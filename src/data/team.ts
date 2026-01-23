@@ -9,7 +9,7 @@ export const teamMembers: TeamMember[] = [
     image: "/images/victor-mugambi.png.png",
     socials: {
       linkedin: "https://www.linkedin.com/in/dr-victor-mugambi-nyagah-dvm-msc-mph-a519a01aa/",
-      email: "info@anduberinnovate.space",
+      email: "vmugambi@anduberinnovate.space",
     },
   },
 ];
