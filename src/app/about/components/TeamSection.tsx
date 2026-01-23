@@ -60,14 +60,14 @@ export default function TeamSection() {
                 <div className="relative flex flex-col md:flex-row gap-8 items-center">
                   {/* Avatar */}
                   <div className="flex-shrink-0">
-                    <div className="relative w-48 h-48 rounded-2xl overflow-hidden border-2 border-teal-500/30">
+                    <div className="relative w-48 h-64 rounded-2xl overflow-hidden border-2 border-teal-500/30 bg-plum-800">
                       <Image
                         src={member.image}
                         alt={member.name}
                         fill
-                        className="object-cover"
+                        className="object-contain"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-plum-900/50 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-plum-900/30 to-transparent pointer-events-none" />
                     </div>
                   </div>
 
