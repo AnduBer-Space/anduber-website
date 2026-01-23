@@ -1,15 +1,30 @@
 import { Resend } from "resend";
 
-// Initialize Resend client
-const resend = process.env.RESEND_API_KEY
-  ? new Resend(process.env.RESEND_API_KEY)
-  : null;
+// Lazy initialization to ensure env vars are read at runtime (important for serverless)
+let resendClient: Resend | null = null;
 
-// Email configuration
-const EMAIL_CONFIG = {
-  to: process.env.CONTACT_EMAIL_TO || "info@anduberinnovate.space",
-  from: process.env.CONTACT_EMAIL_FROM || "AnduBer <onboarding@resend.dev>", // Use verified domain in production
-};
+function getResendClient(): Resend | null {
+  if (resendClient) return resendClient;
+
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.error("❌ RESEND_API_KEY environment variable is not set");
+    return null;
+  }
+
+  console.log("✓ Initializing Resend client with API key:", apiKey.substring(0, 10) + "...");
+  resendClient = new Resend(apiKey);
+  return resendClient;
+}
+
+// Email configuration - read at runtime
+function getEmailConfig() {
+  return {
+    to: process.env.CONTACT_EMAIL_TO || "info@anduberinnovate.space",
+    // IMPORTANT: Change this after verifying your domain in Resend
+    from: process.env.CONTACT_EMAIL_FROM || "AnduBer <onboarding@resend.dev>",
+  };
+}
 
 export interface ContactEmailData {
   name: string;
@@ -31,9 +46,17 @@ export interface JoinEmailData {
  * Send contact form email
  */
 export async function sendContactEmail(data: ContactEmailData): Promise<{ success: boolean; error?: string }> {
+  const resend = getResendClient();
+  const EMAIL_CONFIG = getEmailConfig();
+
+  console.log("📧 Attempting to send contact email...");
+  console.log("   From:", EMAIL_CONFIG.from);
+  console.log("   To:", EMAIL_CONFIG.to);
+  console.log("   Subject:", `[Contact Form] ${data.subject}`);
+
   if (!resend) {
-    console.warn("RESEND_API_KEY not configured - email not sent");
-    console.log("Would have sent contact email:", data);
+    console.error("❌ RESEND_API_KEY not configured - email not sent");
+    console.log("   Would have sent contact email to:", EMAIL_CONFIG.to);
     return { success: false, error: "Email service not configured" };
   }
 
@@ -99,13 +122,14 @@ export async function sendContactEmail(data: ContactEmailData): Promise<{ succes
     });
 
     if (error) {
-      console.error("Resend error:", error);
+      console.error("❌ Resend API error:", JSON.stringify(error, null, 2));
       return { success: false, error: error.message };
     }
 
+    console.log("✅ Contact email sent successfully!");
     return { success: true };
   } catch (err) {
-    console.error("Email send error:", err);
+    console.error("❌ Email send exception:", err);
     return { success: false, error: err instanceof Error ? err.message : "Unknown error" };
   }
 }
@@ -114,9 +138,17 @@ export async function sendContactEmail(data: ContactEmailData): Promise<{ succes
  * Send join application email
  */
 export async function sendJoinEmail(data: JoinEmailData): Promise<{ success: boolean; error?: string }> {
+  const resend = getResendClient();
+  const EMAIL_CONFIG = getEmailConfig();
+
+  console.log("📧 Attempting to send join application email...");
+  console.log("   From:", EMAIL_CONFIG.from);
+  console.log("   To:", EMAIL_CONFIG.to);
+  console.log("   Category:", data.category);
+
   if (!resend) {
-    console.warn("RESEND_API_KEY not configured - email not sent");
-    console.log("Would have sent join email:", data);
+    console.error("❌ RESEND_API_KEY not configured - email not sent");
+    console.log("   Would have sent join email to:", EMAIL_CONFIG.to);
     return { success: false, error: "Email service not configured" };
   }
 
@@ -181,13 +213,14 @@ export async function sendJoinEmail(data: JoinEmailData): Promise<{ success: boo
     });
 
     if (error) {
-      console.error("Resend error:", error);
+      console.error("❌ Resend API error:", JSON.stringify(error, null, 2));
       return { success: false, error: error.message };
     }
 
+    console.log("✅ Join application email sent successfully!");
     return { success: true };
   } catch (err) {
-    console.error("Email send error:", err);
+    console.error("❌ Email send exception:", err);
     return { success: false, error: err instanceof Error ? err.message : "Unknown error" };
   }
 }
@@ -196,5 +229,5 @@ export async function sendJoinEmail(data: JoinEmailData): Promise<{ success: boo
  * Check if email service is configured
  */
 export function isEmailConfigured(): boolean {
-  return !!resend;
+  return !!process.env.RESEND_API_KEY;
 }
