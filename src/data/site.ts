@@ -21,6 +21,7 @@ export const navItems: NavItem[] = [
   { label: "Our Model", href: "/model" },
   { label: "Ecosystem", href: "/ecosystem" },
   { label: "Insights", href: "/blog" },
+  { label: "Join Us", href: "/join" },
   { label: "Contact", href: "/contact" },
 ];
 

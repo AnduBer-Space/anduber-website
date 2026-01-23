@@ -66,9 +66,11 @@ export default function Header() {
 
             {/* Actions */}
             <div className="hidden lg:flex items-center gap-4">
-              <Button variant="primary" size="sm">
-                Get Involved
-              </Button>
+              <Link href="/join">
+                <Button variant="primary" size="sm">
+                  Get Involved
+                </Button>
+              </Link>
             </div>
 
             {/* Mobile Menu Button */}
@@ -139,9 +141,11 @@ export default function Header() {
                 </div>
                 <div className="mt-auto space-y-4">
                   <div className="h-px bg-gradient-to-r from-transparent via-plum-700 to-transparent" />
-                  <Button variant="primary" className="w-full">
-                    Get Involved
-                  </Button>
+                  <Link href="/join">
+                    <Button variant="primary" className="w-full">
+                      Get Involved
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </motion.nav>
