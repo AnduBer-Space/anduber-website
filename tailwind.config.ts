@@ -78,17 +78,11 @@ const config: Config = {
         "glass-dark": "0 8px 32px rgba(0, 0, 0, 0.3)",
       },
       animation: {
-        "fade-in": "fadeIn 0.5s ease-out",
-        "fade-in-up": "fadeInUp 0.6s ease-out",
-        "scale-in": "scaleIn 0.5s ease-out",
-        "glow-pulse": "glowPulse 3s ease-in-out infinite",
-        "glow-pulse-teal": "glowPulseTeal 3s ease-in-out infinite",
-        "float": "float 6s ease-in-out infinite",
-        "float-slow": "float 8s ease-in-out infinite",
-        "spin-slow": "spin 20s linear infinite",
-        "pulse-soft": "pulseSoft 4s ease-in-out infinite",
+        // One-time animations only - no infinite loops
+        "fade-in": "fadeIn 0.5s ease-out forwards",
+        "fade-in-up": "fadeInUp 0.6s ease-out forwards",
+        "scale-in": "scaleIn 0.5s ease-out forwards",
         "draw-line": "drawLine 2s ease-out forwards",
-        "node-pulse": "nodePulse 2s ease-in-out infinite",
       },
       keyframes: {
         fadeIn: {
@@ -103,29 +97,9 @@ const config: Config = {
           "0%": { opacity: "0", transform: "scale(0.9)" },
           "100%": { opacity: "1", transform: "scale(1)" },
         },
-        glowPulse: {
-          "0%, 100%": { boxShadow: "0 0 40px rgba(212, 170, 106, 0.3)" },
-          "50%": { boxShadow: "0 0 80px rgba(212, 170, 106, 0.5)" },
-        },
-        glowPulseTeal: {
-          "0%, 100%": { boxShadow: "0 0 40px rgba(26, 123, 122, 0.3)" },
-          "50%": { boxShadow: "0 0 80px rgba(26, 123, 122, 0.5)" },
-        },
-        float: {
-          "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-20px)" },
-        },
-        pulseSoft: {
-          "0%, 100%": { opacity: "0.5", transform: "scale(1)" },
-          "50%": { opacity: "0.8", transform: "scale(1.05)" },
-        },
         drawLine: {
           "0%": { strokeDashoffset: "1000" },
           "100%": { strokeDashoffset: "0" },
-        },
-        nodePulse: {
-          "0%, 100%": { transform: "scale(1)", opacity: "0.8" },
-          "50%": { transform: "scale(1.2)", opacity: "1" },
         },
       },
       backdropBlur: {

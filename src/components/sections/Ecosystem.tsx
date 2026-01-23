@@ -39,7 +39,7 @@ const armColors = {
   },
 };
 
-// Flywheel SVG component
+// Flywheel SVG component - optimized without infinite animations
 const FlywheelVisualization = ({ activeArm }: { activeArm: string | null }) => {
   return (
     <div className="relative w-[400px] h-[400px] mx-auto">
@@ -66,8 +66,8 @@ const FlywheelVisualization = ({ activeArm }: { activeArm: string | null }) => {
           </filter>
         </defs>
 
-        {/* Outer rotating ring */}
-        <motion.circle
+        {/* Outer ring - static dashed circle */}
+        <circle
           cx="200"
           cy="200"
           r="180"
@@ -75,13 +75,10 @@ const FlywheelVisualization = ({ activeArm }: { activeArm: string | null }) => {
           stroke="#3D1525"
           strokeWidth="2"
           strokeDasharray="10 5"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-          style={{ transformOrigin: "center" }}
         />
 
-        {/* Center circle with glow */}
-        <motion.circle
+        {/* Center circle with glow - static */}
+        <circle
           cx="200"
           cy="200"
           r="50"
@@ -89,8 +86,7 @@ const FlywheelVisualization = ({ activeArm }: { activeArm: string | null }) => {
           stroke={activeArm ? armColors[activeArm === "partners" ? "teal" : activeArm === "labs" ? "gold" : "copper"].primary : "#3D1525"}
           strokeWidth="2"
           filter="url(#glow)"
-          animate={{ scale: [1, 1.05, 1] }}
-          transition={{ duration: 3, repeat: Infinity }}
+          className="transition-all duration-300"
         />
 
         {/* Partners segment (top) */}
@@ -121,36 +117,30 @@ const FlywheelVisualization = ({ activeArm }: { activeArm: string | null }) => {
         />
 
         {/* Completing the wheel (top left segment for visual balance) */}
-        <motion.path
+        <path
           d="M 53 285 A 170 170 0 0 1 53 115 L 130 158 A 85 85 0 0 0 130 242 Z"
           fill="#1A7B7A"
           opacity={0.4}
           className="transition-all duration-300"
         />
 
-        <motion.path
+        <path
           d="M 53 115 A 170 170 0 0 1 200 30 L 200 115 A 85 85 0 0 0 130 158 Z"
           fill="#D4AA6A"
           opacity={0.4}
           className="transition-all duration-300"
         />
 
-        {/* Arrows showing flow */}
-        <motion.g
-          animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          style={{ transformOrigin: "200px 200px" }}
-        >
-          {[0, 120, 240].map((angle, i) => (
-            <motion.polygon
-              key={i}
-              points="0,-8 12,0 0,8"
-              fill="#F5E6C8"
-              opacity={0.6}
-              transform={`translate(${200 + 120 * Math.cos((angle - 90) * Math.PI / 180)}, ${200 + 120 * Math.sin((angle - 90) * Math.PI / 180)}) rotate(${angle + 90})`}
-            />
-          ))}
-        </motion.g>
+        {/* Static arrows showing flow direction */}
+        {[0, 120, 240].map((angle, i) => (
+          <polygon
+            key={i}
+            points="0,-8 12,0 0,8"
+            fill="#F5E6C8"
+            opacity={0.6}
+            transform={`translate(${200 + 120 * Math.cos((angle - 90) * Math.PI / 180)}, ${200 + 120 * Math.sin((angle - 90) * Math.PI / 180)}) rotate(${angle + 90})`}
+          />
+        ))}
 
         {/* Center text */}
         <text x="200" y="195" textAnchor="middle" className="fill-cream-200 font-serif text-sm font-bold">
@@ -173,18 +163,14 @@ export default function Ecosystem() {
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-plum-900 via-plum-800 to-plum-900" />
 
-      {/* Decorative glows */}
-      <motion.div
-        className="absolute top-1/3 left-0 w-96 h-96 rounded-full"
+      {/* Decorative glows - static */}
+      <div
+        className="absolute top-1/3 left-0 w-96 h-96 rounded-full opacity-40"
         style={{ background: "radial-gradient(circle, rgba(26, 123, 122, 0.1) 0%, transparent 70%)" }}
-        animate={{ scale: [1, 1.2, 1], x: [-20, 20, -20] }}
-        transition={{ duration: 15, repeat: Infinity }}
       />
-      <motion.div
-        className="absolute bottom-1/3 right-0 w-96 h-96 rounded-full"
+      <div
+        className="absolute bottom-1/3 right-0 w-96 h-96 rounded-full opacity-40"
         style={{ background: "radial-gradient(circle, rgba(212, 170, 106, 0.1) 0%, transparent 70%)" }}
-        animate={{ scale: [1, 1.3, 1], x: [20, -20, 20] }}
-        transition={{ duration: 12, repeat: Infinity }}
       />
 
       <Container className="relative z-10">

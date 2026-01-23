@@ -15,18 +15,14 @@ export default function ContactHero() {
         }}
       />
 
-      {/* Decorative glows */}
-      <motion.div
-        className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full"
+      {/* Decorative glows - static */}
+      <div
+        className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full opacity-40"
         style={{ background: "radial-gradient(circle, rgba(26, 123, 122, 0.15) 0%, transparent 70%)" }}
-        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 8, repeat: Infinity }}
       />
-      <motion.div
-        className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full"
+      <div
+        className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full opacity-40"
         style={{ background: "radial-gradient(circle, rgba(212, 170, 106, 0.15) 0%, transparent 70%)" }}
-        animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 10, repeat: Infinity }}
       />
 
       <Container className="relative z-10">

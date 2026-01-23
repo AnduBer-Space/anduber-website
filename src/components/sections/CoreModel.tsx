@@ -21,19 +21,15 @@ export default function CoreModel() {
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-plum-900 via-plum-800 to-plum-900" />
 
-      {/* Decorative elements */}
+      {/* Decorative elements - static */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute top-1/4 -left-20 w-80 h-80 rounded-full"
+        <div
+          className="absolute top-1/4 -left-20 w-80 h-80 rounded-full opacity-40"
           style={{ background: "radial-gradient(circle, rgba(26, 123, 122, 0.1) 0%, transparent 70%)" }}
-          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-          transition={{ duration: 8, repeat: Infinity }}
         />
-        <motion.div
-          className="absolute bottom-1/4 -right-20 w-96 h-96 rounded-full"
+        <div
+          className="absolute bottom-1/4 -right-20 w-96 h-96 rounded-full opacity-30"
           style={{ background: "radial-gradient(circle, rgba(212, 170, 106, 0.1) 0%, transparent 70%)" }}
-          animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.4, 0.2] }}
-          transition={{ duration: 10, repeat: Infinity }}
         />
       </div>
 

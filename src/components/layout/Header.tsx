@@ -4,19 +4,17 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Sun, Moon } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { navItems } from "@/data/site";
 import Logo from "@/components/ui/Logo";
 import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
-import { useTheme } from "@/components/providers/ThemeProvider";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -68,22 +66,6 @@ export default function Header() {
 
             {/* Actions */}
             <div className="hidden lg:flex items-center gap-4">
-              <button
-                onClick={toggleTheme}
-                className={cn(
-                  "p-2 rounded-full transition-all duration-300",
-                  theme === "dark"
-                    ? "text-cream-200 hover:bg-plum-700 hover:text-gold-400"
-                    : "text-plum-900 hover:bg-cream-100 hover:text-teal-500"
-                )}
-                aria-label="Toggle theme"
-              >
-                {theme === "dark" ? (
-                  <Sun className="w-5 h-5" />
-                ) : (
-                  <Moon className="w-5 h-5" />
-                )}
-              </button>
               <Button variant="primary" size="sm">
                 Get Involved
               </Button>
@@ -92,29 +74,8 @@ export default function Header() {
             {/* Mobile Menu Button */}
             <div className="flex lg:hidden items-center gap-3">
               <button
-                onClick={toggleTheme}
-                className={cn(
-                  "p-2 rounded-full transition-all duration-300",
-                  theme === "dark"
-                    ? "text-cream-200 hover:bg-plum-700"
-                    : "text-plum-900 hover:bg-cream-100"
-                )}
-                aria-label="Toggle theme"
-              >
-                {theme === "dark" ? (
-                  <Sun className="w-5 h-5" />
-                ) : (
-                  <Moon className="w-5 h-5" />
-                )}
-              </button>
-              <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className={cn(
-                  "p-2 rounded-lg transition-colors",
-                  theme === "dark"
-                    ? "text-cream-200 hover:bg-plum-700"
-                    : "text-plum-900 hover:bg-cream-100"
-                )}
+                className="p-2 rounded-lg transition-colors text-cream-200 hover:bg-plum-700"
                 aria-label="Toggle menu"
               >
                 {isMobileMenuOpen ? (

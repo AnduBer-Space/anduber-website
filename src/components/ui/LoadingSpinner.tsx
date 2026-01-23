@@ -26,11 +26,11 @@ export default function LoadingSpinner({
         transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
       >
         {/* Outer ring */}
-        <div className="absolute inset-0 rounded-full border-2 border-plum-300 dark:border-plum-600" />
+        <div className="absolute inset-0 rounded-full border-2 border-plum-600" />
         {/* Animated arc */}
         <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-gold-500 border-r-gold-500" />
-        {/* Inner glow */}
-        <div className="absolute inset-2 rounded-full bg-gold-500/20 animate-pulse" />
+        {/* Inner glow - static */}
+        <div className="absolute inset-2 rounded-full bg-gold-500/20" />
       </motion.div>
     </div>
   );
@@ -46,20 +46,9 @@ export function PageLoader() {
           transition={{ duration: 0.5 }}
           className="relative"
         >
-          {/* Glowing orb effect */}
+          {/* Static glow background */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <motion.div
-              className="w-24 h-24 rounded-full bg-gold-500/30 blur-xl"
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.5, 0.8, 0.5],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
+            <div className="w-24 h-24 rounded-full bg-gold-500/20 blur-xl" />
           </div>
           <LoadingSpinner size="lg" />
         </motion.div>

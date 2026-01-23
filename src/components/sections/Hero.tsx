@@ -7,7 +7,7 @@ import Link from "next/link";
 import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
 
-// Network node component for background
+// Simplified network node component - animations run once
 const NetworkNodes = () => {
   const nodes = [
     { x: 10, y: 20, delay: 0 },
@@ -44,12 +44,12 @@ const NetworkNodes = () => {
           <stop offset="100%" stopColor="#1A7B7A" stopOpacity="0.3" />
         </linearGradient>
         <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#1A7B7A" stopOpacity="0.8" />
+          <stop offset="0%" stopColor="#1A7B7A" stopOpacity="0.6" />
           <stop offset="100%" stopColor="#1A7B7A" stopOpacity="0" />
         </radialGradient>
       </defs>
 
-      {/* Connection lines */}
+      {/* Connection lines - animate once */}
       {connections.map(([from, to], i) => (
         <motion.line
           key={`line-${i}`}
@@ -65,21 +65,18 @@ const NetworkNodes = () => {
         />
       ))}
 
-      {/* Nodes */}
+      {/* Nodes - fade in once, no pulsing */}
       {nodes.map((node, i) => (
         <motion.g key={`node-${i}`}>
-          {/* Glow */}
+          {/* Glow - static after fade in */}
           <motion.circle
             cx={`${node.x}%`}
             cy={`${node.y}%`}
             r="1.5"
             fill="url(#nodeGlow)"
             initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: [1, 1.5, 1], opacity: [0.3, 0.6, 0.3] }}
-            transition={{
-              scale: { duration: 3, delay: node.delay, repeat: Infinity },
-              opacity: { duration: 3, delay: node.delay, repeat: Infinity },
-            }}
+            animate={{ scale: 1, opacity: 0.5 }}
+            transition={{ duration: 0.5, delay: node.delay }}
           />
           {/* Node */}
           <motion.circle
@@ -100,7 +97,7 @@ const NetworkNodes = () => {
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-plum-900">
-      {/* Background gradient */}
+      {/* Background gradient - static */}
       <div
         className="absolute inset-0"
         style={{
@@ -108,35 +105,17 @@ export default function Hero() {
         }}
       />
 
-      {/* Radial glows */}
-      <motion.div
-        className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full"
+      {/* Radial glows - static, no animation */}
+      <div
+        className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full opacity-60"
         style={{
           background: "radial-gradient(circle, rgba(26, 123, 122, 0.15) 0%, transparent 70%)",
         }}
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.5, 0.8, 0.5],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
       />
-      <motion.div
-        className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full"
+      <div
+        className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full opacity-40"
         style={{
           background: "radial-gradient(circle, rgba(212, 170, 106, 0.1) 0%, transparent 70%)",
-        }}
-        animate={{
-          scale: [1, 1.3, 1],
-          opacity: [0.3, 0.6, 0.3],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
         }}
       />
 
@@ -217,50 +196,32 @@ export default function Hero() {
             className="hidden lg:flex items-center justify-center"
           >
             <div className="relative w-[450px] h-[450px]">
-              {/* Outer rotating ring */}
-              <motion.div
+              {/* Outer ring - static dashed border */}
+              <div
                 className="absolute inset-0 rounded-full border border-teal-500/20"
                 style={{ borderStyle: "dashed" }}
-                animate={{ rotate: 360 }}
-                transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
               />
 
-              {/* Inner rotating ring (opposite direction) */}
-              <motion.div
+              {/* Inner ring - static dashed border */}
+              <div
                 className="absolute inset-8 rounded-full border border-gold-400/20"
                 style={{ borderStyle: "dashed" }}
-                animate={{ rotate: -360 }}
-                transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
               />
 
-              {/* Glowing background */}
-              <motion.div
-                className="absolute inset-16 rounded-full"
+              {/* Glowing background - static */}
+              <div
+                className="absolute inset-16 rounded-full opacity-60"
                 style={{
                   background: "radial-gradient(circle, rgba(212, 170, 106, 0.2) 0%, transparent 70%)",
                 }}
-                animate={{
-                  scale: [1, 1.1, 1],
-                  opacity: [0.5, 0.8, 0.5],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
               />
 
-              {/* Central Logo */}
+              {/* Central Logo - static */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <motion.div
-                  animate={{
-                    y: [0, -10, 0],
-                  }}
-                  transition={{
-                    duration: 6,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.5 }}
                   className="relative"
                 >
                   <Image
@@ -274,7 +235,7 @@ export default function Hero() {
                 </motion.div>
               </div>
 
-              {/* Orbiting elements representing disciplines */}
+              {/* Orbiting elements - fade in once, no bobbing */}
               {["Artists", "Scientists", "Elders", "Youth", "Engineers", "Leaders"].map((label, i) => {
                 const angle = (i * 60) * (Math.PI / 180);
                 const radius = 180;
@@ -294,22 +255,11 @@ export default function Hero() {
                     }}
                     transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
                   >
-                    <motion.div
-                      className="px-3 py-1.5 rounded-full text-xs font-medium glass-card"
-                      animate={{
-                        y: [0, -5, 0],
-                      }}
-                      transition={{
-                        duration: 3,
-                        delay: i * 0.5,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      }}
-                    >
+                    <div className="px-3 py-1.5 rounded-full text-xs font-medium glass-card">
                       <span className={i % 2 === 0 ? "text-teal-400" : "text-gold-400"}>
                         {label}
                       </span>
-                    </motion.div>
+                    </div>
                   </motion.div>
                 );
               })}
@@ -318,27 +268,19 @@ export default function Hero() {
         </div>
       </Container>
 
-      {/* Scroll Indicator */}
+      {/* Scroll Indicator - static */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
       >
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-          className="flex flex-col items-center text-plum-500"
-        >
+        <div className="flex flex-col items-center text-plum-500">
           <span className="text-sm mb-2">Scroll to explore</span>
           <div className="w-6 h-10 rounded-full border-2 border-plum-700 flex items-start justify-center p-1">
-            <motion.div
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-              className="w-1.5 h-3 rounded-full bg-gold-400"
-            />
+            <div className="w-1.5 h-3 rounded-full bg-gold-400" />
           </div>
-        </motion.div>
+        </div>
       </motion.div>
     </section>
   );

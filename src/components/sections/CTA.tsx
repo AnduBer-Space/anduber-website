@@ -65,25 +65,15 @@ export default function CTA() {
         }}
       />
 
-      {/* Decorative elements */}
+      {/* Decorative elements - static */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute -top-40 -right-40 w-80 h-80 rounded-full"
+        <div
+          className="absolute -top-40 -right-40 w-80 h-80 rounded-full opacity-40"
           style={{ background: "radial-gradient(circle, rgba(212, 170, 106, 0.1) 0%, transparent 70%)" }}
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{ duration: 8, repeat: Infinity }}
         />
-        <motion.div
-          className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full"
+        <div
+          className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full opacity-40"
           style={{ background: "radial-gradient(circle, rgba(26, 123, 122, 0.1) 0%, transparent 70%)" }}
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{ duration: 8, repeat: Infinity }}
         />
       </div>
 

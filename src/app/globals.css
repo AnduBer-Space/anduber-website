@@ -28,7 +28,7 @@
     @apply font-sans antialiased;
   }
 
-  /* Dark mode (default) */
+  /* Dark mode (default and only mode) */
   .dark {
     --background: #1E0A14;
     --background-secondary: #2A0E1A;
@@ -44,27 +44,10 @@
     --accent: #D4AA6A;
     --accent-teal: #1A7B7A;
   }
-
-  /* Light mode */
-  .light {
-    --background: #FDF8F3;
-    --background-secondary: #F5EDE4;
-    --background-tertiary: #FFFFFF;
-    --foreground: #1E0A14;
-    --foreground-secondary: #3D1525;
-    --muted: #F5EDE4;
-    --muted-foreground: #6d4a5a;
-    --card: #FFFFFF;
-    --card-foreground: #1E0A14;
-    --border: #e8c9d5;
-    --border-hover: #1A7B7A;
-    --accent: #B8865A;
-    --accent-teal: #1A7B7A;
-  }
 }
 
 @layer components {
-  /* Golden Glow Effect - echoes the logo's central orb */
+  /* Golden Glow Effect - static, no animation */
   .glow-orb {
     position: relative;
   }
@@ -75,22 +58,11 @@
     inset: -20px;
     background: radial-gradient(circle, rgba(212, 170, 106, 0.4) 0%, transparent 70%);
     border-radius: 50%;
-    animation: pulse-glow 3s ease-in-out infinite;
+    opacity: 0.8;
     z-index: -1;
   }
 
-  @keyframes pulse-glow {
-    0%, 100% {
-      opacity: 0.6;
-      transform: scale(1);
-    }
-    50% {
-      opacity: 1;
-      transform: scale(1.1);
-    }
-  }
-
-  /* Teal Glow Effect */
+  /* Teal Glow Effect - static, no animation */
   .glow-teal {
     position: relative;
   }
@@ -101,7 +73,7 @@
     inset: -20px;
     background: radial-gradient(circle, rgba(26, 123, 122, 0.4) 0%, transparent 70%);
     border-radius: 50%;
-    animation: pulse-glow 3s ease-in-out infinite;
+    opacity: 0.8;
     z-index: -1;
   }
 
@@ -144,16 +116,6 @@
     box-shadow: 0 8px 32px rgba(26, 123, 122, 0.1);
   }
 
-  .light .glass-card {
-    background: rgba(255, 255, 255, 0.7);
-    border-color: rgba(232, 201, 213, 0.5);
-  }
-
-  .light .glass-card:hover {
-    background: rgba(255, 255, 255, 0.9);
-    border-color: rgba(26, 123, 122, 0.3);
-  }
-
   /* Card with glow effect */
   .card-glow {
     @apply rounded-2xl p-6 relative overflow-hidden
@@ -186,23 +148,10 @@
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 40px rgba(26, 123, 122, 0.1);
   }
 
-  .light .card-glow {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(253, 248, 243, 0.95) 100%);
-    border-color: rgba(232, 201, 213, 0.5);
-  }
-
-  .light .card-glow:hover {
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 0 40px rgba(26, 123, 122, 0.05);
-  }
-
   /* Section styles */
   .section-dark {
     @apply text-cream-200;
     background: linear-gradient(180deg, #1E0A14 0%, #2A0E1A 100%);
-  }
-
-  .section-light {
-    @apply bg-cream-50 text-plum-900;
   }
 
   /* Text gradient */
@@ -265,10 +214,6 @@
     @apply bg-plum-800 border-plum-700 text-cream-200 placeholder-plum-500;
   }
 
-  .light .input-field {
-    @apply bg-white border-cream-100 text-plum-900 placeholder-plum-300;
-  }
-
   /* Network node decoration */
   .network-bg {
     position: relative;
@@ -304,19 +249,7 @@
     background: #1A7B7A;
   }
 
-  .light ::-webkit-scrollbar-track {
-    background: #F5EDE4;
-  }
-
-  .light ::-webkit-scrollbar-thumb {
-    background: #d4a3b8;
-  }
-
-  .light ::-webkit-scrollbar-thumb:hover {
-    background: #1A7B7A;
-  }
-
-  /* Mindmap/Flywheel connector lines */
+  /* Mindmap/Flywheel connector lines - runs once with forwards */
   .connector-line {
     stroke: url(#lineGradient);
     stroke-width: 2;
@@ -332,40 +265,31 @@
     }
   }
 
-  /* Pillar card hover effect */
+  /* Pillar card hover effect - CSS transitions only, no infinite animation */
   .pillar-card {
     @apply relative overflow-hidden rounded-3xl p-8;
     background: linear-gradient(145deg, rgba(42, 14, 26, 0.8), rgba(30, 10, 20, 0.95));
     border: 1px solid rgba(61, 21, 37, 0.6);
+    transition: all 0.5s ease;
   }
 
   .pillar-card::after {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: conic-gradient(
-      from 0deg,
-      transparent,
-      rgba(26, 123, 122, 0.1),
-      transparent,
-      rgba(212, 170, 106, 0.1),
-      transparent
-    );
-    animation: rotate 20s linear infinite;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(26, 123, 122, 0.1) 0%, transparent 70%);
     opacity: 0;
     transition: opacity 0.5s;
+    pointer-events: none;
   }
 
   .pillar-card:hover::after {
     opacity: 1;
   }
 
-  @keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+  .pillar-card:hover {
+    border-color: rgba(26, 123, 122, 0.4);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 40px rgba(26, 123, 122, 0.1);
   }
 
   /* Ecosystem flywheel */
@@ -383,7 +307,7 @@
     text-wrap: balance;
   }
 
-  /* Animation delays */
+  /* Animation delays for staggered effects */
   .animation-delay-100 {
     animation-delay: 100ms;
   }
@@ -438,10 +362,5 @@
   ::selection {
     background: rgba(26, 123, 122, 0.3);
     color: #F5E6C8;
-  }
-
-  .light ::selection {
-    background: rgba(26, 123, 122, 0.3);
-    color: #1E0A14;
   }
 }
