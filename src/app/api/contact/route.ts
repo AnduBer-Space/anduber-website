@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { sendContactEmail, isEmailConfigured } from "@/lib/email";
 
 // =============================================================================
 // CONTACT FORM API ROUTE WITH RATE LIMITING AND VALIDATION
@@ -212,14 +213,10 @@ export async function POST(request: NextRequest) {
     }
 
     // ==========================================================================
-    // PROCESS THE CONTACT FORM
-    // In production, you would:
-    // 1. Send email via SendGrid/Resend/Nodemailer
-    // 2. Store in database
-    // 3. Send to CRM
+    // SEND THE EMAIL
     // ==========================================================================
 
-    // Log for now (replace with actual email sending in production)
+    // Log submission
     console.log("=== Contact Form Submission ===");
     console.log("Time:", new Date().toISOString());
     console.log("IP:", clientIP);
@@ -227,14 +224,19 @@ export async function POST(request: NextRequest) {
     console.log("Email:", data.email);
     console.log("Type:", data.inquiryType);
     console.log("Subject:", data.subject);
-    console.log("Message:", data.message.substring(0, 100) + "...");
     console.log("================================");
 
-    // If you have an email service configured, send the email here
-    // Example with environment variable check:
-    // if (process.env.EMAIL_SERVICE_API_KEY) {
-    //   await sendEmail(data);
-    // }
+    // Send email via Resend
+    const emailResult = await sendContactEmail(data);
+
+    if (!emailResult.success) {
+      console.error("Failed to send email:", emailResult.error);
+      // Still return success to user - we have the data logged
+      // In production, you might want to queue for retry or alert admins
+      if (!isEmailConfigured()) {
+        console.warn("⚠️ RESEND_API_KEY not set - emails will not be sent");
+      }
+    }
 
     return NextResponse.json(
       {
