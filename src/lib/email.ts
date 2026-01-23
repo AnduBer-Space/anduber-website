@@ -21,8 +21,7 @@ function getResendClient(): Resend | null {
 function getEmailConfig() {
   return {
     to: process.env.CONTACT_EMAIL_TO || "info@anduberinnovate.space",
-    // IMPORTANT: Change this after verifying your domain in Resend
-    from: process.env.CONTACT_EMAIL_FROM || "AnduBer <onboarding@resend.dev>",
+    from: process.env.CONTACT_EMAIL_FROM || "AnduBer <noreply@anduberinnovate.space>",
   };
 }
 
