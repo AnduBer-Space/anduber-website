@@ -26,6 +26,7 @@ export default function Counter({
     if (!isInView) return;
 
     let startTime: number | null = null;
+    let animationFrameId: number;
     const startValue = 0;
 
     const animate = (timestamp: number) => {
@@ -39,11 +40,18 @@ export default function Counter({
       setCount(currentValue);
 
       if (progress < 1) {
-        requestAnimationFrame(animate);
+        animationFrameId = requestAnimationFrame(animate);
       }
     };
 
-    requestAnimationFrame(animate);
+    animationFrameId = requestAnimationFrame(animate);
+
+    // Cleanup function to cancel animation on unmount
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
   }, [isInView, value, duration]);
 
   const formatNumber = (num: number): string => {

@@ -69,9 +69,9 @@ export default function RootLayout({
         className={`${inter.variable} ${playfair.variable} font-sans antialiased`}
       >
         <ThemeProvider>
-          <div className="flex min-h-screen flex-col bg-plum-900 text-cream-200 transition-colors duration-300">
+          <div className="flex min-h-screen flex-col bg-plum-900 text-cream-200 transition-colors duration-300 overflow-x-hidden">
             <Header />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 overflow-x-hidden">{children}</main>
             <Footer />
             <BackToTop />
           </div>

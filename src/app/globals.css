@@ -26,6 +26,13 @@
 
   body {
     @apply font-sans antialiased;
+    /* Prevent any potential overflow issues that could cause duplication */
+    overflow-x: hidden;
+  }
+
+  /* Safety: Ensure animations don't create duplicate content */
+  * {
+    animation-fill-mode: forwards;
   }
 
   /* Dark mode (default and only mode) */
