@@ -13,25 +13,25 @@ const pillarIcons = {
 
 const pillarGradients = {
   teal: {
-    border: "border-teal-500/30",
+    border: "border-teal-500/30 hover:border-teal-500/60",
     bg: "from-teal-500/10 to-transparent",
     icon: "bg-teal-500/20 text-teal-400",
     text: "text-teal-400",
-    glow: "rgba(26, 123, 122, 0.2)",
+    cardClass: "card-premium",
   },
   gold: {
-    border: "border-gold-400/30",
+    border: "border-gold-400/30 hover:border-gold-400/60",
     bg: "from-gold-400/10 to-transparent",
     icon: "bg-gold-400/20 text-gold-400",
     text: "text-gold-400",
-    glow: "rgba(212, 170, 106, 0.2)",
+    cardClass: "card-premium card-premium-gold",
   },
   copper: {
-    border: "border-gold-600/30",
+    border: "border-gold-600/30 hover:border-gold-600/60",
     bg: "from-gold-600/10 to-transparent",
     icon: "bg-gold-600/20 text-gold-600",
     text: "text-gold-600",
-    glow: "rgba(201, 149, 108, 0.2)",
+    cardClass: "card-premium card-premium-copper",
   },
 };
 
@@ -103,27 +103,15 @@ export default function ThreePillars() {
                 transition={{ delay: index * 0.2, duration: 0.6 }}
                 className="group relative"
               >
-                {/* Card */}
+                {/* Card - Pure CSS hover effects for better performance */}
                 <div
                   className={`
-                    relative h-full p-8 lg:p-10 rounded-3xl
+                    relative h-full p-8 lg:p-10
+                    ${colors.cardClass}
                     border ${colors.border}
                     bg-gradient-to-br ${colors.bg}
                     backdrop-blur-sm
-                    transition-all duration-500
-                    hover:border-opacity-60
                   `}
-                  style={{
-                    boxShadow: `0 0 0 rgba(0,0,0,0)`,
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.boxShadow = `0 20px 60px ${colors.glow}`;
-                    e.currentTarget.style.transform = "translateY(-8px)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.boxShadow = "0 0 0 rgba(0,0,0,0)";
-                    e.currentTarget.style.transform = "translateY(0)";
-                  }}
                 >
                   {/* Number badge */}
                   <div className="absolute -top-4 -right-4 w-12 h-12 rounded-full bg-plum-900 border border-plum-700 flex items-center justify-center">

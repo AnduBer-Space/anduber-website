@@ -300,6 +300,213 @@
   .flywheel-segment:hover {
     filter: brightness(1.2) drop-shadow(0 0 20px rgba(26, 123, 122, 0.4));
   }
+
+  /* ============================================
+     PREMIUM VISUAL EFFECTS - GPU ACCELERATED
+     ============================================ */
+
+  /* Rotating Flywheel Container */
+  .flywheel-rotating {
+    will-change: transform;
+    animation: spinSlow 45s linear infinite;
+  }
+
+  @keyframes spinSlow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* Counter-rotation for text labels to keep them readable */
+  .flywheel-label-counter {
+    will-change: transform;
+    animation: spinSlowReverse 45s linear infinite;
+  }
+
+  @keyframes spinSlowReverse {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(-360deg); }
+  }
+
+  /* Network Lines Background */
+  .network-lines-container {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .network-line {
+    stroke-dasharray: 8 4;
+    stroke-linecap: round;
+    opacity: 0.15;
+  }
+
+  .network-line-animated {
+    animation: dashMove 20s linear infinite;
+    will-change: stroke-dashoffset;
+  }
+
+  @keyframes dashMove {
+    from { stroke-dashoffset: 0; }
+    to { stroke-dashoffset: 100; }
+  }
+
+  .network-node {
+    opacity: 0.3;
+  }
+
+  .network-node-glow {
+    animation: nodeGlow 4s ease-in-out infinite;
+    will-change: opacity;
+  }
+
+  @keyframes nodeGlow {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 0.5; }
+  }
+
+  /* Premium Card Hover Effects - CSS Only */
+  .card-premium {
+    @apply relative overflow-hidden rounded-3xl;
+    background: linear-gradient(145deg, rgba(42, 14, 26, 0.8), rgba(30, 10, 20, 0.95));
+    border: 1px solid rgba(61, 21, 37, 0.6);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.4s ease,
+                border-color 0.4s ease;
+    will-change: transform, box-shadow;
+  }
+
+  .card-premium::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(26, 123, 122, 0.15) 0%,
+      transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .card-premium:hover {
+    transform: translateY(-8px);
+    border-color: rgba(26, 123, 122, 0.4);
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.3),
+      0 0 40px rgba(26, 123, 122, 0.15),
+      0 0 80px rgba(26, 123, 122, 0.08);
+  }
+
+  .card-premium:hover::before {
+    opacity: 1;
+  }
+
+  /* Gold variant */
+  .card-premium-gold:hover {
+    border-color: rgba(212, 170, 106, 0.4);
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.3),
+      0 0 40px rgba(212, 170, 106, 0.15),
+      0 0 80px rgba(212, 170, 106, 0.08);
+  }
+
+  .card-premium-gold::before {
+    background: radial-gradient(
+      ellipse at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(212, 170, 106, 0.15) 0%,
+      transparent 60%
+    );
+  }
+
+  /* Copper variant */
+  .card-premium-copper:hover {
+    border-color: rgba(201, 149, 108, 0.4);
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.3),
+      0 0 40px rgba(201, 149, 108, 0.15),
+      0 0 80px rgba(201, 149, 108, 0.08);
+  }
+
+  /* Button Premium Hover */
+  .btn-premium {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    will-change: transform, box-shadow;
+  }
+
+  .btn-premium::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      transparent 50%,
+      transparent 100%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .btn-premium:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .btn-premium:hover::before {
+    opacity: 1;
+  }
+
+  .btn-premium:active {
+    transform: translateY(0);
+  }
+
+  /* Scroll Reveal Animation Classes */
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    will-change: opacity, transform;
+  }
+
+  .scroll-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Staggered delays for children */
+  .scroll-reveal-stagger > *:nth-child(1) { transition-delay: 0ms; }
+  .scroll-reveal-stagger > *:nth-child(2) { transition-delay: 100ms; }
+  .scroll-reveal-stagger > *:nth-child(3) { transition-delay: 200ms; }
+  .scroll-reveal-stagger > *:nth-child(4) { transition-delay: 300ms; }
+  .scroll-reveal-stagger > *:nth-child(5) { transition-delay: 400ms; }
+  .scroll-reveal-stagger > *:nth-child(6) { transition-delay: 500ms; }
+
+  /* Subtle floating elements */
+  .float-subtle {
+    animation: floatSubtle 6s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  @keyframes floatSubtle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  /* Glow pulse for decorative elements */
+  .glow-pulse {
+    animation: glowPulse 4s ease-in-out infinite;
+    will-change: opacity;
+  }
+
+  @keyframes glowPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+  }
 }
 
 @layer utilities {

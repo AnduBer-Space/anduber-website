@@ -78,11 +78,15 @@ const config: Config = {
         "glass-dark": "0 8px 32px rgba(0, 0, 0, 0.3)",
       },
       animation: {
-        // One-time animations only - no infinite loops
+        // One-time animations
         "fade-in": "fadeIn 0.5s ease-out forwards",
         "fade-in-up": "fadeInUp 0.6s ease-out forwards",
         "scale-in": "scaleIn 0.5s ease-out forwards",
         "draw-line": "drawLine 2s ease-out forwards",
+        // Continuous CSS animations (GPU accelerated)
+        "spin-slow": "spinSlow 45s linear infinite",
+        "pulse-glow": "pulseGlow 4s ease-in-out infinite",
+        "float": "float 6s ease-in-out infinite",
       },
       keyframes: {
         fadeIn: {
@@ -100,6 +104,21 @@ const config: Config = {
         drawLine: {
           "0%": { strokeDashoffset: "1000" },
           "100%": { strokeDashoffset: "0" },
+        },
+        // Slow continuous rotation for flywheel (45s = smooth, not distracting)
+        spinSlow: {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+        // Subtle glow pulse
+        pulseGlow: {
+          "0%, 100%": { opacity: "0.4" },
+          "50%": { opacity: "0.7" },
+        },
+        // Floating effect
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
         },
       },
       backdropBlur: {

@@ -39,10 +39,21 @@ const armColors = {
   },
 };
 
-// Flywheel SVG component - optimized without infinite animations
+// Flywheel SVG component - with smooth CSS rotation (GPU accelerated)
 const FlywheelVisualization = ({ activeArm }: { activeArm: string | null }) => {
+  // Label data for the three engines
+  const labels = [
+    { angle: 60, label: "AnduBer Partners", color: "#1A7B7A" },
+    { angle: 180, label: "The Good Labs", color: "#D4AA6A" },
+    { angle: 300, label: "The Gathering", color: "#C9956C" },
+  ];
+
   return (
     <div className="relative w-[400px] h-[400px] mx-auto">
+      {/* Outer decorative ring - static */}
+      <div className="absolute inset-0 rounded-full border-2 border-dashed border-plum-700 opacity-50" />
+
+      {/* Main SVG with rotating wheel */}
       <svg viewBox="0 0 400 400" className="w-full h-full">
         <defs>
           <linearGradient id="flywheelGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -58,7 +69,14 @@ const FlywheelVisualization = ({ activeArm }: { activeArm: string | null }) => {
             <stop offset="100%" stopColor="#D4A57B" />
           </linearGradient>
           <filter id="glow">
-            <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+            <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <filter id="glowStrong">
+            <feGaussianBlur stdDeviation="6" result="coloredBlur" />
             <feMerge>
               <feMergeNode in="coloredBlur" />
               <feMergeNode in="SourceGraphic" />
@@ -66,90 +84,126 @@ const FlywheelVisualization = ({ activeArm }: { activeArm: string | null }) => {
           </filter>
         </defs>
 
-        {/* Outer ring - static dashed circle */}
+        {/* Rotating wheel group - CSS animation for GPU acceleration */}
+        <g className="flywheel-rotating" style={{ transformOrigin: '200px 200px' }}>
+          {/* Partners segment (Teal) - 120 degrees */}
+          <path
+            d="M 200 200 L 200 40 A 160 160 0 0 1 338.6 280 Z"
+            fill={activeArm === "partners" ? "url(#flywheelGrad1)" : "#1A7B7A"}
+            opacity={activeArm && activeArm !== "partners" ? 0.4 : 0.85}
+            className="cursor-pointer transition-opacity duration-300"
+            filter={activeArm === "partners" ? "url(#glow)" : "none"}
+          />
+
+          {/* Labs segment (Gold) - 120 degrees */}
+          <path
+            d="M 200 200 L 338.6 280 A 160 160 0 0 1 61.4 280 Z"
+            fill={activeArm === "labs" ? "url(#flywheelGrad2)" : "#D4AA6A"}
+            opacity={activeArm && activeArm !== "labs" ? 0.4 : 0.85}
+            className="cursor-pointer transition-opacity duration-300"
+            filter={activeArm === "labs" ? "url(#glow)" : "none"}
+          />
+
+          {/* The Gathering segment (Copper) - 120 degrees */}
+          <path
+            d="M 200 200 L 61.4 280 A 160 160 0 0 1 200 40 Z"
+            fill={activeArm === "foundation" ? "url(#flywheelGrad3)" : "#C9956C"}
+            opacity={activeArm && activeArm !== "foundation" ? 0.4 : 0.85}
+            className="cursor-pointer transition-opacity duration-300"
+            filter={activeArm === "foundation" ? "url(#glow)" : "none"}
+          />
+
+          {/* Flow arrows on each segment */}
+          {[30, 150, 270].map((angle, i) => {
+            const rad = (angle - 90) * Math.PI / 180;
+            const x = 200 + 110 * Math.cos(rad);
+            const y = 200 + 110 * Math.sin(rad);
+            return (
+              <polygon
+                key={i}
+                points="0,-7 10,0 0,7"
+                fill="#F5E6C8"
+                opacity={0.7}
+                transform={`translate(${x}, ${y}) rotate(${angle + 90})`}
+              />
+            );
+          })}
+        </g>
+
+        {/* Center circle - static (doesn't rotate) */}
         <circle
           cx="200"
           cy="200"
-          r="180"
+          r="55"
+          fill="#1E0A14"
+          stroke={activeArm ? armColors[activeArm === "partners" ? "teal" : activeArm === "labs" ? "gold" : "copper"].primary : "#3D1525"}
+          strokeWidth="3"
+          filter="url(#glowStrong)"
+          className="transition-all duration-500"
+        />
+
+        {/* Inner decorative ring */}
+        <circle
+          cx="200"
+          cy="200"
+          r="45"
           fill="none"
           stroke="#3D1525"
-          strokeWidth="2"
-          strokeDasharray="10 5"
+          strokeWidth="1"
+          strokeDasharray="4 4"
         />
 
-        {/* Center circle with glow - static */}
-        <circle
-          cx="200"
-          cy="200"
-          r="50"
-          fill="#2A0E1A"
-          stroke={activeArm ? armColors[activeArm === "partners" ? "teal" : activeArm === "labs" ? "gold" : "copper"].primary : "#3D1525"}
-          strokeWidth="2"
-          filter="url(#glow)"
-          className="transition-all duration-300"
-        />
-
-        {/* Partners segment (top) */}
-        <motion.path
-          d="M 200 30 A 170 170 0 0 1 347 115 L 270 158 A 85 85 0 0 0 200 115 Z"
-          fill={activeArm === "partners" ? "url(#flywheelGrad1)" : "#1A7B7A"}
-          opacity={activeArm && activeArm !== "partners" ? 0.3 : 0.8}
-          className="cursor-pointer transition-all duration-300"
-          whileHover={{ opacity: 1 }}
-        />
-
-        {/* Labs segment (bottom right) */}
-        <motion.path
-          d="M 347 115 A 170 170 0 0 1 347 285 L 270 242 A 85 85 0 0 0 270 158 Z"
-          fill={activeArm === "labs" ? "url(#flywheelGrad2)" : "#D4AA6A"}
-          opacity={activeArm && activeArm !== "labs" ? 0.3 : 0.8}
-          className="cursor-pointer transition-all duration-300"
-          whileHover={{ opacity: 1 }}
-        />
-
-        {/* The Gathering segment (bottom left) */}
-        <motion.path
-          d="M 347 285 A 170 170 0 0 1 53 285 L 130 242 A 85 85 0 0 0 270 242 Z"
-          fill={activeArm === "foundation" ? "url(#flywheelGrad3)" : "#C9956C"}
-          opacity={activeArm && activeArm !== "foundation" ? 0.3 : 0.8}
-          className="cursor-pointer transition-all duration-300"
-          whileHover={{ opacity: 1 }}
-        />
-
-        {/* Completing the wheel (top left segment for visual balance) */}
-        <path
-          d="M 53 285 A 170 170 0 0 1 53 115 L 130 158 A 85 85 0 0 0 130 242 Z"
-          fill="#1A7B7A"
-          opacity={0.4}
-          className="transition-all duration-300"
-        />
-
-        <path
-          d="M 53 115 A 170 170 0 0 1 200 30 L 200 115 A 85 85 0 0 0 130 158 Z"
-          fill="#D4AA6A"
-          opacity={0.4}
-          className="transition-all duration-300"
-        />
-
-        {/* Static arrows showing flow direction */}
-        {[0, 120, 240].map((angle, i) => (
-          <polygon
-            key={i}
-            points="0,-8 12,0 0,8"
-            fill="#F5E6C8"
-            opacity={0.6}
-            transform={`translate(${200 + 120 * Math.cos((angle - 90) * Math.PI / 180)}, ${200 + 120 * Math.sin((angle - 90) * Math.PI / 180)}) rotate(${angle + 90})`}
-          />
-        ))}
-
-        {/* Center text */}
-        <text x="200" y="195" textAnchor="middle" className="fill-cream-200 font-serif text-sm font-bold">
+        {/* Center text - static */}
+        <text x="200" y="192" textAnchor="middle" className="fill-cream-200 font-serif text-base font-bold" style={{ fontFamily: 'Playfair Display, serif' }}>
           Symbiotic
         </text>
-        <text x="200" y="215" textAnchor="middle" className="fill-cream-300 text-xs">
+        <text x="200" y="212" textAnchor="middle" className="fill-cream-300 text-xs" style={{ fontFamily: 'Inter, sans-serif' }}>
           Engines
         </text>
       </svg>
+
+      {/* Floating labels around the wheel - static position, counter-rotate text would be complex */}
+      {labels.map((item, i) => {
+        const rad = (item.angle - 90) * Math.PI / 180;
+        const x = 50 + 50 * Math.cos(rad); // percentage
+        const y = 50 + 50 * Math.sin(rad); // percentage
+        return (
+          <div
+            key={i}
+            className="absolute px-3 py-1.5 rounded-full text-xs font-medium backdrop-blur-sm border transition-all duration-300 hover:scale-110"
+            style={{
+              left: `${x}%`,
+              top: `${y}%`,
+              transform: 'translate(-50%, -50%)',
+              backgroundColor: `${item.color}15`,
+              borderColor: `${item.color}40`,
+              color: item.color,
+            }}
+          >
+            {item.label}
+          </div>
+        );
+      })}
+
+      {/* Glowing orbs at segment positions - subtle pulse animation */}
+      {[60, 180, 300].map((angle, i) => {
+        const rad = (angle - 90) * Math.PI / 180;
+        const colors = ["#1A7B7A", "#D4AA6A", "#C9956C"];
+        return (
+          <div
+            key={i}
+            className="absolute w-3 h-3 rounded-full glow-pulse"
+            style={{
+              left: `${50 + 35 * Math.cos(rad)}%`,
+              top: `${50 + 35 * Math.sin(rad)}%`,
+              transform: 'translate(-50%, -50%)',
+              backgroundColor: colors[i],
+              boxShadow: `0 0 15px ${colors[i]}`,
+              animationDelay: `${i * 1.3}s`,
+            }}
+          />
+        );
+      })}
     </div>
   );
 };
@@ -225,12 +279,16 @@ export default function Ecosystem() {
                   <div
                     className={`
                       p-6 rounded-2xl border backdrop-blur-sm
-                      transition-all duration-300
+                      transition-all duration-300 ease-out
                       ${colors.border} ${colors.bg}
-                      ${activeArm === arm.id ? "border-opacity-80 scale-[1.02]" : "border-opacity-30"}
+                      ${activeArm === arm.id ? "border-opacity-80 -translate-y-1" : "border-opacity-30"}
+                      hover:-translate-y-1 hover:border-opacity-60
+                      will-change-transform
                     `}
                     style={{
-                      boxShadow: activeArm === arm.id ? `0 0 30px ${colors.glow}` : "none",
+                      boxShadow: activeArm === arm.id
+                        ? `0 20px 40px rgba(0,0,0,0.2), 0 0 30px ${colors.glow}`
+                        : "0 4px 20px rgba(0,0,0,0.1)",
                     }}
                   >
                     <div className="flex items-start gap-4">

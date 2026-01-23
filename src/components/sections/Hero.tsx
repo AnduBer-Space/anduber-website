@@ -7,7 +7,121 @@ import Link from "next/link";
 import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
 
-// Simplified network node component - animations run once
+// Premium Network Lines Background - SVG with subtle CSS animations
+const NetworkBackground = () => {
+  // Static node positions for the network
+  const nodes = [
+    { x: 8, y: 15 }, { x: 22, y: 35 }, { x: 15, y: 65 },
+    { x: 35, y: 20 }, { x: 45, y: 50 }, { x: 38, y: 80 },
+    { x: 55, y: 25 }, { x: 65, y: 55 }, { x: 58, y: 85 },
+    { x: 78, y: 18 }, { x: 85, y: 45 }, { x: 92, y: 70 },
+    { x: 50, y: 10 }, { x: 75, y: 75 }, { x: 28, y: 50 },
+  ];
+
+  // Connections between nodes
+  const connections = [
+    [0, 1], [1, 2], [1, 4], [0, 3],
+    [3, 4], [4, 5], [3, 6], [4, 7],
+    [6, 7], [7, 8], [6, 9], [7, 10],
+    [9, 10], [10, 11], [10, 13],
+    [2, 5], [5, 8], [8, 13],
+    [0, 12], [12, 6], [12, 9],
+    [1, 14], [14, 4], [14, 7],
+  ];
+
+  return (
+    <div className="network-lines-container">
+      <svg
+        className="absolute inset-0 w-full h-full"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="xMidYMid slice"
+      >
+        <defs>
+          {/* Gradient for lines */}
+          <linearGradient id="networkLineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#1A7B7A" stopOpacity="0.4" />
+            <stop offset="50%" stopColor="#D4AA6A" stopOpacity="0.25" />
+            <stop offset="100%" stopColor="#C9956C" stopOpacity="0.4" />
+          </linearGradient>
+
+          {/* Glow filter for nodes */}
+          <filter id="networkNodeGlow" x="-100%" y="-100%" width="300%" height="300%">
+            <feGaussianBlur stdDeviation="0.5" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+
+          {/* Radial gradient for node glows */}
+          <radialGradient id="nodeGlowGrad">
+            <stop offset="0%" stopColor="#1A7B7A" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="#1A7B7A" stopOpacity="0" />
+          </radialGradient>
+        </defs>
+
+        {/* Connection lines - static with subtle dash animation */}
+        {connections.map(([from, to], i) => (
+          <line
+            key={`conn-${i}`}
+            x1={nodes[from].x}
+            y1={nodes[from].y}
+            x2={nodes[to].x}
+            y2={nodes[to].y}
+            stroke="url(#networkLineGrad)"
+            strokeWidth="0.12"
+            className="network-line network-line-animated"
+            style={{ animationDelay: `${i * 0.8}s` }}
+          />
+        ))}
+
+        {/* Network nodes with subtle glow */}
+        {nodes.map((node, i) => (
+          <g key={`node-${i}`}>
+            {/* Outer glow */}
+            <circle
+              cx={node.x}
+              cy={node.y}
+              r="1.2"
+              fill="url(#nodeGlowGrad)"
+              className="network-node-glow"
+              style={{ animationDelay: `${i * 0.3}s` }}
+            />
+            {/* Inner node */}
+            <circle
+              cx={node.x}
+              cy={node.y}
+              r="0.35"
+              fill={i % 3 === 0 ? "#1A7B7A" : i % 3 === 1 ? "#D4AA6A" : "#C9956C"}
+              className="network-node"
+              filter="url(#networkNodeGlow)"
+            />
+          </g>
+        ))}
+
+        {/* Decorative curved paths */}
+        <path
+          d="M 0 30 Q 25 20 50 35 T 100 25"
+          stroke="url(#networkLineGrad)"
+          strokeWidth="0.08"
+          fill="none"
+          className="network-line"
+          opacity="0.5"
+        />
+        <path
+          d="M 0 70 Q 30 80 60 65 T 100 75"
+          stroke="url(#networkLineGrad)"
+          strokeWidth="0.08"
+          fill="none"
+          className="network-line"
+          opacity="0.5"
+        />
+      </svg>
+    </div>
+  );
+};
+
+// Simplified network node component for hero - animations run once on load
 const NetworkNodes = () => {
   const nodes = [
     { x: 10, y: 20, delay: 0 },
@@ -105,21 +219,32 @@ export default function Hero() {
         }}
       />
 
-      {/* Radial glows - static, no animation */}
+      {/* Premium Network Lines Background */}
+      <NetworkBackground />
+
+      {/* Radial glows with subtle pulse animation */}
       <div
-        className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full opacity-60"
+        className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full glow-pulse"
         style={{
-          background: "radial-gradient(circle, rgba(26, 123, 122, 0.15) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(26, 123, 122, 0.2) 0%, transparent 70%)",
         }}
       />
       <div
-        className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full opacity-40"
+        className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full glow-pulse"
         style={{
-          background: "radial-gradient(circle, rgba(212, 170, 106, 0.1) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(212, 170, 106, 0.15) 0%, transparent 70%)",
+          animationDelay: "2s",
+        }}
+      />
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full glow-pulse"
+        style={{
+          background: "radial-gradient(circle, rgba(201, 149, 108, 0.08) 0%, transparent 60%)",
+          animationDelay: "1s",
         }}
       />
 
-      {/* Network nodes background */}
+      {/* Network nodes overlay (one-time animations on load) */}
       <NetworkNodes />
 
       <Container className="relative z-10 pt-32 pb-20">
@@ -268,7 +393,7 @@ export default function Hero() {
         </div>
       </Container>
 
-      {/* Scroll Indicator - static */}
+      {/* Scroll Indicator with subtle bounce animation */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -278,7 +403,7 @@ export default function Hero() {
         <div className="flex flex-col items-center text-plum-500">
           <span className="text-sm mb-2">Scroll to explore</span>
           <div className="w-6 h-10 rounded-full border-2 border-plum-700 flex items-start justify-center p-1">
-            <div className="w-1.5 h-3 rounded-full bg-gold-400" />
+            <div className="w-1.5 h-3 rounded-full bg-gold-400 animate-bounce" style={{ animationDuration: '2s' }} />
           </div>
         </div>
       </motion.div>
