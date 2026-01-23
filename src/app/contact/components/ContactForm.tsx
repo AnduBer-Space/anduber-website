@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -9,13 +9,25 @@ import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import { Input, Textarea } from "@/components/ui/Input";
 import { siteConfig } from "@/data/site";
-import { Mail, Phone, MapPin, Send, CheckCircle, Linkedin, Globe } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle, Linkedin, Globe, AlertCircle } from "lucide-react";
 
 const contactSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Please enter a valid email address"),
-  subject: z.string().min(5, "Subject must be at least 5 characters"),
-  message: z.string().min(20, "Message must be at least 20 characters"),
+  name: z
+    .string()
+    .min(2, "Name must be at least 2 characters")
+    .max(100, "Name must be less than 100 characters"),
+  email: z
+    .string()
+    .email("Please enter a valid email address")
+    .max(254, "Email must be less than 254 characters"),
+  subject: z
+    .string()
+    .min(5, "Subject must be at least 5 characters")
+    .max(200, "Subject must be less than 200 characters"),
+  message: z
+    .string()
+    .min(20, "Message must be at least 20 characters")
+    .max(5000, "Message must be less than 5000 characters"),
   inquiryType: z.string().min(1, "Please select an inquiry type"),
 });
 
@@ -31,6 +43,8 @@ const inquiryTypes = [
 
 export default function ContactForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const honeypotRef = useRef<HTMLInputElement>(null);
 
   const {
     register,
@@ -42,11 +56,50 @@ export default function ContactForm() {
   });
 
   const onSubmit = async (data: ContactFormData) => {
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    console.log("Form submitted:", data);
-    setIsSubmitted(true);
-    reset();
+    setSubmitError(null);
+
+    // Check honeypot field (should be empty)
+    if (honeypotRef.current?.value) {
+      // Bot detected, silently "succeed"
+      setIsSubmitted(true);
+      reset();
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        if (response.status === 429) {
+          setSubmitError(
+            `Too many requests. Please try again in ${Math.ceil(result.retryAfter / 60)} minutes.`
+          );
+          return;
+        }
+
+        if (result.errors) {
+          // Validation errors
+          setSubmitError(result.errors.map((e: { message: string }) => e.message).join(", "));
+          return;
+        }
+
+        setSubmitError(result.error || "Failed to send message. Please try again.");
+        return;
+      }
+
+      setIsSubmitted(true);
+      reset();
+    } catch {
+      setSubmitError("Network error. Please check your connection and try again.");
+    }
   };
 
   return (
@@ -177,12 +230,38 @@ export default function ContactForm() {
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                  {/* Honeypot field - hidden from users, bots will fill it */}
+                  <div className="absolute -left-[9999px] opacity-0 pointer-events-none" aria-hidden="true">
+                    <label htmlFor="website">Website</label>
+                    <input
+                      ref={honeypotRef}
+                      type="text"
+                      id="website"
+                      name="website"
+                      tabIndex={-1}
+                      autoComplete="off"
+                    />
+                  </div>
+
+                  {/* Error Banner */}
+                  {submitError && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="flex items-center gap-3 p-4 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400"
+                    >
+                      <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                      <p className="text-sm">{submitError}</p>
+                    </motion.div>
+                  )}
+
                   <div className="grid md:grid-cols-2 gap-6">
                     <Input
                       id="name"
                       label="Your Name"
                       placeholder="Jane Doe"
                       error={errors.name?.message}
+                      maxLength={100}
                       {...register("name")}
                     />
                     <Input
@@ -191,6 +270,7 @@ export default function ContactForm() {
                       label="Email Address"
                       placeholder="jane@example.com"
                       error={errors.email?.message}
+                      maxLength={254}
                       {...register("email")}
                     />
                   </div>
@@ -226,6 +306,7 @@ export default function ContactForm() {
                     label="Subject"
                     placeholder="How can we help?"
                     error={errors.subject?.message}
+                    maxLength={200}
                     {...register("subject")}
                   />
 
@@ -235,6 +316,7 @@ export default function ContactForm() {
                     placeholder="Tell us more about your inquiry..."
                     rows={5}
                     error={errors.message?.message}
+                    maxLength={5000}
                     {...register("message")}
                   />
 
