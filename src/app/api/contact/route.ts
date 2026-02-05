@@ -233,7 +233,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           success: false,
-          error: "We couldn't send your message right now. Please try again or email us directly at info@anduberinnovate.space",
+          error: "We couldn't send your message right now. Please try again or email us directly at info@anduber.org",
         },
         { status: 502 }
       );

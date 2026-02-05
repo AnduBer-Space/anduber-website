@@ -1,7 +1,7 @@
 import { Resend } from "resend";
 
 // Email configuration
-const FROM_EMAIL = "AnduBer <noreply@anduberinnovate.space>";
+const FROM_EMAIL = "AnduBer <noreply@anduber.org>";
 const TO_EMAIL = "info@anduberinnovate.space";
 
 // HTML sanitization to prevent injection
