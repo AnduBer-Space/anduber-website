@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
@@ -23,7 +21,7 @@ export default function Logo({ className, showText = true, size = "md" }: LogoPr
     <div className={cn("flex items-center gap-3", className)}>
       <div className="relative flex-shrink-0" style={{ width: icon, height: icon }}>
         <Image
-          src="/images/logo.png.png"
+          src="/images/logo.png"
           alt="AnduBer Logo"
           width={icon}
           height={icon}

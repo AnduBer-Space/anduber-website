@@ -12,7 +12,7 @@ const contactSchema = z.object({
     .string()
     .min(2, "Name must be at least 2 characters")
     .max(100, "Name must be less than 100 characters")
-    .regex(/^[a-zA-Z\s\-']+$/, "Name contains invalid characters"),
+    .regex(/^[a-zA-Z\u00C0-\u024F\u1E00-\u1EFF\s\-']+$/, "Name contains invalid characters"),
   email: z
     .string()
     .email("Please enter a valid email address")
@@ -217,25 +217,26 @@ export async function POST(request: NextRequest) {
     // ==========================================================================
 
     // Log submission
-    console.log("=== Contact Form Submission ===");
-    console.log("Time:", new Date().toISOString());
-    console.log("IP:", clientIP);
-    console.log("Name:", data.name);
-    console.log("Email:", data.email);
-    console.log("Type:", data.inquiryType);
-    console.log("Subject:", data.subject);
-    console.log("================================");
+    console.log("Contact form submission received:", {
+      time: new Date().toISOString(),
+      type: data.inquiryType,
+    });
 
     // Send email via Resend
     const emailResult = await sendContactEmail(data);
 
     if (!emailResult.success) {
-      console.error("Failed to send email:", emailResult.error);
-      // Still return success to user - we have the data logged
-      // In production, you might want to queue for retry or alert admins
+      console.error("Contact form email delivery failed");
       if (!isEmailConfigured()) {
-        console.warn("⚠️ RESEND_API_KEY not set - emails will not be sent");
+        console.warn("RESEND_API_KEY not set - emails will not be sent");
       }
+      return NextResponse.json(
+        {
+          success: false,
+          error: "We couldn't send your message right now. Please try again or email us directly at info@anduberinnovate.space",
+        },
+        { status: 502 }
+      );
     }
 
     return NextResponse.json(

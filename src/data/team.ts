@@ -6,7 +6,7 @@ export const teamMembers: TeamMember[] = [
     name: "Dr. Victor Mugambi Nyaga",
     role: "Founding President",
     bio: "Victor is a systems thinker and social entrepreneur who believes in the power of intersectionality to solve complex challenges. With a background spanning technology, design, and community development, he founded AnduBer to create a space where unusual suspects collide to build resilient solutions. His vision: a world where innovation happens at the intersections.",
-    image: "/images/victor-mugambi.png.png",
+    image: "/images/victor-mugambi.png",
     socials: {
       linkedin: "https://www.linkedin.com/in/dr-victor-mugambi-nyagah-dvm-msc-mph-a519a01aa/",
       email: "vmugambi@anduberinnovate.space",

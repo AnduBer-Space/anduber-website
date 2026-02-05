@@ -51,7 +51,7 @@ export default function AnimatedSection({
 }: AnimatedSectionProps) {
   return (
     <motion.div
-      className={cn("will-change-transform", className)}
+      className={cn(className)}
       initial={animations[animation].initial}
       whileInView={animations[animation].whileInView}
       viewport={{

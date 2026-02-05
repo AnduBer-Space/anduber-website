@@ -350,7 +350,7 @@ export default function Hero() {
                   className="relative"
                 >
                   <Image
-                    src="/images/logo.png.png"
+                    src="/images/logo.png"
                     alt="AnduBer Logo"
                     width={200}
                     height={200}

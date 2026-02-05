@@ -4,10 +4,10 @@ import ContributionCards from "./components/ContributionCards";
 import JoinFooterQuote from "./components/JoinFooterQuote";
 
 export const metadata: Metadata = {
-  title: "Join the Movement | AnduBer",
+  title: "Join the Movement",
   description: "The challenges of our time need all of us. Discover how you can contribute to AnduBer through careers, consulting, volunteering, ideas, and more.",
   openGraph: {
-    title: "Join the Movement | AnduBer",
+    title: "Join the Movement",
     description: "The challenges of our time need all of us. Discover how you can contribute to AnduBer.",
     type: "website",
   },

@@ -22,6 +22,7 @@ export const navItems: NavItem[] = [
   { label: "Ecosystem", href: "/ecosystem" },
   { label: "Insights", href: "/blog" },
   { label: "Join Us", href: "/join" },
+  { label: "Governance", href: "/governance" },
   { label: "Contact", href: "/contact" },
 ];
 

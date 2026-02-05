@@ -28,11 +28,11 @@ export default function Card({
       className={cn(
         "rounded-2xl shadow-lg transition-all duration-300 overflow-hidden",
         variants[variant],
-        hover && "hover:-translate-y-2 hover:shadow-xl",
+        hover && "hover:shadow-xl",
         glow && "hover:shadow-glow-gold",
         className
       )}
-      whileHover={hover ? { y: -8 } : undefined}
+      whileHover={hover ? { y: -8, boxShadow: "0 20px 40px rgba(0,0,0,0.3)" } : undefined}
       transition={{ duration: 0.3 }}
       {...props}
     >

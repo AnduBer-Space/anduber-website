@@ -30,6 +30,10 @@ export default function FeaturedProjects() {
 
   const currentProject = featuredProjects[currentIndex];
 
+  if (featuredProjects.length === 0 || !currentProject) {
+    return null;
+  }
+
   return (
     <Section variant="light" padding="xl">
       <Container>

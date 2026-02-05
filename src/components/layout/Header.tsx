@@ -17,11 +17,18 @@ export default function Header() {
   const pathname = usePathname();
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 50);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -66,11 +73,9 @@ export default function Header() {
 
             {/* Actions */}
             <div className="hidden lg:flex items-center gap-4">
-              <Link href="/join">
-                <Button variant="primary" size="sm">
-                  Get Involved
-                </Button>
-              </Link>
+              <Button variant="primary" size="sm" onClick={() => window.location.href = '/join'}>
+                Get Involved
+              </Button>
             </div>
 
             {/* Mobile Menu Button */}
@@ -78,7 +83,9 @@ export default function Header() {
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className="p-2 rounded-lg transition-colors text-cream-200 hover:bg-plum-700"
-                aria-label="Toggle menu"
+                aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+                aria-expanded={isMobileMenuOpen}
+                aria-controls="mobile-menu"
               >
                 {isMobileMenuOpen ? (
                   <X className="w-6 h-6" />
@@ -106,6 +113,10 @@ export default function Header() {
               onClick={() => setIsMobileMenuOpen(false)}
             />
             <motion.nav
+              id="mobile-menu"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Mobile navigation"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
@@ -141,11 +152,9 @@ export default function Header() {
                 </div>
                 <div className="mt-auto space-y-4">
                   <div className="h-px bg-gradient-to-r from-transparent via-plum-700 to-transparent" />
-                  <Link href="/join">
-                    <Button variant="primary" className="w-full">
-                      Get Involved
-                    </Button>
-                  </Link>
+                  <Button variant="primary" className="w-full" onClick={() => window.location.href = '/join'}>
+                    Get Involved
+                  </Button>
                 </div>
               </div>
             </motion.nav>

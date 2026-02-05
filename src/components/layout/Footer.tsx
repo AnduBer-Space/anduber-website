@@ -11,7 +11,6 @@ import {
 } from "lucide-react";
 import Container from "@/components/ui/Container";
 import Logo from "@/components/ui/Logo";
-import Button from "@/components/ui/Button";
 import { siteConfig } from "@/data/site";
 
 const socialLinks = [
@@ -48,17 +47,15 @@ export default function Footer() {
                 Subscribe to stay updated on our work dismantling silos and building resilient systems.
               </p>
             </div>
-            <form className="flex w-full md:w-auto gap-3">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 md:w-64 px-4 py-3 rounded-full bg-plum-800 border border-plum-700 text-cream-200 placeholder-plum-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all"
-              />
-              <Button variant="primary" className="flex-shrink-0">
-                Subscribe
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
-            </form>
+            <a
+              href={siteConfig.socials.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center font-medium rounded-full px-6 py-3 bg-gold-400 text-plum-900 hover:bg-teal-400 hover:shadow-[0_10px_30px_rgba(212,170,106,0.3)] transition-all duration-300 active:scale-95"
+            >
+              Follow on LinkedIn
+              <ArrowRight className="ml-2 w-4 h-4" />
+            </a>
           </div>
         </Container>
       </div>

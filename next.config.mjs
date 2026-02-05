@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Security headers for local development and non-Vercel deployments
   async headers() {
     return [
       {
@@ -30,9 +29,9 @@ const nextConfig = {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-              "font-src 'self' https://fonts.gstatic.com",
+              "script-src 'self' 'unsafe-inline'",
+              "style-src 'self' 'unsafe-inline'",
+              "font-src 'self'",
               "img-src 'self' data: https:",
               "connect-src 'self' https:",
               "frame-ancestors 'none'",
@@ -40,11 +39,14 @@ const nextConfig = {
               "form-action 'self'",
             ].join("; "),
           },
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=31536000; includeSubDomains",
+          },
         ],
       },
     ];
   },
-  // Disable x-powered-by header for security
   poweredByHeader: false,
 };
 

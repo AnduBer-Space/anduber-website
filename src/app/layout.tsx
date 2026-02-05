@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import BackToTop from "@/components/ui/BackToTop";
@@ -17,6 +16,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://anduber.org"),
   title: {
     default: "AnduBer - An Engine for Applied Imagination",
     template: "%s | AnduBer",
@@ -89,18 +89,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className="dark">
+    <html lang="en" className="dark">
       <body
         className={`${inter.variable} ${playfair.variable} font-sans antialiased`}
       >
-        <ThemeProvider>
-          <div className="flex min-h-screen flex-col bg-plum-900 text-cream-200 transition-colors duration-300 overflow-x-hidden">
-            <Header />
-            <main className="flex-1 overflow-x-hidden">{children}</main>
-            <Footer />
-            <BackToTop />
-          </div>
-        </ThemeProvider>
+        {/* Skip to content for keyboard users */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-6 focus:py-3 focus:rounded-full focus:bg-gold-400 focus:text-plum-900 focus:font-medium focus:outline-none"
+        >
+          Skip to content
+        </a>
+        <div className="flex min-h-screen flex-col bg-plum-900 text-cream-200 transition-colors duration-300 overflow-x-hidden">
+          <Header />
+          <main id="main-content" className="flex-1 overflow-x-hidden">{children}</main>
+          <Footer />
+          <BackToTop />
+        </div>
       </body>
     </html>
   );

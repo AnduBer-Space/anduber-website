@@ -28,6 +28,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         <input
           ref={ref}
           id={id}
+          aria-invalid={error ? "true" : undefined}
+          aria-describedby={error ? `${id}-error` : undefined}
+          aria-required={props.required}
           className={cn(
             "input-field",
             error && "border-red-500 focus:ring-red-500",
@@ -35,7 +38,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           )}
           {...props}
         />
-        {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
+        {error && <p id={`${id}-error`} className="mt-1 text-sm text-red-500" role="alert">{error}</p>}
       </div>
     );
   }
@@ -58,6 +61,9 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         <textarea
           ref={ref}
           id={id}
+          aria-invalid={error ? "true" : undefined}
+          aria-describedby={error ? `${id}-error` : undefined}
+          aria-required={props.required}
           className={cn(
             "input-field min-h-[120px] resize-y",
             error && "border-red-500 focus:ring-red-500",
@@ -65,7 +71,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           )}
           {...props}
         />
-        {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
+        {error && <p id={`${id}-error`} className="mt-1 text-sm text-red-500" role="alert">{error}</p>}
       </div>
     );
   }

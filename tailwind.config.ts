@@ -2,7 +2,6 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
@@ -17,7 +16,7 @@ const config: Config = {
           200: "#e8c9d5",
           300: "#d4a3b8",
           400: "#b87393",
-          500: "#8B7355", // muted bronze (text-muted)
+          500: "#C4A882", // muted bronze (text-muted) - WCAG AA compliant
           600: "#6d4a5a",
           700: "#3D1525", // background tertiary
           800: "#2A0E1A", // background secondary
@@ -60,8 +59,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        serif: ["Playfair Display", "Georgia", "Cambria", "serif"],
-        sans: ["Inter", "system-ui", "sans-serif"],
+        serif: ["var(--font-playfair)", "Playfair Display", "Georgia", "Cambria", "serif"],
+        sans: ["var(--font-inter)", "Inter", "system-ui", "sans-serif"],
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

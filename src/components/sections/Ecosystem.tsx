@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Briefcase, Beaker, Heart, ChevronRight } from "lucide-react";
 import Container from "@/components/ui/Container";
 import { ecosystemArms } from "@/data/site";
@@ -44,7 +44,7 @@ const FlywheelVisualization = ({ activeArm }: { activeArm: string | null }) => {
   // Label data for the three engines
   const labels = [
     { angle: 60, label: "AnduBer Partners", color: "#1A7B7A" },
-    { angle: 180, label: "The Good Labs", color: "#D4AA6A" },
+    { angle: 180, label: "AnduBer Labs", color: "#D4AA6A" },
     { angle: 300, label: "The Gathering", color: "#C9956C" },
   ];
 
@@ -85,7 +85,7 @@ const FlywheelVisualization = ({ activeArm }: { activeArm: string | null }) => {
         </defs>
 
         {/* Rotating wheel group - CSS animation for GPU acceleration */}
-        <g className="flywheel-rotating" style={{ transformOrigin: '200px 200px' }}>
+        <g className={activeArm ? "flywheel-paused" : "flywheel-rotating"} style={{ transformOrigin: '200px 200px' }}>
           {/* Partners segment (Teal) - 120 degrees */}
           <path
             d="M 200 200 L 200 40 A 160 160 0 0 1 338.6 280 Z"
@@ -209,11 +209,10 @@ const FlywheelVisualization = ({ activeArm }: { activeArm: string | null }) => {
 };
 
 export default function Ecosystem() {
-  const ref = useRef(null);
   const [activeArm, setActiveArm] = useState<string | null>(null);
 
   return (
-    <section ref={ref} className="relative py-24 lg:py-32 overflow-hidden">
+    <section className="relative py-24 lg:py-32 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-plum-900 via-plum-800 to-plum-900" />
 

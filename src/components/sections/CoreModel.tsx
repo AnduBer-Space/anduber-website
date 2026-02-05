@@ -1,14 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useRef } from "react";
 import { ArrowRight, Users, Lightbulb, Shield } from "lucide-react";
 import Container from "@/components/ui/Container";
 import { coreHypothesis } from "@/data/site";
 
 export default function CoreModel() {
-  const ref = useRef(null);
-
   const hypothesisSteps = [
     { key: "premise", icon: Users, text: coreHypothesis.premise, color: "teal" as const },
     { key: "method", icon: Lightbulb, text: coreHypothesis.method, color: "gold" as const },
@@ -17,7 +14,7 @@ export default function CoreModel() {
   ];
 
   return (
-    <section ref={ref} className="relative py-24 lg:py-32 overflow-hidden">
+    <section className="relative py-24 lg:py-32 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-plum-900 via-plum-800 to-plum-900" />
 
