@@ -2,7 +2,7 @@ import { Resend } from "resend";
 
 // Email configuration
 const FROM_EMAIL = "AnduBer <noreply@anduber.org>";
-const TO_EMAIL = "info@anduberinnovate.org";
+const TO_EMAIL = "info@anduberinnovate.space";
 
 // Singleton Resend instance (reused across requests in the same serverless instance)
 let resendInstance: Resend | null = null;
@@ -153,7 +153,7 @@ export async function sendContactEmail(data: ContactEmailData): Promise<{ succes
           </div>
           <div style="background: #f9f9f9; padding: 16px 24px; text-align: center; border-top: 1px solid #eee;">
             <p style="color: #999; font-size: 12px; margin: 0;">
-              Submitted via anduberinnovate.org contact form<br>
+              Submitted via anduberinnovate.space contact form<br>
               <a href="mailto:${safeEmail}" style="color: #1A7B7A;">Reply to ${safeName}</a>
             </p>
           </div>
@@ -262,7 +262,7 @@ export async function sendJoinEmail(data: JoinEmailData): Promise<{ success: boo
           </div>
           <div style="background: #f9f9f9; padding: 16px 24px; text-align: center; border-top: 1px solid #eee;">
             <p style="color: #999; font-size: 12px; margin: 0;">
-              Submitted via anduberinnovate.org<br>
+              Submitted via anduberinnovate.space<br>
               <a href="mailto:${safeEmail}" style="color: #1A7B7A;">Reply to ${safeName}</a>
             </p>
           </div>
