@@ -8,17 +8,19 @@ const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
 const RATE_LIMIT_MAX = 5;
 const RATE_LIMIT_WINDOW = 60 * 60 * 1000; // 1 hour
 
-// Periodic cleanup to prevent memory leak
-setInterval(() => {
+// Lazy cleanup instead of setInterval (serverless-safe)
+function cleanupRateLimitStore() {
   const now = Date.now();
-  const keysToDelete: string[] = [];
-  rateLimitStore.forEach((value, key) => {
-    if (now > value.resetTime) {
-      keysToDelete.push(key);
-    }
-  });
-  keysToDelete.forEach((key) => rateLimitStore.delete(key));
-}, 10 * 60 * 1000); // every 10 minutes
+  if (rateLimitStore.size > 1000) {
+    const keysToDelete: string[] = [];
+    rateLimitStore.forEach((value, key) => {
+      if (now > value.resetTime) {
+        keysToDelete.push(key);
+      }
+    });
+    keysToDelete.forEach((key) => rateLimitStore.delete(key));
+  }
+}
 
 function getRateLimitInfo(ip: string) {
   const now = Date.now();
@@ -31,16 +33,33 @@ function getRateLimitInfo(ip: string) {
   return record;
 }
 
-function incrementRateLimit(ip: string) {
+function checkAndIncrementRateLimit(ip: string): { allowed: boolean; remaining: number; retryAfter: number } {
+  cleanupRateLimitStore();
+  const now = Date.now();
   const info = getRateLimitInfo(ip);
+
+  const newCount = info.count + 1;
   rateLimitStore.set(ip, {
-    count: info.count + 1,
+    count: newCount,
     resetTime: info.resetTime,
   });
-  return info.count + 1;
+
+  if (newCount > RATE_LIMIT_MAX) {
+    return {
+      allowed: false,
+      remaining: 0,
+      retryAfter: Math.ceil((info.resetTime - now) / 1000),
+    };
+  }
+
+  return {
+    allowed: true,
+    remaining: RATE_LIMIT_MAX - newCount,
+    retryAfter: 0,
+  };
 }
 
-// Validation schema - honeypot field passes through (no max(0))
+// Validation schema
 const joinSchema = z.object({
   category: z.string().min(1, "Category is required"),
   categoryId: z.string().min(1, "Category ID is required"),
@@ -72,11 +91,13 @@ function detectSpam(data: Record<string, unknown>): boolean {
 }
 
 export async function POST(request: NextRequest) {
+  const startTime = Date.now();
   try {
     // CSRF: Verify origin header
     const origin = request.headers.get("origin");
     const host = request.headers.get("host");
     if (origin && host && !origin.includes(host)) {
+      console.warn("Join form CSRF check failed:", { origin, host });
       return NextResponse.json(
         { success: false, error: "Invalid request origin." },
         { status: 403 }
@@ -89,30 +110,35 @@ export async function POST(request: NextRequest) {
       request.headers.get("x-real-ip") ||
       "unknown";
 
-    // Increment rate limit for ALL requests (before validation)
-    incrementRateLimit(ip);
-
     // Check rate limit
-    const rateLimitInfo = getRateLimitInfo(ip);
-    if (rateLimitInfo.count > RATE_LIMIT_MAX) {
-      const retryAfter = Math.ceil(
-        (rateLimitInfo.resetTime - Date.now()) / 1000
-      );
+    const rateLimit = checkAndIncrementRateLimit(ip);
+    if (!rateLimit.allowed) {
+      console.log("Join form rate limited:", { ip: ip.slice(0, 8) + "...", retryAfter: rateLimit.retryAfter });
       return NextResponse.json(
         {
           success: false,
           error: "Too many submissions. Please try again later.",
-          retryAfter,
+          retryAfter: rateLimit.retryAfter,
         },
         { status: 429 }
       );
     }
 
-    const body = await request.json();
+    // Parse request body safely
+    let body: Record<string, unknown>;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json(
+        { success: false, error: "Invalid request body" },
+        { status: 400 }
+      );
+    }
 
     // Validate schema
     const validation = joinSchema.safeParse(body);
     if (!validation.success) {
+      console.log("Join form validation failed:", validation.error.issues.map(i => i.message));
       return NextResponse.json(
         {
           success: false,
@@ -127,6 +153,7 @@ export async function POST(request: NextRequest) {
 
     // Check honeypot - silently reject bots
     if (data.website && data.website.length > 0) {
+      console.log("Join form honeypot triggered");
       return NextResponse.json({
         success: true,
         message: "Thank you for your submission.",
@@ -135,17 +162,20 @@ export async function POST(request: NextRequest) {
 
     // Check for spam - silently reject
     if (detectSpam(body)) {
+      console.log("Join form spam detected for category:", data.category);
       return NextResponse.json({
         success: true,
         message: "Thank you for your submission.",
       });
     }
 
-    // Log submission without PII
-    console.log("=== NEW JOIN APPLICATION ===");
-    console.log("Category:", data.category);
-    console.log("Submitted at:", new Date().toISOString());
-    console.log("============================");
+    // Log submission
+    console.log("=== JOIN APPLICATION ===", {
+      category: data.category,
+      categoryId: data.categoryId,
+      timestamp: new Date().toISOString(),
+      emailConfigured: isEmailConfigured(),
+    });
 
     // Send email via Resend - only whitelisted fields
     const emailResult = await sendJoinEmail({
@@ -162,10 +192,11 @@ export async function POST(request: NextRequest) {
     });
 
     if (!emailResult.success) {
-      console.error("Failed to send join email:", emailResult.error);
-      if (!isEmailConfigured()) {
-        console.warn("RESEND_API_KEY not set - emails will not be sent");
-      }
+      console.error("Join email delivery failed:", {
+        error: emailResult.error,
+        category: data.category,
+        duration: Date.now() - startTime,
+      });
       return NextResponse.json(
         {
           success: false,
@@ -175,12 +206,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    console.log("Join form processed successfully:", {
+      category: data.category,
+      duration: Date.now() - startTime,
+    });
+
     return NextResponse.json({
       success: true,
       message: "Thank you for your application. We will get back to you soon.",
     });
   } catch (error) {
-    console.error("Join form error:", error instanceof Error ? error.message : "Unknown error");
+    console.error("Join form unhandled error:", {
+      message: error instanceof Error ? error.message : "Unknown error",
+      stack: error instanceof Error ? error.stack : undefined,
+      duration: Date.now() - startTime,
+    });
     return NextResponse.json(
       {
         success: false,

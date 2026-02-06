@@ -141,6 +141,7 @@ function checkHoneypot(body: Record<string, unknown>): boolean {
 // API HANDLER
 // =============================================================================
 export async function POST(request: NextRequest) {
+  const startTime = Date.now();
   try {
     // Get client IP for rate limiting
     const clientIP = getClientIP(request);
@@ -217,27 +218,34 @@ export async function POST(request: NextRequest) {
     // ==========================================================================
 
     // Log submission
-    console.log("Contact form submission received:", {
-      time: new Date().toISOString(),
-      type: data.inquiryType,
+    console.log("=== CONTACT FORM ===", {
+      inquiryType: data.inquiryType,
+      timestamp: new Date().toISOString(),
+      emailConfigured: isEmailConfigured(),
     });
 
     // Send email via Resend
     const emailResult = await sendContactEmail(data);
 
     if (!emailResult.success) {
-      console.error("Contact form email delivery failed");
-      if (!isEmailConfigured()) {
-        console.warn("RESEND_API_KEY not set - emails will not be sent");
-      }
+      console.error("Contact email delivery failed:", {
+        error: emailResult.error,
+        inquiryType: data.inquiryType,
+        duration: Date.now() - startTime,
+      });
       return NextResponse.json(
         {
           success: false,
-          error: "We couldn't send your message right now. Please try again or email us directly at info@anduber.org",
+          error: "We couldn't send your message right now. Please try again or email us directly at info@anduberinnovate.org",
         },
         { status: 502 }
       );
     }
+
+    console.log("Contact form processed successfully:", {
+      inquiryType: data.inquiryType,
+      duration: Date.now() - startTime,
+    });
 
     return NextResponse.json(
       {
@@ -252,7 +260,11 @@ export async function POST(request: NextRequest) {
       }
     );
   } catch (error) {
-    console.error("Contact form error:", error);
+    console.error("Contact form unhandled error:", {
+      message: error instanceof Error ? error.message : "Unknown error",
+      stack: error instanceof Error ? error.stack : undefined,
+      duration: Date.now() - startTime,
+    });
 
     return NextResponse.json(
       { success: false, error: "An unexpected error occurred. Please try again." },

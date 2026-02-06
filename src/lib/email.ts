@@ -2,7 +2,53 @@ import { Resend } from "resend";
 
 // Email configuration
 const FROM_EMAIL = "AnduBer <noreply@anduber.org>";
-const TO_EMAIL = "info@anduberinnovate.space";
+const TO_EMAIL = "info@anduberinnovate.org";
+
+// Singleton Resend instance (reused across requests in the same serverless instance)
+let resendInstance: Resend | null = null;
+
+function getResendClient(): Resend | null {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    return null;
+  }
+  if (!resendInstance) {
+    resendInstance = new Resend(apiKey);
+  }
+  return resendInstance;
+}
+
+// Generate a short request ID for tracing
+function generateRequestId(): string {
+  return `req_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
+}
+
+// Retry wrapper with exponential backoff
+async function withRetry<T>(
+  fn: () => Promise<T>,
+  reqId: string,
+  maxRetries: number = 1,
+  baseDelayMs: number = 1000
+): Promise<T> {
+  let lastError: unknown;
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      if (attempt > 0) {
+        const delay = baseDelayMs * Math.pow(2, attempt - 1);
+        console.log(`[${reqId}] Retry attempt ${attempt}/${maxRetries} after ${delay}ms`);
+        await new Promise((resolve) => setTimeout(resolve, delay));
+      }
+      return await fn();
+    } catch (err) {
+      lastError = err;
+      console.error(
+        `[${reqId}] Attempt ${attempt + 1}/${maxRetries + 1} failed:`,
+        err instanceof Error ? err.message : err
+      );
+    }
+  }
+  throw lastError;
+}
 
 // HTML sanitization to prevent injection
 function escapeHtml(str: string): string {
@@ -36,17 +82,23 @@ export interface JoinEmailData {
 }
 
 /**
- * Send contact form email
+ * Send contact form email with retry logic
  */
 export async function sendContactEmail(data: ContactEmailData): Promise<{ success: boolean; error?: string }> {
-  const apiKey = process.env.RESEND_API_KEY;
+  const reqId = generateRequestId();
+  console.log(`[${reqId}] sendContactEmail START`, {
+    inquiryType: data.inquiryType,
+    from: FROM_EMAIL,
+    to: TO_EMAIL,
+    replyTo: data.email,
+    timestamp: new Date().toISOString(),
+  });
 
-  if (!apiKey) {
-    console.warn("RESEND_API_KEY is not configured - contact form emails will not be sent");
+  const resend = getResendClient();
+  if (!resend) {
+    console.error(`[${reqId}] RESEND_API_KEY is not configured - email will NOT be sent`);
     return { success: false, error: "Email service not configured" };
   }
-
-  const resend = new Resend(apiKey);
 
   const inquiryLabels: Record<string, string> = {
     partners: "AnduBer Partners - Strategic Consulting",
@@ -101,7 +153,7 @@ export async function sendContactEmail(data: ContactEmailData): Promise<{ succes
           </div>
           <div style="background: #f9f9f9; padding: 16px 24px; text-align: center; border-top: 1px solid #eee;">
             <p style="color: #999; font-size: 12px; margin: 0;">
-              Submitted via anduberinnovate.space contact form<br>
+              Submitted via anduberinnovate.org contact form<br>
               <a href="mailto:${safeEmail}" style="color: #1A7B7A;">Reply to ${safeName}</a>
             </p>
           </div>
@@ -112,33 +164,49 @@ export async function sendContactEmail(data: ContactEmailData): Promise<{ succes
   };
 
   try {
-    const { data: responseData, error } = await resend.emails.send(emailPayload);
+    const result = await withRetry(async () => {
+      console.log(`[${reqId}] Calling Resend API...`);
+      const { data: responseData, error } = await resend.emails.send(emailPayload);
 
-    if (error) {
-      console.error("Resend API error:", error.message);
-      return { success: false, error: error.message };
-    }
+      if (error) {
+        // Throw so the retry wrapper can catch and retry
+        throw new Error(`Resend API error: ${error.message}`);
+      }
 
-    console.log("Contact email sent successfully, id:", responseData?.id);
+      return responseData;
+    }, reqId);
+
+    console.log(`[${reqId}] sendContactEmail SUCCESS - email id: ${result?.id}`);
     return { success: true };
   } catch (err) {
-    console.error("Email send exception:", err instanceof Error ? err.message : "Unknown error");
-    return { success: false, error: err instanceof Error ? err.message : "Unknown error" };
+    const errorMsg = err instanceof Error ? err.message : "Unknown error";
+    console.error(`[${reqId}] sendContactEmail FAILED after retries:`, errorMsg);
+    if (err instanceof Error && err.stack) {
+      console.error(`[${reqId}] Stack trace:`, err.stack);
+    }
+    return { success: false, error: errorMsg };
   }
 }
 
 /**
- * Send join application email - only whitelisted fields
+ * Send join application email with retry logic - only whitelisted fields
  */
 export async function sendJoinEmail(data: JoinEmailData): Promise<{ success: boolean; error?: string }> {
-  const apiKey = process.env.RESEND_API_KEY;
+  const reqId = generateRequestId();
+  console.log(`[${reqId}] sendJoinEmail START`, {
+    category: data.category,
+    categoryId: data.categoryId,
+    from: FROM_EMAIL,
+    to: TO_EMAIL,
+    replyTo: data.email,
+    timestamp: new Date().toISOString(),
+  });
 
-  if (!apiKey) {
-    console.warn("RESEND_API_KEY is not configured - join form emails will not be sent");
+  const resend = getResendClient();
+  if (!resend) {
+    console.error(`[${reqId}] RESEND_API_KEY is not configured - email will NOT be sent`);
     return { success: false, error: "Email service not configured" };
   }
-
-  const resend = new Resend(apiKey);
 
   const allowedFields: { key: keyof JoinEmailData; label: string }[] = [
     { key: "name", label: "Name" },
@@ -194,7 +262,7 @@ export async function sendJoinEmail(data: JoinEmailData): Promise<{ success: boo
           </div>
           <div style="background: #f9f9f9; padding: 16px 24px; text-align: center; border-top: 1px solid #eee;">
             <p style="color: #999; font-size: 12px; margin: 0;">
-              Submitted via anduberinnovate.space<br>
+              Submitted via anduberinnovate.org<br>
               <a href="mailto:${safeEmail}" style="color: #1A7B7A;">Reply to ${safeName}</a>
             </p>
           </div>
@@ -205,18 +273,26 @@ export async function sendJoinEmail(data: JoinEmailData): Promise<{ success: boo
   };
 
   try {
-    const { data: responseData, error } = await resend.emails.send(emailPayload);
+    const result = await withRetry(async () => {
+      console.log(`[${reqId}] Calling Resend API...`);
+      const { data: responseData, error } = await resend.emails.send(emailPayload);
 
-    if (error) {
-      console.error("Resend API error:", error.message);
-      return { success: false, error: error.message };
-    }
+      if (error) {
+        throw new Error(`Resend API error: ${error.message}`);
+      }
 
-    console.log("Join email sent successfully, id:", responseData?.id);
+      return responseData;
+    }, reqId);
+
+    console.log(`[${reqId}] sendJoinEmail SUCCESS - email id: ${result?.id}`);
     return { success: true };
   } catch (err) {
-    console.error("Email send exception:", err instanceof Error ? err.message : "Unknown error");
-    return { success: false, error: err instanceof Error ? err.message : "Unknown error" };
+    const errorMsg = err instanceof Error ? err.message : "Unknown error";
+    console.error(`[${reqId}] sendJoinEmail FAILED after retries:`, errorMsg);
+    if (err instanceof Error && err.stack) {
+      console.error(`[${reqId}] Stack trace:`, err.stack);
+    }
+    return { success: false, error: errorMsg };
   }
 }
 
