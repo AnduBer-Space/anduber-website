@@ -212,7 +212,7 @@ export default function Ecosystem() {
   const [activeArm, setActiveArm] = useState<string | null>(null);
 
   return (
-    <section className="relative py-24 lg:py-32 overflow-hidden">
+    <section id="ecosystem" className="relative py-24 lg:py-32 overflow-hidden scroll-mt-24">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-plum-900 via-plum-800 to-plum-900" />
 

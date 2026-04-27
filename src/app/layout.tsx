@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import BackToTop from "@/components/ui/BackToTop";
+import ComeThruAnnouncement from "@/components/ui/ComeThruAnnouncement";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -105,6 +106,7 @@ export default function RootLayout({
           <main id="main-content" className="flex-1 overflow-x-hidden">{children}</main>
           <Footer />
           <BackToTop />
+          <ComeThruAnnouncement />
         </div>
       </body>
     </html>
