@@ -1,9 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Zap, Sparkles, Shield } from "lucide-react";
 import Container from "@/components/ui/Container";
 import HybridSection from "@/components/ui/HybridSection";
+import {
+  IconPillarCollision,
+  IconPillarImagination,
+  IconPillarResilience,
+} from "@/components/ui/icons";
 
 /**
  * Theory of Change. Three pillars connected as a flow (input → process →
@@ -26,7 +30,7 @@ type Pillar = {
   stage: string;
   description: string;
   example: string;
-  Icon: typeof Zap;
+  Icon: typeof IconPillarCollision;
   accent: "teal" | "gold" | "copper";
 };
 
@@ -39,7 +43,7 @@ const PILLARS: Pillar[] = [
     description:
       "We collide the unusual suspects. Outside their disciplines and inside the same room, people see angles their training trained them to ignore.",
     example: "A Maji Maisha planning session put a hydrogeologist, a youth pastor, a women's-group treasurer, and a solar engineer at the same table. The pump survived because they did.",
-    Icon: Zap,
+    Icon: IconPillarCollision,
     accent: "teal",
   },
   {
@@ -50,7 +54,7 @@ const PILLARS: Pillar[] = [
     description:
       "Systems mapping. Causal-loop diagrams. Design-justice methods. We move groups from \"what if\" to \"how to\" — turning intuition into structures decisions can be made on.",
     example: "We map the system on the wall before we touch a budget. Half the time, the solution turns out to be a smaller, weirder, cheaper intervention than anyone in the room arrived expecting.",
-    Icon: Sparkles,
+    Icon: IconPillarImagination,
     accent: "gold",
   },
   {
@@ -61,7 +65,7 @@ const PILLARS: Pillar[] = [
     description:
       "What we ship is not a project. It's a system — community-owned, self-sustaining, designed to keep working when the funding cycle ends and the consultant leaves.",
     example: "Maji Maisha graduated to community ownership in 18 months. Three years on, the pumps still run, costs are 75% lower, and zero litres of diesel are burned.",
-    Icon: Shield,
+    Icon: IconPillarResilience,
     accent: "copper",
   },
 ];

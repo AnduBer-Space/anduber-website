@@ -2,6 +2,47 @@
 
 A running log of each commit in the redesign. Newest first.
 
+## Session B1 — Custom branded icon set
+
+**Why:** the homepage&rsquo;s signature sections were using lucide-react icons (Zap, Sparkles, Shield, Coins, Building2, Lightbulb). Functional, but generic — they could be on any startup landing page. The brand needs marks of its own.
+
+### New icon set
+
+`src/components/ui/icons/index.tsx`. Nine SVG line-art icons sharing a deliberate visual vocabulary: nodes, intersecting lines, geometric balance. Every icon is 24×24, stroke-only, `currentColor`, with round caps and joins so the marks read as hand-drawn rather than CAD-perfect.
+
+**Three Engines** (replaces `Briefcase` / `Beaker` / `Heart`):
+- `IconEnginePartners` — hub-and-spoke advisory pattern. Centre node radiates to four partner nodes, suggesting embedded consultancy.
+- `IconEngineLabs` — flask cradling three rising idea-nodes. Lab-built things.
+- `IconEngineGathering` — three orbiting bodies around a shared centre. Community + capital + network in cyclical exchange.
+
+**Three Pillars** (replaces `Zap` / `Sparkles` / `Shield`):
+- `IconPillarCollision` — two diverging lines crossing at a heavier centre node, with sparkers at the four termini. The unusual suspects in the same room.
+- `IconPillarImagination` — small mind-map. Centre node with four branches, each ending in a leaf-node. Tools to map a problem and find leverage.
+- `IconPillarResilience` — three concentric arcs over a base node and a foundation line. Layered defences; the &ldquo;still working in three years&rdquo; aesthetic.
+
+**Pathways** (replaces `Coins` / `Building2` / `Lightbulb`):
+- `IconPathwayFunders` — coin face with eight radial rays. Capital that bends systems.
+- `IconPathwayOrgs` — institutional footprint with three horizontal levels and a connecting node at the door.
+- `IconPathwayInnovators` — bulb-shaped node graph. A founder with the skeleton of an idea.
+
+### Wired in
+
+- `src/components/sections/ThreePillars.tsx` — uses `IconPillarCollision` / `IconPillarImagination` / `IconPillarResilience`.
+- `src/components/sections/WhoItsFor.tsx` — uses `IconPathwayFunders` / `IconPathwayOrgs` / `IconPathwayInnovators`.
+
+The Three Engines visualisation in `OrbitalEngines.tsx` already draws geometry (orbiting circles + center wash) instead of using glyph icons, so no swap was needed there.
+
+### Deferred
+
+- Branded versions of the Silo Trap failure-mode icons (`Coins` / `Link2Off` / `Bandage`) — these are metaphor-heavy and the lucide reads quickly. Will design when the brief calls for them.
+
+### Verified
+
+- `npm run build` — passing.
+- `npm run lint` — passing.
+
+---
+
 ## Session A3 — Marquee tagline strips
 
 **Why:** subtle moving type adds rhythm and reinforces the brand vocabulary. Used sparingly — two instances total.

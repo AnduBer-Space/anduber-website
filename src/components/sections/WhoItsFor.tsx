@@ -2,9 +2,14 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Coins, Building2, Lightbulb } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Container from "@/components/ui/Container";
 import HybridSection from "@/components/ui/HybridSection";
+import {
+  IconPathwayFunders,
+  IconPathwayOrgs,
+  IconPathwayInnovators,
+} from "@/components/ui/icons";
 
 /**
  * Three pathways for visitors to identify themselves and pick a next step.
@@ -17,21 +22,21 @@ const PATHWAYS = [
     title: "Funders & Philanthropists",
     plain: "You want your capital to bend systems, not bandage symptoms.",
     href: "/contact?intent=fund",
-    Icon: Coins,
+    Icon: IconPathwayFunders,
     accent: "gold" as const,
   },
   {
     title: "Organisations & Governments",
     plain: "Your team is stuck inside a complex problem and needs to see the whole web.",
     href: "/contact?intent=advise",
-    Icon: Building2,
+    Icon: IconPathwayOrgs,
     accent: "teal" as const,
   },
   {
     title: "Innovators with Ideas",
     plain: "You're building something the standard pipeline overlooks. You need backing and a network.",
     href: "/contact?intent=back",
-    Icon: Lightbulb,
+    Icon: IconPathwayInnovators,
     accent: "copper" as const,
   },
 ];
