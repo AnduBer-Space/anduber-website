@@ -2,6 +2,28 @@
 
 A running log of each commit in the redesign. Newest first.
 
+## Round 2, Commit 4 — Newsletter de-personalisation polish
+
+**Why:** the previous build still framed *Common Sense is Not Common* as a personal column. The brand voice should be plural. Most of the heavy lifting happened earlier in this round (Commits 2 + 3 retired the "by Dr. Victor Mugambi Nyaga" lines and rewrote both the homepage `<InsightsTeaser />` section and the new `BlogIndex` hero in collective voice). This commit tightens the remaining language so the framing is consistent everywhere.
+
+### Changes
+
+- `src/components/sections/InsightsTeaser.tsx` — body sentence now opens with "AnduBer's thought-leadership publication." Subscribe button reframed: "Subscribe to our perspectives" + an explicit aria-label "Subscribe to AnduBer's perspectives on LinkedIn".
+- `src/app/blog/components/BlogIndex.tsx` — subscribe link reads "Subscribe to our perspectives on LinkedIn" with the same aria-label, so screen-reader users hear the same plural framing.
+
+### What stays the same
+
+- The newsletter brand name, "Common Sense is Not Common", is kept — it's a distinct publication identity that's already accumulated subscribers and recognition.
+- The LinkedIn URL stays at `/company/anduber/` (the company page), not a personal profile.
+- The default author on every blog post (`author` frontmatter field defaults to "AnduBer collective") was already plural in Commit 3.
+
+### Verified
+
+- `npm run build` — passing.
+- `npm run lint` — passing.
+
+---
+
 ## Round 2, Commit 3 — Real blog system + three seed posts
 
 **Why:** the previous `/blog` was a "Coming Soon" placeholder. The new system is a proper file-based blog driven by markdown content with frontmatter — easy to author, fast to render, deploys with the site.

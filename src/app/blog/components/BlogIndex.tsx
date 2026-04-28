@@ -92,8 +92,9 @@ export default function BlogIndex({ posts, tags }: Props) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-sm font-semibold text-token-gold hover:text-token-gold-strong transition-colors"
+                aria-label="Subscribe to AnduBer's perspectives on LinkedIn"
               >
-                Subscribe on LinkedIn
+                Subscribe to our perspectives on LinkedIn
                 <ExternalLink className="w-4 h-4" aria-hidden="true" />
               </a>
             </motion.div>

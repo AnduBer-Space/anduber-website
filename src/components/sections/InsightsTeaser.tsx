@@ -34,9 +34,9 @@ export default function InsightsTeaser() {
               conventional thinking from the AnduBer collective.
             </p>
             <p className="text-base md:text-lg text-token-secondary leading-relaxed mb-8 max-w-[60ch]">
-              Field notes, hot takes, and arguments we&rsquo;re willing to put our
-              names on. Published on LinkedIn and cross-posted to the AnduBer
-              blog.
+              AnduBer&rsquo;s thought-leadership publication. Field notes, hot
+              takes, and arguments we&rsquo;re willing to put our names on —
+              published on LinkedIn, cross-posted to the AnduBer blog.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <a
@@ -47,8 +47,9 @@ export default function InsightsTeaser() {
                            bg-gold-400 text-plum-900 font-medium
                            transition-all duration-300 hover:bg-gold-300 hover:shadow-glow-gold
                            active:scale-95"
+                aria-label="Subscribe to AnduBer's perspectives on LinkedIn"
               >
-                Subscribe on LinkedIn
+                Subscribe to our perspectives
                 <ExternalLink className="w-4 h-4" />
               </a>
               <Link
