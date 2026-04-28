@@ -37,7 +37,7 @@ const pillarGradients = {
 
 export default function ThreePillars() {
   return (
-    <section className="relative py-24 lg:py-32 overflow-hidden">
+    <section id="how-we-work" className="relative py-24 lg:py-32 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-cream-100 via-cream-50 to-cream-100 dark:from-plum-800 dark:via-plum-900 dark:to-plum-800" />
 

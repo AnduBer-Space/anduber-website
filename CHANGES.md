@@ -2,6 +2,43 @@
 
 A running log of each commit in the redesign. Newest first.
 
+## Phase 3a — New homepage hero: constellation as the methodology
+
+**Goal:** the visitor should understand "what AnduBer does" within five seconds. The hero's job is one sentence + two next steps + a visual that *demonstrates* Applied Intersectionality without using the term.
+
+### What's new
+
+- `src/components/sections/hero/ConstellationBackground.tsx` — new SVG component. Twelve labeled nodes (Artists, Scientists, Elders, Engineers, Poets, Policymakers, Youth, Farmers, Healers, Builders, Designers, Storytellers) live in fixed positions across the viewport. Every 4 seconds a deterministic seed picks 3–5 of them and the system draws thin gold lines between every pair, forming a different "intersection" each cycle. Active nodes scale up; inactive nodes idle at low glow.
+  - SSR-safe: the seed is deterministic so server and client agree on the first frame.
+  - `prefers-reduced-motion`: the cycle is suppressed and a static composition is shown.
+  - Pure CSS keyframe for the line fade (`<style jsx>`) keeps the JS work to one `setInterval`.
+- `src/components/sections/Hero.tsx` — rewritten from scratch:
+  - Headline: **"An Engine for Applied Imagination"** (gold gradient on "Applied Imagination").
+  - Plain-language one-liner in the new Fraunces accent serif: *"We solve complex problems by uniting people who don't normally work together, and turning their ideas into systems that last."*
+  - Two CTAs: **"See how we work"** (anchors to `#how-we-work`) and **"Partner with us"** (`/contact`).
+  - Brand-pill at the top: "Andu (People) + Ber (Good)" with a gold dot — gives newcomers the etymology in one glance.
+  - Tagline footer: *"From friction to flow."*
+  - Scroll cue at the bottom: italic "How does it work?" + bouncing chevron, links to `#the-silo-trap`. Focusable, keyboard-accessible.
+  - Section is hard-wired to the dark plum palette via `data-section-mode="dark"` + `dark` class so it reads consistently in all three theme modes (the brief mandates the hero stays dark).
+  - Removed: the orbital "Artists / Scientists / …" label badges. Their job has been absorbed into the constellation labels, which is the point — the disciplines aren't decoration anymore, they're the methodology.
+
+### Anchor IDs added
+
+- `#the-silo-trap` on `<SiloTrap>` — target of the hero's scroll cue.
+- `#how-we-work` on `<ThreePillars>` — target of the "See how we work" CTA.
+
+### Decisions worth flagging
+
+- I kept the existing homepage section ordering (Hero → SiloTrap → CoreModel → ThreePillars → Ecosystem → CTA) for this commit. Phase 3b/3c will replace those sections with the new flow described in the brief (Silo Trap with plain subtitles → Applied Intersectionality interactive diagram → Three Pillars connected → Three Engines orbital viz → Featured Projects → Who It's For → Insights teaser → Contact).
+- The constellation deliberately does NOT respond to the cursor or pan with the viewport. It's a slow, ambient signal; making it interactive would compete with the headline for attention.
+
+### Verified
+
+- `npm run build` — passing, hero route at 3.05 kB
+- `npm run lint` — passing
+
+---
+
 ## Phase 2 — Navigation restructure
 
 **Goal:** flatten the IA from 8 nav items down to 7 with cleaner, intent-led labels, and rename the underlying URLs to match. Old URLs continue to work via 308 redirects so existing inbound links don't break.

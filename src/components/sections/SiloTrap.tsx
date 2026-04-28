@@ -9,7 +9,7 @@ const problemIcons = [Coins, Link2Off, Bandage];
 
 export default function SiloTrap() {
   return (
-    <section className="relative py-24 lg:py-32 overflow-hidden">
+    <section id="the-silo-trap" className="relative py-24 lg:py-32 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 gradient-section-vertical" />
 
