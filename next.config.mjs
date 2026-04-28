@@ -1,5 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      // Phase 2 nav restructure: old route → new route (permanent 308)
+      { source: "/ecosystem", destination: "/what-we-do", permanent: true },
+      { source: "/model", destination: "/our-approach", permanent: true },
+      { source: "/projects", destination: "/our-work", permanent: true },
+      {
+        source: "/projects/:slug",
+        destination: "/our-work/:slug",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

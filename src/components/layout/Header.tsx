@@ -125,6 +125,11 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const { preference, mounted } = useTheme();
+
+  // Header chrome stays dark in hybrid + dark modes; only light mode flips it.
+  // Pre-mount we assume dark to avoid a flash for the common (hybrid) case.
+  const chromeIsDark = !mounted || preference !== "light";
 
   useEffect(() => {
     let ticking = false;
@@ -150,6 +155,7 @@ export default function Header() {
       <header
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+          chromeIsDark && "dark",
           isScrolled ? "glass-dark py-3" : "bg-transparent py-5"
         )}
       >

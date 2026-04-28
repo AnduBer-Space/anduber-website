@@ -178,7 +178,7 @@ export default function FeaturedProjects() {
 
         {/* View All Link */}
         <div className="text-center mt-12">
-          <Link href="/projects">
+          <Link href="/our-work">
             <Button variant="outline">
               View All Projects
               <ArrowRight className="ml-2 w-4 h-4" />

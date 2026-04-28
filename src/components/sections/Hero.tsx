@@ -282,9 +282,9 @@ export default function Hero() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Link href="/model">
+              <Link href="/our-approach">
                 <Button variant="primary" size="lg">
-                  Explore Our Model
+                  Explore Our Approach
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </Link>

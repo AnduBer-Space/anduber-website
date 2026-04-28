@@ -42,11 +42,11 @@ export default function ProjectDetail({ project, relatedProjects }: Props) {
 
         <Container className="relative z-10">
           <Link
-            href="/projects"
+            href="/our-work"
             className="inline-flex items-center text-plum-600 dark:text-plum-300 hover:text-gold-500 transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Projects
+            Back to Our Work
           </Link>
 
           <div className="grid lg:grid-cols-2 gap-12 items-center">

@@ -2,6 +2,52 @@
 
 A running log of each commit in the redesign. Newest first.
 
+## Phase 2 — Navigation restructure
+
+**Goal:** flatten the IA from 8 nav items down to 7 with cleaner, intent-led labels, and rename the underlying URLs to match. Old URLs continue to work via 308 redirects so existing inbound links don't break.
+
+### Nav items
+
+Before: `Home | About | Our Model | Ecosystem | Insights | Join Us | Governance | Contact` (8)
+
+After: `Home | What We Do | Our Approach | Our Work | About | Insights | Contact` (7)
+
+`Get Involved` (formerly `Join Us`) and `Governance` move to the footer + the upcoming Start Here picker. They remain reachable via `/join` and `/governance`.
+
+### Route map
+
+| Old URL                | New URL                | Status     |
+| ---------------------- | ---------------------- | ---------- |
+| `/ecosystem`           | `/what-we-do`          | 308 perm.  |
+| `/model`               | `/our-approach`        | 308 perm.  |
+| `/projects`            | `/our-work`            | 308 perm.  |
+| `/projects/:slug`      | `/our-work/:slug`      | 308 perm.  |
+| `/about`               | (unchanged)            | —          |
+| `/blog`, `/contact`    | (unchanged)            | —          |
+| `/join`, `/governance` | (unchanged, dropped from main nav) | — |
+
+### Files
+
+- `next.config.mjs` — added `redirects()` block with permanent 308s for the four moves above.
+- `src/app/what-we-do/page.tsx`, `src/app/our-approach/page.tsx`, `src/app/our-work/page.tsx`, `src/app/our-work/[slug]/page.tsx` — new route handlers. Each composes the existing section components (Phase 4 will rebuild the actual page contents).
+- `src/data/site.ts` — `navItems` updated with the new structure. Added `secondaryNavItems` for footer / picker.
+- `src/app/sitemap.ts` — sitemap rewritten around the new URLs and now includes per-project entries from `data/projects.ts` (currently empty).
+- `src/components/layout/Footer.tsx` — quick links updated to point at new URLs. Now wrapped in `<HybridSection variant="dark">` so it stays brand-dark in hybrid + dark modes and only flips to light when the user forces it. Adds a "Three Engines" sub-list deep-linking to `/what-we-do#partners` etc.
+- `src/components/layout/Header.tsx` — fixed header now also conditionally carries the `dark` class so its glass background and text resolve correctly in hybrid mode.
+- `src/components/sections/Hero.tsx`, `src/components/sections/FeaturedProjects.tsx`, `src/app/projects/[slug]/components/ProjectDetail.tsx` — updated in-page CTAs and breadcrumbs to use the new URLs (the redirect would have caught them but direct links avoid a wasted hop and keep crawlers happy).
+
+### Decisions worth flagging
+
+- I left the old `app/ecosystem/page.tsx`, `app/model/page.tsx`, etc. in place. They're rendered but immediately redirected — Phase 4 (which actually rebuilds those pages) will delete them as part of the cleanup so the diff there stays focused.
+- The dynamic `/our-work/[slug]` route mirrors the existing `/projects/[slug]` route. Since `data/projects.ts` is currently an empty array, no slug pages are generated yet. Once Maji Maisha and ComeThru land in Phase 4 they'll appear at the new URLs automatically.
+
+### Verified
+
+- `npm run build` — passing (19 routes)
+- `npm run lint` — passing
+
+---
+
 ## Phase 1 — Foundation: 3-state theme, tokens, fonts, contrast
 
 **Goal:** lay the design-system groundwork that every subsequent change builds on, without breaking any existing page.

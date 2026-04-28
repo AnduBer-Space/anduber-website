@@ -17,13 +17,19 @@ export const siteConfig = {
 
 export const navItems: NavItem[] = [
   { label: "Home", href: "/" },
+  { label: "What We Do", href: "/what-we-do" },
+  { label: "Our Approach", href: "/our-approach" },
+  { label: "Our Work", href: "/our-work" },
   { label: "About", href: "/about" },
-  { label: "Our Model", href: "/model" },
-  { label: "Ecosystem", href: "/ecosystem" },
   { label: "Insights", href: "/blog" },
-  { label: "Join Us", href: "/join" },
-  { label: "Governance", href: "/governance" },
   { label: "Contact", href: "/contact" },
+];
+
+// Secondary nav items — surfaced in the footer and the "Start Here" picker,
+// but kept out of the primary navigation to keep it focused.
+export const secondaryNavItems: NavItem[] = [
+  { label: "Get Involved", href: "/join" },
+  { label: "Governance", href: "/governance" },
 ];
 
 export const faqs: FAQ[] = [

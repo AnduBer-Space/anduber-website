@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import Container from "@/components/ui/Container";
 import Logo from "@/components/ui/Logo";
+import HybridSection from "@/components/ui/HybridSection";
 import { siteConfig } from "@/data/site";
 
 const socialLinks = [
@@ -18,23 +19,33 @@ const socialLinks = [
 ];
 
 const quickLinks = [
-  { label: "About Us", href: "/about" },
-  { label: "Our Model", href: "/model" },
-  { label: "Ecosystem", href: "/ecosystem" },
+  { label: "What We Do", href: "/what-we-do" },
+  { label: "Our Approach", href: "/our-approach" },
+  { label: "Our Work", href: "/our-work" },
+  { label: "About", href: "/about" },
   { label: "Insights", href: "/blog" },
-  { label: "Join Us", href: "/join" },
   { label: "Contact", href: "/contact" },
 ];
 
 const ecosystemLinks = [
-  { label: "AnduBer Partners", href: "/ecosystem#partners" },
-  { label: "AnduBer Labs", href: "/ecosystem#labs" },
-  { label: "The Gathering", href: "/ecosystem#foundation" },
+  { label: "AnduBer Partners", href: "/what-we-do#partners" },
+  { label: "The Good Labs", href: "/what-we-do#labs" },
+  { label: "The Gathering", href: "/what-we-do#foundation" },
+];
+
+const moreLinks = [
+  { label: "Get Involved", href: "/join" },
+  { label: "Governance", href: "/governance" },
 ];
 
 export default function Footer() {
   return (
-    <footer className="bg-cream-100 dark:bg-plum-900 text-plum-900 dark:text-cream-200 border-t border-cream-200 dark:border-plum-800">
+    <HybridSection
+      variant="dark"
+      as="footer"
+      padding="none"
+      className="border-t border-cream-200 dark:border-plum-800"
+    >
       {/* Newsletter Section */}
       <div className="border-b border-cream-200 dark:border-plum-800">
         <Container>
@@ -63,15 +74,15 @@ export default function Footer() {
       {/* Main Footer */}
       <Container>
         <div className="py-12 md:py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
             {/* Brand Column */}
-            <div className="lg:col-span-1">
+            <div className="lg:col-span-2">
               <Logo size="lg" className="mb-6" />
               <p className="text-plum-600 dark:text-cream-300 mb-4 leading-relaxed">
                 <span className="text-gold-700 dark:text-gold-400 font-semibold">ANDU</span> (People) +{" "}
                 <span className="text-teal-600 dark:text-teal-400 font-semibold">BER</span> (Good)
               </p>
-              <p className="text-plum-600 dark:text-cream-300 mb-6 leading-relaxed text-sm">
+              <p className="text-plum-600 dark:text-cream-300 mb-6 leading-relaxed text-sm max-w-md">
                 A new breed of social enterprise dismantling silos and building
                 resilient systems through applied imagination.
               </p>
@@ -94,10 +105,20 @@ export default function Footer() {
             {/* Quick Links */}
             <div>
               <h4 className="font-serif text-lg font-semibold mb-6 text-gold-700 dark:text-gold-400">
-                Quick Links
+                Explore
               </h4>
               <ul className="space-y-3">
                 {quickLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-plum-600 dark:text-cream-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+                {moreLinks.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
@@ -113,7 +134,7 @@ export default function Footer() {
             {/* Ecosystem */}
             <div>
               <h4 className="font-serif text-lg font-semibold mb-6 text-gold-700 dark:text-gold-400">
-                Our Ecosystem
+                Three Engines
               </h4>
               <ul className="space-y-3">
                 {ecosystemLinks.map((link) => (
@@ -188,6 +209,6 @@ export default function Footer() {
           </div>
         </Container>
       </div>
-    </footer>
+    </HybridSection>
   );
 }
