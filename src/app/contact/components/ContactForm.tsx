@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -10,6 +11,27 @@ import Button from "@/components/ui/Button";
 import { Input, Textarea } from "@/components/ui/Input";
 import { siteConfig } from "@/data/site";
 import { Mail, Phone, MapPin, Send, CheckCircle, Linkedin, Globe, AlertCircle } from "lucide-react";
+
+/** Maps the StartHerePicker / WhoItsFor `intent` query param to inquiry type
+ *  and a starter subject so the form is one click closer to sent.
+ */
+const INTENT_MAP: Record<string, { inquiryType: string; subject: string; intro: string }> = {
+  fund: {
+    inquiryType: "foundation",
+    subject: "Funding partnership inquiry",
+    intro: "I'm reaching out about funding AnduBer's work. ",
+  },
+  advise: {
+    inquiryType: "partners",
+    subject: "Strategy support for our organisation",
+    intro: "Our organisation is looking for strategic support. ",
+  },
+  back: {
+    inquiryType: "foundation",
+    subject: "Innovation looking for backing",
+    intro: "I'm working on an idea that could use backing and a network. ",
+  },
+};
 
 const contactSchema = z.object({
   name: z
@@ -45,15 +67,29 @@ export default function ContactForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const honeypotRef = useRef<HTMLInputElement>(null);
+  const searchParams = useSearchParams();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
+    setValue,
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
   });
+
+  // Pre-fill the form when arriving from /contact?intent=fund|advise|back
+  // (Start Here picker, Who It's For pathways, Featured Projects "Bring us a project").
+  useEffect(() => {
+    const intent = searchParams.get("intent");
+    if (!intent) return;
+    const mapping = INTENT_MAP[intent];
+    if (!mapping) return;
+    setValue("inquiryType", mapping.inquiryType, { shouldDirty: false });
+    setValue("subject", mapping.subject, { shouldDirty: false });
+    setValue("message", mapping.intro, { shouldDirty: false });
+  }, [searchParams, setValue]);
 
   const onSubmit = async (data: ContactFormData) => {
     setSubmitError(null);

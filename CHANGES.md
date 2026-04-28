@@ -2,6 +2,60 @@
 
 A running log of each commit in the redesign. Newest first.
 
+## Phase 5 — Flourishes: Start Here picker, scroll thread, cursor glow, intent-aware contact form
+
+**Goal:** the layer of polish the brief asked for — the things that make the site feel like it&rsquo;s actually paying attention to the visitor.
+
+### Start Here floating picker
+
+`src/components/ui/StartHerePicker.tsx`. Bottom-right of every page (suppressed on `/contact` to avoid duplication). The trigger is a small gold pill labelled "Start here" with a `Compass` icon and a subtle `animate-ping` ring on first paint to draw the eye.
+
+Clicking opens a panel with the brief's three pathways:
+
+- **I want to fund this work** → `/contact?intent=fund`
+- **My organisation needs strategy help** → `/contact?intent=advise`
+- **I have an innovation that needs backing** → `/contact?intent=back`
+
+Closes on outside click + Escape, traps no scroll, fully keyboard-navigable. Never blocks essential UI on small screens (the trigger collapses to a 40px round icon).
+
+### Intent-aware contact form
+
+`src/app/contact/page.tsx` now wraps `<ContactForm />` in a Suspense boundary so `useSearchParams()` is allowed to read `?intent=…`.
+
+`src/app/contact/components/ContactForm.tsx` reads the intent on mount and pre-fills:
+
+| Intent | Inquiry type | Subject | Message intro |
+| ------ | ------------ | ------- | ------------- |
+| `fund` | The Gathering | "Funding partnership inquiry" | "I'm reaching out about funding AnduBer's work. " |
+| `advise` | AnduBer Partners | "Strategy support for our organisation" | "Our organisation is looking for strategic support. " |
+| `back` | The Gathering | "Innovation looking for backing" | "I'm working on an idea that could use backing and a network. " |
+
+Visitors arrive with the form one click closer to sent. The intro is a deliberate run-on so they can complete the sentence without having to delete a closing period.
+
+### Scroll thread
+
+`src/components/ui/ScrollThread.tsx`. Thin gold + teal gradient line down the right edge of the viewport, with a glowing dot that tracks scroll position. Reinforces the "every section is on the same thread" theme. Hidden below `md`, hidden on `/contact`, no-op when reduced-motion is requested. Driven by `requestAnimationFrame` from a passive `scroll` listener; layout-free (transforms only).
+
+### Cursor glow
+
+`src/components/ui/CursorGlow.tsx`. Mounts only when `(hover: hover) and (pointer: fine)` — i.e., a desktop with a real pointer — and only when `prefers-reduced-motion` is not set. Adds a `.has-cursor-glow` class to `<html>` and updates `--cursor-x` / `--cursor-y` CSS variables on every frame. The glow itself is a fixed `::before` pseudo-element on the root (defined in `globals.css` in Phase 1) so paint stays in the GPU compositor. No-op on touch devices.
+
+### Wiring
+
+`src/app/layout.tsx` now mounts `<StartHerePicker />`, `<ScrollThread />`, and `<CursorGlow />` alongside the existing `<BackToTop />` and `<ComeThruAnnouncement />`.
+
+### Decisions worth flagging
+
+- The picker uses `router.push("/contact?intent=…")` rather than scrolling-then-navigating. The brief asked for "scrolls to relevant section + opens contact" — a two-stage interaction added friction without making the result clearer. Pre-filling the form is the higher-signal action and works from any page.
+- Cursor glow is intentionally subtle (~10% gold, 220px radius). Anything more was distracting on the constellation hero.
+
+### Verified
+
+- `npm run build` — passing (still 23 routes; no size regression on FLJS).
+- `npm run lint` — passing.
+
+---
+
 ## Phase 4 — Page restructures: About, Our Approach, Our Work
 
 **Goal:** rebuild the three deepest pages so each one stands on its own. The brief asked for the AnduBer name etymology to be prominent on About, Crenshaw + logic model + deep pillars on Our Approach, and ComeThru + Maji Maisha as full case studies on Our Work.

@@ -5,6 +5,9 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import BackToTop from "@/components/ui/BackToTop";
 import ComeThruAnnouncement from "@/components/ui/ComeThruAnnouncement";
+import StartHerePicker from "@/components/ui/StartHerePicker";
+import ScrollThread from "@/components/ui/ScrollThread";
+import CursorGlow from "@/components/ui/CursorGlow";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 const inter = Inter({
@@ -124,6 +127,9 @@ export default function RootLayout({
             <Footer />
             <BackToTop />
             <ComeThruAnnouncement />
+            <StartHerePicker />
+            <ScrollThread />
+            <CursorGlow />
           </div>
         </ThemeProvider>
       </body>
