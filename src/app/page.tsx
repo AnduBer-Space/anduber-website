@@ -1,6 +1,6 @@
 import Hero from "@/components/sections/Hero";
 import SiloTrap from "@/components/sections/SiloTrap";
-import CoreModel from "@/components/sections/CoreModel";
+import AppliedIntersectionality from "@/components/sections/AppliedIntersectionality";
 import ThreePillars from "@/components/sections/ThreePillars";
 import Ecosystem from "@/components/sections/Ecosystem";
 import CTA from "@/components/sections/CTA";
@@ -10,7 +10,7 @@ export default function Home() {
     <>
       <Hero />
       <SiloTrap />
-      <CoreModel />
+      <AppliedIntersectionality />
       <ThreePillars />
       <Ecosystem />
       <CTA />

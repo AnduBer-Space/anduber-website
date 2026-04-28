@@ -2,6 +2,54 @@
 
 A running log of each commit in the redesign. Newest first.
 
+## Phase 3b — Silo Trap rewrite + Applied Intersectionality interactive diagram
+
+**Goal:** the second and third sections of the homepage. Visitors learn what's broken (Silo Trap) and how AnduBer thinks (Applied Intersectionality) — both with plain-language subtitles right under the technical headings, and a hands-on diagram that lets the methodology be *felt* instead of read.
+
+### Silo Trap — rewritten
+
+`src/components/sections/SiloTrap.tsx` now leads with:
+- **"The Silo Trap"** as the heading (brand IP retained).
+- A friendly Fraunces-italic explainer right beneath: *"Why most solutions to big problems fail."*
+- Three cards (Fragmented Funding / Restricted Interventions / Band-Aid Solutions) each with a plain-language subtitle of their own:
+  - *"Money chases symptoms, not systems."*
+  - *"Solutions designed in capitals don't survive villages."*
+  - *"When the funding ends, the problem comes back."*
+- The closing one-liner *"AnduBer acts as the connective tissue, turning friction into flow."* — front-and-center as a serif italic statement, not boxed inside a card.
+- Section is hard-set to dark plum (`data-section-mode="dark"` + `dark` class) so the Silo Trap reads as a "shadowed" problem space sitting between the (also-dark) hero and the (light) methodology.
+
+### Applied Intersectionality — new interactive diagram
+
+`src/components/sections/intersectionality/IntersectionalityDiagram.tsx` is the homepage's "wow" moment. Six domain nodes (Water, Health, Governance, Climate, Gender, Livelihoods) sit on a circle. All fifteen pairwise lines are drawn between them.
+
+When a visitor hovers, focuses, or taps a node:
+- The node enlarges and gold-glows.
+- All five lines from that node brighten with a teal→gold gradient stroke; every other line fades to ~8% opacity so the visitor's eye follows the connections.
+- A panel beside the diagram swaps in the node's plain-language definition plus a one-sentence story for each of the five connections it forms — fifteen pre-written stories total, each grounded in a real-world dynamic ("Clean water cuts disease in half — and frees women from a 4-hour walk that prevents schooling and work.").
+
+Accessibility:
+- Every node is a `<button>` (label) plus a focusable `<g>` (SVG) with `role="button"`, `aria-pressed`, and a descriptive `aria-label`.
+- The diagram has `role="img"` and a long-form `aria-label` describing what it is.
+- Click toggles activation on touch devices; hover handles desktop.
+
+### Section wiring
+
+`src/components/sections/AppliedIntersectionality.tsx` is the homepage section wrapper. It uses `<HybridSection variant="light">` so it renders cream-on-plum in hybrid + light modes, and forced-dark in dark mode. The introductory copy frames the methodology as an extension of Crenshaw's intersectionality from people to systems.
+
+`src/app/page.tsx` now composes: Hero → SiloTrap → AppliedIntersectionality → ThreePillars → Ecosystem → CTA. (`CoreModel` is no longer rendered on the homepage; it remains in use on `/our-approach` until Phase 4 rebuilds that page.)
+
+### Decisions worth flagging
+
+- I kept the existing `<ThreePillars>` and `<Ecosystem>` sections in this commit even though they don't yet have plain-language explainers. Phase 3c will rewrite them. This commit is already large; splitting keeps reviews tight.
+- The fifteen connection stories are written into the diagram component rather than pulled from `data/site.ts`. They're voice-y and specific to this visualization; they'd be misleading if reused on, say, `/our-approach` without their context.
+
+### Verified
+
+- `npm run build` — passing
+- `npm run lint` — passing
+
+---
+
 ## Phase 3a — New homepage hero: constellation as the methodology
 
 **Goal:** the visitor should understand "what AnduBer does" within five seconds. The hero's job is one sentence + two next steps + a visual that *demonstrates* Applied Intersectionality without using the term.

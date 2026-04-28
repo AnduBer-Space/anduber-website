@@ -1,26 +1,65 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { AlertTriangle, Link2Off, Bandage, Coins } from "lucide-react";
+import { Coins, Link2Off, Bandage } from "lucide-react";
 import Container from "@/components/ui/Container";
-import { siloProblems } from "@/data/site";
 
-const problemIcons = [Coins, Link2Off, Bandage];
+/**
+ * The problem section. Sets up the methodology that follows.
+ * Brand-named "The Silo Trap" (intellectual property — kept), with a
+ * plain-language subtitle right underneath that tells visitors what it
+ * actually means before they have to decode the term.
+ */
+
+type Failure = {
+  /** Brand name — never abbreviated. */
+  name: string;
+  /** Plain-language subtitle, the friendly voice. */
+  plain: string;
+  /** Body copy. */
+  description: string;
+  icon: typeof Coins;
+};
+
+const FAILURES: Failure[] = [
+  {
+    name: "Fragmented Funding",
+    plain: "Money chases symptoms, not systems.",
+    description:
+      "Grants target single problems in isolation. The water grant doesn't talk to the health grant. Communities apply for ten of them just to cover one need.",
+    icon: Coins,
+  },
+  {
+    name: "Restricted Interventions",
+    plain: "Solutions designed in capitals don't survive villages.",
+    description:
+      "A pilot tests one variable. The real world has fifty. Programmes built without local complexity collapse the moment they meet it.",
+    icon: Link2Off,
+  },
+  {
+    name: "Band-Aid Solutions",
+    plain: "When the funding ends, the problem comes back.",
+    description:
+      "Programmes that don't address root causes leave nothing behind. Two years later the same community is still waiting for the next intervention.",
+    icon: Bandage,
+  },
+];
 
 export default function SiloTrap() {
   return (
-    <section id="the-silo-trap" className="relative py-24 lg:py-32 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 gradient-section-vertical" />
-
-      {/* Decorative broken grid pattern */}
-      <div className="absolute inset-0 opacity-10 dark:opacity-10 pointer-events-none">
+    <section
+      id="the-silo-trap"
+      className="dark relative bg-plum-900 text-cream-200 py-24 lg:py-32 overflow-hidden"
+      data-section-mode="dark"
+    >
+      {/* Subtle broken-grid pattern hints at the "fragmented" theme */}
+      <div className="absolute inset-0 opacity-[0.07] pointer-events-none">
         <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
           <defs>
             <pattern id="brokenGrid" width="10" height="10" patternUnits="userSpaceOnUse">
               <path
                 d="M 0 0 L 0 10 M 10 0 L 10 10 M 0 0 L 10 0 M 0 10 L 10 10"
-                className="stroke-plum-200 dark:stroke-plum-700"
+                stroke="#F5E6C8"
                 strokeWidth="0.3"
                 fill="none"
                 strokeDasharray="2 2"
@@ -32,85 +71,65 @@ export default function SiloTrap() {
       </div>
 
       <Container className="relative z-10">
-        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6 }}
+          className="max-w-3xl mb-14"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/10 border border-red-500/30 text-red-500 dark:text-red-400 text-sm font-medium mb-6"
-          >
-            <AlertTriangle className="w-4 h-4" />
-            <span>The Challenge</span>
-          </motion.div>
-
-          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-plum-900 dark:text-cream-200 mb-6">
-            The <span className="text-red-500 dark:text-red-400">Silo Trap</span>
-          </h2>
-
-          <p className="text-lg text-plum-600 dark:text-cream-300 max-w-3xl mx-auto mb-8">
-            The world&apos;s biggest challenges&mdash;pandemics, climate change, inequality&mdash;are
-            entangled. Yet, the systems designed to solve them are fragmented.
+          <p className="text-xs uppercase tracking-[0.22em] font-semibold text-gold-400 mb-4">
+            The Problem
           </p>
-
-          <div className="max-w-2xl mx-auto p-6 rounded-2xl border border-cream-200 dark:border-plum-700 bg-cream-100/50 dark:bg-plum-800/50">
-            <p className="text-plum-600 dark:text-cream-300">
-              Scientists don&apos;t talk to artists. Policymakers don&apos;t listen to communities.
-              This <span className="text-red-500 dark:text-red-400 font-semibold">linear thinking</span> leads to
-              &quot;band-aid&quot; solutions.
-            </p>
-          </div>
+          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-cream-200 leading-[1.05] mb-5">
+            The <span className="text-gradient-gold">Silo Trap</span>
+          </h2>
+          <p className="font-accent italic text-lg md:text-xl text-cream-300/90 max-w-[60ch] leading-snug">
+            Why most solutions to big problems fail.
+          </p>
         </motion.div>
 
-        {/* Problems Grid */}
         <div className="grid md:grid-cols-3 gap-6 lg:gap-8 mb-16">
-          {siloProblems.map((problem, index) => {
-            const Icon = problemIcons[index];
-            return (
-              <motion.div
-                key={problem.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.15 }}
-                className="group"
-              >
-                <div className="h-full p-6 lg:p-8 rounded-2xl border border-cream-200 dark:border-plum-700 bg-cream-100/30 dark:bg-plum-800/30 backdrop-blur-sm transition-all duration-300 hover:border-red-500/30 hover:bg-red-500/5">
-                  <div className="w-14 h-14 rounded-2xl bg-red-500/10 flex items-center justify-center mb-6 transition-all duration-300 group-hover:bg-red-500/20">
-                    <Icon className="w-7 h-7 text-red-500 dark:text-red-400" />
-                  </div>
+          {FAILURES.map((f, index) => (
+            <motion.article
+              key={f.name}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ delay: index * 0.1, duration: 0.5 }}
+              className="group h-full p-6 lg:p-8 rounded-2xl border border-plum-700 bg-plum-800/40 backdrop-blur-sm
+                         transition-all duration-300 hover:border-gold-400/50 hover:bg-plum-800/60"
+            >
+              <div className="w-12 h-12 rounded-xl bg-gold-400/10 flex items-center justify-center mb-6
+                              transition-all duration-300 group-hover:bg-gold-400/20">
+                <f.icon className="w-6 h-6 text-gold-400" aria-hidden="true" />
+              </div>
 
-                  <h3 className="font-serif text-xl font-bold text-plum-900 dark:text-cream-200 mb-3">
-                    {problem.title}
-                  </h3>
-
-                  <p className="text-plum-600 dark:text-cream-300 leading-relaxed">
-                    {problem.description}
-                  </p>
-                </div>
-              </motion.div>
-            );
-          })}
+              <h3 className="font-serif text-xl md:text-2xl font-bold text-cream-200 mb-2 leading-tight">
+                {f.name}
+              </h3>
+              <p className="font-accent italic text-base text-cream-300/85 mb-4 leading-snug">
+                {f.plain}
+              </p>
+              <p className="text-cream-300/80 leading-relaxed text-sm md:text-base">
+                {f.description}
+              </p>
+            </motion.article>
+          ))}
         </div>
 
-        {/* Solution Teaser */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.6 }}
           className="text-center"
         >
-          <div className="inline-block p-8 rounded-3xl border border-teal-500/30 bg-teal-500/5 backdrop-blur-sm">
-            <p className="font-serif text-xl md:text-2xl text-plum-900 dark:text-cream-200 italic">
-              &ldquo;AnduBer acts as the <span className="text-teal-600 dark:text-teal-400">connective tissue</span>,
-              turning friction into flow.&rdquo;
-            </p>
-          </div>
+          <p className="font-serif text-xl md:text-2xl lg:text-3xl text-cream-200 italic max-w-3xl mx-auto leading-relaxed">
+            AnduBer acts as the{" "}
+            <span className="text-teal-400 not-italic font-semibold">connective tissue</span>,
+            turning friction into flow.
+          </p>
         </motion.div>
       </Container>
     </section>
