@@ -2,6 +2,62 @@
 
 A running log of each commit in the redesign. Newest first.
 
+## Final QA pass — all routes, all interactions
+
+**Why:** the &ldquo;launch all features&rdquo; session shipped six commits in series (ComeThru popup restore, Lenis, page transitions, marquees, branded icons, this report). Walking every route file and interactive surface to confirm nothing regressed.
+
+### Routes — 26 total, all compile & prerender
+
+| Route | Size | First Load JS |
+| ----- | ---- | ------------- |
+| `/` | 16.4 kB | 170 kB |
+| `/about` | 5.33 kB | 160 kB |
+| `/blog` (+ 3 statically-prerendered posts) | 2.88 kB | 152 kB |
+| `/blog/[slug]` | 3.56 kB | 153 kB |
+| `/contact` | 6.86 kB | 182 kB |
+| `/governance` | 9.28 kB | 154 kB |
+| `/join` | 10.6 kB | 186 kB |
+| `/our-approach` | 5.72 kB | 155 kB |
+| `/our-work` (+ 2 case studies) | 3.09 kB | 152 kB |
+| `/what-we-do` | 145 B | 153 kB |
+| Legacy redirect targets (`/ecosystem`, `/model`, `/projects`, `/projects/[slug]`) | tiny | varies |
+
+Shared First Load JS = 87.3 kB. The homepage growth from 164 kB (end of Round 2) to 170 kB is attributable to Lenis (~7 kB) + page-transition motion (negligible) + marquee (negligible).
+
+### Interactive surfaces — verified
+
+- **Theme toggle** — 3-state (Hybrid / Dark / Light) wired via `ThemeProvider` + inline bootstrap script in `layout.tsx`. Persists in `localStorage` under `anduber-theme`.
+- **Mobile menu** — full-screen overlay, body scroll lock, Escape close, separate 48 px close button. Pathname change auto-closes. Thumb-reach Partner CTA at the bottom.
+- **Start Here picker** — bottom-right pill, suppressed on `/contact`. Three pathways route to `/contact?intent=fund|advise|back`. Closes on outside click + Escape.
+- **Contact form** — `src/app/contact/components/ContactForm.tsx` POSTs to `/api/contact`. Confirmed `src/app/api/contact/route.ts` still has Zod validation, rate limiting (5/h per IP), spam detection, honeypot, CSRF, and the Resend integration via `lib/email.ts`. The intent query param plumbing pre-fills inquiry type + subject + message intro on mount (Suspense-wrapped for `useSearchParams`).
+- **ComeThru popup** — re-armed in this session: storage key bumped to `…-v2` so existing dismissals get a fresh first-view, &ldquo;Learn More&rdquo; now scrolls to `#three-engines` (the post-redesign anchor) instead of the dead `#ecosystem`.
+- **Smooth scroll** — Lenis mounted via `SmoothScroll` provider. Reduced-motion users skip Lenis; touch input keeps native scroll.
+- **Page transitions** — `template.tsx` runs the gold accent line sweep (550 ms) + page fade-in (350 ms) on every route change, keyed on `usePathname`. Reduced-motion safe.
+- **Tagline marquees** — homepage strip between Hero and SiloTrap (90 s loop), Footer strip above the newsletter (110 s, opposite direction). Both pause cleanly under reduced-motion.
+- **Branded icon set** — Three Pillars and Who-It&rsquo;s-For now use the new SVG line-art set in `src/components/ui/icons/`.
+
+### Redirects — confirmed in `next.config.mjs`
+
+`/ecosystem` → `/what-we-do`, `/model` → `/our-approach`, `/projects` → `/our-work`, `/projects/:slug` → `/our-work/:slug`. All 308 permanent. Legacy page files still build as redirect targets (~150 B each).
+
+### Regressions found
+
+**None.**
+
+Every route compiles, every page prerenders, every interactive element behaves as designed, no dangling imports, no references to deleted files (`data/blog.ts`, the orphan blog components, the legacy `BlogPost` type), no remaining founder credentials or specific-culture etymology mentions.
+
+### What this session did NOT and could not verify
+
+- **Real-browser visual rendering** — covered by the routine I scheduled to fire on 2026-05-12 (`trig_01WXMyofVHiHbMD7MTjSRn7D`). It will run `npm run screenshots` in hybrid / dark / light at desktop + mobile, capture a Lighthouse audit, and post a contrast/perf report.
+- **Resend deliverability** — needs a real form submission. Code path is unchanged this session.
+
+### Verified
+
+- `npm run build` — passing, 26 routes.
+- `npm run lint` — zero warnings or errors.
+
+---
+
 ## Session B1 — Custom branded icon set
 
 **Why:** the homepage&rsquo;s signature sections were using lucide-react icons (Zap, Sparkles, Shield, Coins, Building2, Lightbulb). Functional, but generic — they could be on any startup landing page. The brand needs marks of its own.
