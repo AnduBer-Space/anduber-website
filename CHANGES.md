@@ -2,6 +2,32 @@
 
 A running log of each commit in the redesign. Newest first.
 
+## Session A2 — Page transitions: gold sweep + fade
+
+**Why:** Next.js page navigations should feel curated, not snappy and bare.
+
+### Changes
+
+`src/app/template.tsx` is new. App Router re-mounts `template.tsx` on every navigation, so anything I render here animates on every route change without needing custom router event hooks.
+
+What it does:
+
+1. **Thin gold accent line** sweeps across the top of the viewport — `transform: scaleX(0 → 1)` with a soft glow (`box-shadow` of `rgba(212, 170, 106, 0.6)`) and a brief opacity fade-out at the end. 850 ms total. Sits at `z-[80]` (above the scroll thread, below the modal backdrop).
+2. **Page content fades in** beneath the sweep with a 8 px lift — 350 ms duration, 100 ms delay so the sweep starts first and the eye lands on the new content right after.
+
+Both motion blocks are keyed on `usePathname()`, which forces remount on navigation and re-triggers the animation.
+
+### Reduced-motion
+
+Framer Motion respects the global motion-reduce CSS clamp from Phase 1 — animations collapse to 0.01 ms for users who request reduced motion, so the sweep is effectively suppressed.
+
+### Verified
+
+- `npm run build` — passing.
+- `npm run lint` — passing.
+
+---
+
 ## Session A1 — Lenis smooth-scroll
 
 **Why:** premium feel for scroll. Lenis lerps the viewport to keep wheel/trackpad input feeling weighted instead of flat.
