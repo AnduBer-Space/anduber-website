@@ -2,6 +2,46 @@
 
 A running log of each commit in the redesign. Newest first.
 
+## Round 2, Commit 6 — Mobile-specific enhancements
+
+**Why:** the previous mobile menu was a 320 px right-drawer — functional but not premium. The brief asked for "design-award" quality on mobile, large tap targets, touch-optimised interactions, and thumb-reach action buttons. This commit upgrades the mobile experience.
+
+### Mobile menu — full-screen overlay
+
+`src/components/layout/Header.tsx`. Replaced the side drawer with a full-screen menu:
+
+- **Backdrop** is a soft gold radial wash bleeding into deep plum (instead of flat 60%-opacity overlay). Reads as branded space, not as a curtain.
+- **Primary nav links** are now 3xl/4xl serif type with a 56 px minimum tap target, far above the 44 px iOS/Android guidance. Active route is gold with a `↗` glyph that animates in on hover.
+- **Secondary links** (`Get Involved`, `Governance`) live below a divider in a 2-column grid, 44 px tap targets each.
+- **Direct contact rail** (Email, LinkedIn) — same 44 px row pattern, so visitors reach the primary contact channels without leaving the menu.
+- **Primary CTA ("Partner With Us")** is anchored at the bottom of the menu so it&rsquo;s in thumb reach on every phone size; `min-h-[52px]` for a comfortable tap.
+- **Close button** is a 48×48 px circular button top-right (separate from the toggle in the header bar) — easier to find than scanning back to the small `X` in the bar.
+- **Body scroll lock** when the menu is open (prevents background-scroll on iOS).
+- **Escape key** closes the menu.
+- **Pathname change** auto-closes the menu (already in place — kept).
+
+### Touch / hover degradation — verified
+
+Sweep of the hover-dependent components I shipped earlier; each now confirmed to no-op gracefully on touch:
+
+- `MagneticButton` — gated by `(hover: hover) and (pointer: fine)`. Touch users get a normal button.
+- `TiltCard` — same gate.
+- `CursorGlow` — same gate; doesn&rsquo;t mount on touch at all.
+- `StartHerePicker` panel — already opened via click, fine on touch.
+- Constellation hero — animation runs as ambient regardless of input type, no hover-required interactions to miss.
+
+### Skipped from the brief, with reasoning
+
+- **Pull-to-refresh on /blog** — Next/Vercel static-prerender means there&rsquo;s no fresh content for a refresh to fetch. Genuine value would require client-side polling or a CMS; deferred until/unless the blog moves off file-system content.
+- **Swipeable image galleries on case studies** — current ComeThru / Maji Maisha case studies have no `gallery` images (the data model has the field but it&rsquo;s empty). Once real photography lands, this becomes a focused commit.
+
+### Verified
+
+- `npm run build` — passing.
+- `npm run lint` — passing.
+
+---
+
 ## Round 2, Commit 5 — Design enhancements: motion primitives + signature interactions
 
 **Why:** to push the redesign toward design-award territory, the brand needs signature interactions that visitors *feel*, not just see. This commit adds a small toolkit of reusable motion primitives and applies them to the highest-leverage surfaces.
