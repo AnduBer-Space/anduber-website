@@ -4,12 +4,12 @@ export const siteConfig = {
   name: "AnduBer",
   tagline: "An Engine for Applied Imagination",
   description:
-    "AnduBer is a new breed of social enterprise headquartered in Nairobi. Our name—ANDU (People) + BER (Good)—is a deliberate fusion of two African dialects, symbolizing our core belief that innovation happens at the intersection. We are a collective of systems thinkers, artists, scientists, and community leaders united by one mission: to dismantle silos and build resilient systems.",
+    "AnduBer is a new breed of social enterprise headquartered in Nairobi. Our name—ANDU (People) + BER (Good)—is a fusion of two African cultures, symbolising our core belief that innovation happens at the intersection. We are a collective of systems thinkers, artists, scientists, and community leaders united by one mission: to dismantle silos and build resilient systems.",
   url: "https://anduber.org",
   email: "info@anduberinnovate.space",
   phone: "+254107025817",
   address: "Nairobi, Kenya",
-  nameMeaning: "ANDU (People) + BER (Good) - A fusion of two African dialects, symbolizing our core belief that innovation happens at the intersection.",
+  nameMeaning: "ANDU (People) + BER (Good) — a fusion of two African cultures, symbolising our core belief that innovation happens at the intersection.",
   socials: {
     linkedin: "https://www.linkedin.com/company/anduber/",
   },
@@ -36,7 +36,7 @@ export const faqs: FAQ[] = [
   {
     question: "What does AnduBer mean?",
     answer:
-      "AnduBer is a deliberate fusion of two African dialects: ANDU (People) + BER (Good). This name symbolizes our core belief that innovation happens at the intersection—when diverse people come together with good intentions.",
+      "AnduBer is a fusion of two African cultures: ANDU (People) + BER (Good). The name symbolises our core belief that innovation happens at the intersection — when diverse people come together with good intentions.",
   },
   {
     question: "What is Applied Intersectionality?",

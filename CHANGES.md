@@ -2,6 +2,37 @@
 
 A running log of each commit in the redesign. Newest first.
 
+## Round 2, Commit 2 — De-center founder + generic name etymology
+
+**Why:** AnduBer is an organisation and a movement, not a personal brand. The previous build leaned too heavily on a founder profile and named specific cultures/languages that the team didn't want surfaced. Both fixed.
+
+### Generic etymology
+
+Replaced every cultural-linguistic specific (`Kĩmbeere`, `Dholuo`, `Luo`, "African dialects", "Kenyan languages") with the generic "fusion of two African cultures" framing throughout:
+
+- `src/data/site.ts` — `siteConfig.description`, `nameMeaning`, the FAQ entry on "What does AnduBer mean?".
+- `src/app/about/page.tsx` — meta description.
+- `src/app/about/components/AboutHero.tsx` — etymology cards. Both cards now lead with the meaning (Andu = people, Ber = good) and a one-line poetic gloss instead of a language name. Closing line: *"A fusion of two African cultures — and our core belief: innovation happens at the intersection."*
+
+Project location names like *Mbeere North, Kenya* are kept (they're factual location data for Maji Maisha, not cultural framing).
+
+### De-centered founder
+
+- `src/data/team.ts` — removed the `credentials` line ("DVM, University of Nairobi · MIPH, Liverpool John Moores University"). Bio rewritten in the third-person collective voice ("Convened the early collective...") so the founder reads as a co-founding role rather than the protagonist.
+- `src/app/about/components/TeamSection.tsx` — restructured. The collective story now leads (full half of the section: "We are a room, not a name" + three paragraphs explaining why the brand is plural by design). The founder profile becomes a smaller compact card on the right, labelled *"From the collective"* and sized like a peer card rather than a centerpiece. A second placeholder card hints at "more profiles coming" without making the page feel half-built.
+- `src/app/about/components/OurStory.tsx` — the subtitle *"Why a veterinarian started a social enterprise"* (which surfaced the founder's profession on first read) is now *"Why a collective took on a problem most institutions step around."*
+
+### Newsletter intro on the placeholder /blog page
+
+The current `/blog` route still uses the placeholder `InsightsPage`; it surfaced "Thoughts ... by Dr. Victor Mugambi Nyaga" twice. Both lines retired in favour of "Honest perspectives on development, philanthropy, and challenging conventional thinking from the AnduBer collective." Full newsletter de-personalisation lands with Round 2 / Commit 4.
+
+### Verified
+
+- `npm run build` — passing.
+- `npm run lint` — passing.
+
+---
+
 ## Round 2, Commit 1 — Light mode contrast fixes (CRITICAL)
 
 **Why:** users reported illegible text on cream backgrounds. Root causes: (a) my Phase-3 "dark" sections (Hero, SiloTrap, HomeContact, InsightsTeaser, ThreeEngines) hardcoded `text-cream-200/300` and `bg-plum-X`; when the user forced light mode, the wrapper flipped to cream but the inner cream-on-cream texts vanished. (b) the existing palette's `text-gold-700` was `#a87545`, which only hits ~3.7:1 on cream — below WCAG AA body. (c) several legacy files used `text-plum-400` / `text-plum-500` which are ~3:1 on cream. (d) `placeholder-plum-500` and `bg-plum-500 text-white` status badges failed AA.

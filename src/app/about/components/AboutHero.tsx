@@ -4,9 +4,9 @@ import { motion } from "framer-motion";
 import Container from "@/components/ui/Container";
 
 /**
- * About hero. The name itself is the headline — Andu (Kimbeere, "people")
- * + Ber (Luo, "good") — typeset as the visual centerpiece so the
- * etymology is the first thing visitors encounter.
+ * About hero. The name itself is the headline — Andu (people) + Ber (good),
+ * a fusion of two African cultures — typeset as the visual centerpiece so
+ * the etymology is the first thing visitors encounter.
  */
 export default function AboutHero() {
   return (
@@ -48,7 +48,7 @@ export default function AboutHero() {
             </h1>
           </motion.div>
 
-          {/* Etymology breakdown */}
+          {/* Etymology — the meaning, without naming the specific cultures */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -59,18 +59,18 @@ export default function AboutHero() {
               <p className="text-[10px] uppercase tracking-[0.2em] text-token-muted font-semibold mb-1">
                 Andu
               </p>
-              <p className="font-serif text-xl text-token-gold mb-1">people</p>
-              <p className="text-sm text-token-secondary italic font-accent">
-                from Kĩmbeere
+              <p className="font-serif text-2xl text-token-gold mb-1">people</p>
+              <p className="text-sm text-token-secondary italic font-accent leading-snug">
+                The room we keep gathering — diverse, plural, unlikely.
               </p>
             </div>
             <div className="p-5 rounded-2xl border border-plum-200 dark:border-plum-700 bg-white/50 dark:bg-plum-800/40 backdrop-blur-sm">
               <p className="text-[10px] uppercase tracking-[0.2em] text-token-muted font-semibold mb-1">
                 Ber
               </p>
-              <p className="font-serif text-xl text-token-teal mb-1">good</p>
-              <p className="text-sm text-token-secondary italic font-accent">
-                from Dholuo
+              <p className="font-serif text-2xl text-token-teal mb-1">good</p>
+              <p className="text-sm text-token-secondary italic font-accent leading-snug">
+                The intention we won&rsquo;t compromise on.
               </p>
             </div>
           </motion.div>
@@ -81,8 +81,8 @@ export default function AboutHero() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="font-accent italic text-lg md:text-xl text-token-secondary max-w-[60ch] mx-auto leading-snug"
           >
-            A deliberate fusion of two Kenyan languages — and our core belief:
-            innovation happens at the intersection.
+            A fusion of two African cultures — and our core belief: innovation
+            happens at the intersection.
           </motion.p>
         </div>
       </Container>

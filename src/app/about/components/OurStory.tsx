@@ -28,7 +28,7 @@ export default function OurStory() {
               The bet behind <span className="text-gradient-gold">AnduBer</span>
             </h2>
             <p className="font-accent italic text-lg md:text-xl text-token-secondary leading-snug max-w-[60ch]">
-              Why a veterinarian started a social enterprise.
+              Why a collective took on a problem most institutions step around.
             </p>
           </motion.div>
 

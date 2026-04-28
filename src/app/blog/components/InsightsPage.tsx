@@ -51,10 +51,10 @@ export default function InsightsPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-lg md:text-xl text-plum-600 dark:text-cream-300 max-w-3xl mx-auto"
+              className="text-lg md:text-xl text-plum-700 dark:text-cream-300 max-w-3xl mx-auto"
             >
-              Thoughts on development, philanthropy, and challenging conventional thinking
-              by Dr. Victor Mugambi Nyaga
+              Honest perspectives on development, philanthropy, and challenging
+              conventional thinking from the AnduBer collective.
             </motion.p>
           </div>
         </Container>
@@ -97,8 +97,8 @@ export default function InsightsPage() {
                 </Button>
               </a>
 
-              <p className="mt-6 text-sm text-plum-400 dark:text-cream-400">
-                Published on LinkedIn by Dr. Victor Mugambi Nyaga
+              <p className="mt-6 text-sm text-plum-700 dark:text-cream-300/70">
+                Published on LinkedIn by the AnduBer collective.
               </p>
             </motion.div>
           </div>

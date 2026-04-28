@@ -4,7 +4,7 @@ import InsightsPage from "./components/InsightsPage";
 export const metadata: Metadata = {
   title: "Insights",
   description:
-    "Common Sense is Not Common - Thoughts on development, philanthropy, and challenging conventional thinking by Dr. Victor Mugambi Nyaga.",
+    "Honest perspectives on development, philanthropy, and challenging conventional thinking from the AnduBer collective.",
 };
 
 export default function BlogPage() {
