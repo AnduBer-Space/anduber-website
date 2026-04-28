@@ -2,6 +2,47 @@
 
 A running log of each commit in the redesign. Newest first.
 
+## Round 2, Commit 7 — Final QA pass + dead-code cleanup
+
+**Why:** the round shipped six commits in series. This is the cleanup pass — removing files that are no longer reachable, tightening JSDoc that referenced removed credentials, and a final build/lint verification.
+
+### Removed (orphan / dead code)
+
+The blog rebuild in Commit 3 left these legacy components unreferenced. Confirmed via grep that nothing imports them, then deleted:
+
+- `src/app/blog/components/BlogList.tsx`
+- `src/app/blog/components/InsightsPage.tsx`
+- `src/app/blog/components/BlogHero.tsx`
+- `src/app/blog/[slug]/components/BlogPostDetail.tsx`
+- `src/data/blog.ts`
+
+The new blog system in `src/lib/blog.ts` defines its own `BlogPost` interface, so the legacy `BlogPost` interface in `src/types/index.ts` was also retired (replaced with a one-line comment pointing readers at the new location).
+
+### Tightened
+
+- `src/types/index.ts` — `TeamMember.credentials` JSDoc no longer carries the founder&rsquo;s old credential text as an example. New copy: *"Optional pre-formatted credentials line shown next to the role. Generally unused — AnduBer favours a collective framing over individual credentials."*
+
+### Verified end-to-end
+
+- `npm run build` — passing across all 29 routes (homepage, /what-we-do, /our-approach, /our-work + 2 case studies, /about, /blog + 3 posts, /contact, /join, /governance, plus the redirected legacy paths).
+- `npm run lint` — passing.
+- Contact form integration: `src/app/contact/components/ContactForm.tsx` still POSTs to `/api/contact` with the existing Resend wiring — untouched apart from the `?intent=…` pre-fill plumbing added in the original Phase 5.
+- Theme toggle: 3-state Hybrid / Dark / Light still wired through `ThemeProvider`, inline bootstrap script in `layout.tsx`, and the segmented popover in `Header`.
+- Start Here picker: still floats bottom-right except on `/contact`; intent query param still pre-fills the contact form.
+- Mobile menu: full-screen overlay introduced in Commit 6.
+- Redirects (`/ecosystem` → `/what-we-do`, `/model` → `/our-approach`, `/projects` → `/our-work`, `/projects/:slug` → `/our-work/:slug`) — still in `next.config.mjs`.
+
+### Final round summary
+
+Seven commits: contrast fix → de-centred founder + generic etymology → real blog → newsletter polish → motion primitives → mobile menu upgrade → cleanup.
+
+What I could not verify from this session:
+- Visual appearance of every page in every theme on real devices — needs `npm run screenshots` locally (Playwright script ships with the repo).
+- Lighthouse 95+ — needs to run against the live deploy or a local prod build.
+- Resend deliverability — needs a real form submission to confirm delivery to `info@anduberinnovate.space` (the env var `RESEND_API_KEY` is the only thing the form depends on; nothing in this round changed the API route or `lib/email.ts`).
+
+---
+
 ## Round 2, Commit 6 — Mobile-specific enhancements
 
 **Why:** the previous mobile menu was a 320 px right-drawer — functional but not premium. The brief asked for "design-award" quality on mobile, large tap targets, touch-optimised interactions, and thumb-reach action buttons. This commit upgrades the mobile experience.

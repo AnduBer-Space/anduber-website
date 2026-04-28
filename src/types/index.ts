@@ -31,29 +31,14 @@ export interface Project {
   engine?: "partners" | "labs" | "gathering";
 }
 
-export interface BlogPost {
-  id: string;
-  slug: string;
-  title: string;
-  excerpt: string;
-  content: string;
-  author: {
-    name: string;
-    image: string;
-    role: string;
-  };
-  category: string;
-  tags: string[];
-  image: string;
-  publishedAt: string;
-  readTime: number;
-}
+// The blog system now defines its own BlogPost interface in src/lib/blog.ts.
 
 export interface TeamMember {
   id: string;
   name: string;
   role: string;
-  /** Optional formatted credentials line (e.g. "DVM, University of Nairobi · MIPH, Liverpool John Moores University"). */
+  /** Optional pre-formatted credentials line shown next to the role. Generally
+   *  unused — AnduBer favours a collective framing over individual credentials. */
   credentials?: string;
   bio: string;
   image: string;
