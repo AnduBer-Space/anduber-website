@@ -2,6 +2,74 @@
 
 A running log of each commit in the redesign. Newest first.
 
+## Round 2, Commit 3 — Real blog system + three seed posts
+
+**Why:** the previous `/blog` was a "Coming Soon" placeholder. The new system is a proper file-based blog driven by markdown content with frontmatter — easy to author, fast to render, deploys with the site.
+
+### Stack
+
+- `gray-matter` — parses frontmatter at build time.
+- `marked` — renders the markdown body with a custom renderer that injects stable heading IDs for the in-post Table of Contents.
+- `@tailwindcss/typography` — the `prose` styles for the post body, with brand-token overrides (gold links, plum text, gold-bordered blockquotes).
+
+No MDX runtime — posts are plain markdown so authors don&rsquo;t need to learn JSX, and we don&rsquo;t pay for a runtime renderer.
+
+### Data layer
+
+`src/lib/blog.ts` exposes:
+
+- `getAllPosts()` — reads every `.md`/`.mdx` under `content/blog/`, sorts newest-first, excludes `draft: true` posts in production.
+- `getPostBySlug(slug)`
+- `getRelatedPosts(post, max)` — picks posts that share at least one tag.
+- `getAllTags()` — used by the index filter.
+
+Each `BlogPost` carries pre-rendered HTML, plain markdown, an estimated reading time (200 wpm), and a `headings` array used to drive the TOC.
+
+### Frontmatter contract
+
+```yaml
+title: required string
+date: required YYYY-MM-DD
+excerpt: required ~150-char string
+tags: required array of strings
+author: optional (defaults to "AnduBer collective")
+cover: optional /public path
+draft: optional boolean
+```
+
+### Content directory
+
+`content/blog/` (sibling to `src/`) — three seed posts, each grounded in a real AnduBer working stance, written in the collective voice:
+
+- `boreholes-drilled-already-lost.md` — outputs vs. outcomes; why the donor measurement convention is broken.
+- `quotas-are-not-a-side-benefit.md` — Maji Maisha governance reflection on the women&rsquo;s seats decision.
+- `applied-intersectionality-not-a-buzzword.md` — operationalising Crenshaw&rsquo;s framework, for funders.
+
+### UI
+
+- `src/app/blog/components/BlogIndex.tsx` — replaces the "Coming Soon" hero. Tag filter pills (all + per-tag); responsive 1/2/3-column post grid with cards that show date, reading time, title, italic excerpt, two tag chips, and a hover-state arrow CTA. The hero retains the *Common Sense is Not Common* branding but reframes it in the collective voice and offers a LinkedIn subscribe link separately from the in-site browse.
+- `src/app/blog/[slug]/components/BlogPost.tsx` — full post template. Hero (date · reading time · author, h1, italic excerpt, tag chips), body in a `prose-lg` article with brand-token overrides, sticky desktop sidebar with on-page TOC + share buttons, mobile-stacked share row, and a "More from the collective" related-posts block based on tag overlap.
+- `src/app/blog/[slug]/components/ShareButtons.tsx` — LinkedIn, X (Twitter), and copy-link with a copied checkmark. Server-rendered fallback URL uses `https://anduber.org` when window isn&rsquo;t available.
+
+### Routes
+
+- `src/app/blog/page.tsx` and `src/app/blog/[slug]/page.tsx` rewritten to use the new lib + components. `generateStaticParams` walks the content directory; `generateMetadata` builds OpenGraph article metadata per post. Both pages close with the `<HomeContact />` CTA so readers have a clear path forward.
+
+### Build output
+
+Three statically prerendered post pages (`/blog/boreholes-drilled-already-lost`, `/blog/quotas-are-not-a-side-benefit`, `/blog/applied-intersectionality-not-a-buzzword`). Index 2.86 kB / 150 kB FLJS, posts 3.55 kB / 150 kB.
+
+### What this commit does NOT yet cover
+
+- Final newsletter de-personalisation copy beyond the placeholder. Round 2 / Commit 4 sweeps the homepage `<InsightsTeaser />` section copy as a focused pass.
+
+### Verified
+
+- `npm run build` — passing (29 routes total).
+- `npm run lint` — passing.
+
+---
+
 ## Round 2, Commit 2 — De-center founder + generic name etymology
 
 **Why:** AnduBer is an organisation and a movement, not a personal brand. The previous build leaned too heavily on a founder profile and named specific cultures/languages that the team didn't want surfaced. Both fixed.

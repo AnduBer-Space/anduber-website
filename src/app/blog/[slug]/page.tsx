@@ -1,45 +1,51 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { blogPosts } from "@/data/blog";
-import BlogPostDetail from "./components/BlogPostDetail";
+import BlogPostView from "./components/BlogPost";
+import { getAllPosts, getPostBySlug, getRelatedPosts } from "@/lib/blog";
+import HomeContact from "@/components/sections/HomeContact";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
-  return blogPosts.map((post) => ({
-    slug: post.slug,
-  }));
+  return getAllPosts().map((post) => ({ slug: post.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const post = blogPosts.find((p) => p.slug === slug);
+  const post = getPostBySlug(slug);
 
   if (!post) {
-    return {
-      title: "Post Not Found",
-    };
+    return { title: "Post Not Found" };
   }
 
   return {
     title: post.title,
     description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      type: "article",
+      publishedTime: post.isoDate,
+    },
   };
 }
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
-  const post = blogPosts.find((p) => p.slug === slug);
+  const post = getPostBySlug(slug);
 
   if (!post) {
     notFound();
   }
 
-  const relatedPosts = blogPosts
-    .filter((p) => p.id !== post.id && p.category === post.category)
-    .slice(0, 3);
+  const related = getRelatedPosts(post, 3);
 
-  return <BlogPostDetail post={post} relatedPosts={relatedPosts} />;
+  return (
+    <>
+      <BlogPostView post={post} related={related} />
+      <HomeContact />
+    </>
+  );
 }
