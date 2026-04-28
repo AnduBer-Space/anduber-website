@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, X, ArrowRight, Heart } from "lucide-react";
 
-const STORAGE_KEY = "anduber-comethru-popup-seen";
+// Bumped key so visitors who dismissed the launch popup before the redesign
+// see the relaunched version once. Increment again when we re-pin the popup.
+const STORAGE_KEY = "anduber-comethru-popup-seen-v2";
 const COMETHRU_URL = "https://comethru.anduber.org";
 
 export default function ComeThruAnnouncement() {
@@ -37,11 +39,13 @@ export default function ComeThruAnnouncement() {
   const handleLearnMore = () => {
     closePopup();
     if (typeof window !== "undefined") {
+      // Post-redesign anchor: the homepage Three Engines section is what the
+      // brief replaced the old "ecosystem" anchor with.
       if (window.location.pathname === "/") {
-        const el = document.getElementById("ecosystem");
+        const el = document.getElementById("three-engines");
         el?.scrollIntoView({ behavior: "smooth", block: "start" });
       } else {
-        window.location.href = "/#ecosystem";
+        window.location.href = "/#three-engines";
       }
     }
   };
