@@ -8,6 +8,7 @@ import ComeThruAnnouncement from "@/components/ui/ComeThruAnnouncement";
 import StartHerePicker from "@/components/ui/StartHerePicker";
 import ScrollThread from "@/components/ui/ScrollThread";
 import CursorGlow from "@/components/ui/CursorGlow";
+import SmoothScroll from "@/components/providers/SmoothScroll";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 const inter = Inter({
@@ -115,6 +116,7 @@ export default function RootLayout({
         className={`${inter.variable} ${playfair.variable} ${fraunces.variable} font-sans antialiased`}
       >
         <ThemeProvider>
+          <SmoothScroll />
           <a
             href="#main-content"
             className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-6 focus:py-3 focus:rounded-full focus:bg-gold-400 focus:text-plum-900 focus:font-medium focus:outline-none"

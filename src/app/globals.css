@@ -152,6 +152,26 @@
     scroll-behavior: smooth;
   }
 
+  /* Lenis smooth-scroll integration. Lenis adds these classes to <html> when
+     active; the rules ensure scroll-behavior doesn't fight the JS-driven
+     animation, and lock scrolling cleanly when the menu/modal locks the body. */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  html.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  html.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  html.lenis.lenis-stopped {
+    overflow: hidden;
+  }
+  html.lenis.lenis-smooth iframe {
+    pointer-events: none;
+  }
+
   body {
     @apply font-sans antialiased;
     overflow-x: hidden;

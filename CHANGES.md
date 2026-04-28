@@ -2,6 +2,28 @@
 
 A running log of each commit in the redesign. Newest first.
 
+## Session A1 — Lenis smooth-scroll
+
+**Why:** premium feel for scroll. Lenis lerps the viewport to keep wheel/trackpad input feeling weighted instead of flat.
+
+### Changes
+
+- `npm install lenis` (1.3.23, ~7 kB gzipped).
+- `src/components/providers/SmoothScroll.tsx` — new client provider. Instantiates Lenis with a tuned config (`duration: 1.05`, `lerp: 0.09`, easing curve from the Lenis docs), drives it with `requestAnimationFrame`, cleans up on unmount.
+- `src/app/layout.tsx` — `<SmoothScroll />` mounted inside `<ThemeProvider>` so anchor scrolling and modal behaviour stay consistent.
+- `src/app/globals.css` — added the Lenis-recommended integration rules (`html.lenis`, `html.lenis-smooth`, `html.lenis-stopped`, `[data-lenis-prevent]`). Ensures `scroll-behavior: smooth` doesn&rsquo;t fight Lenis and that body-lock-while-modal-open still works.
+
+### Reduced-motion
+
+The provider checks `prefers-reduced-motion: reduce` on mount and skips Lenis entirely if set. Touch input keeps native scroll regardless (`syncTouch: false`) so OS-level inertia and accessibility gestures aren&rsquo;t replaced.
+
+### Verified
+
+- `npm run build` — passing.
+- `npm run lint` — passing.
+
+---
+
 ## Round 2, Commit 7 — Final QA pass + dead-code cleanup
 
 **Why:** the round shipped six commits in series. This is the cleanup pass — removing files that are no longer reachable, tightening JSDoc that referenced removed credentials, and a final build/lint verification.
