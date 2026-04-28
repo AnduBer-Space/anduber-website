@@ -58,7 +58,7 @@ export default function ProjectDetail({ project, relatedProjects }: Props) {
                       ? "bg-teal-500 text-white"
                       : project.status === "completed"
                       ? "bg-gold-500 text-plum-900"
-                      : "bg-plum-500 text-white"
+                      : "bg-plum-700 text-cream-50"
                   }`}
                 >
                   {project.status.charAt(0).toUpperCase() +
@@ -193,7 +193,7 @@ export default function ProjectDetail({ project, relatedProjects }: Props) {
                   >
                     <div className="w-full h-full flex items-center justify-center">
                       <svg
-                        className="w-8 h-8 text-plum-400 dark:text-plum-600 opacity-50"
+                        className="w-8 h-8 text-plum-600 dark:text-cream-300/40 opacity-50"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"

@@ -168,7 +168,7 @@ export default function ContactForm() {
                   <h3 className="font-medium text-plum-900 dark:text-cream-200 mb-1">Email</h3>
                   <a
                     href={`mailto:${siteConfig.email}`}
-                    className="text-plum-600 dark:text-cream-300 hover:text-teal-400 transition-colors"
+                    className="text-plum-600 dark:text-cream-300 hover:text-teal-700 dark:hover:text-teal-400 transition-colors"
                   >
                     {siteConfig.email}
                   </a>
@@ -183,7 +183,7 @@ export default function ContactForm() {
                   <h3 className="font-medium text-plum-900 dark:text-cream-200 mb-1">Phone</h3>
                   <a
                     href={`tel:${siteConfig.phone}`}
-                    className="text-plum-600 dark:text-cream-300 hover:text-teal-400 transition-colors"
+                    className="text-plum-600 dark:text-cream-300 hover:text-teal-700 dark:hover:text-teal-400 transition-colors"
                   >
                     {siteConfig.phone}
                   </a>
@@ -197,7 +197,7 @@ export default function ContactForm() {
                 <div>
                   <h3 className="font-medium text-plum-900 dark:text-cream-200 mb-1">Headquarters</h3>
                   <p className="text-plum-600 dark:text-cream-300">{siteConfig.address}</p>
-                  <p className="text-sm text-plum-400 dark:text-plum-500">Global Reach</p>
+                  <p className="text-sm text-plum-700 dark:text-cream-300/70">Global Reach</p>
                 </div>
               </div>
 
@@ -211,7 +211,7 @@ export default function ContactForm() {
                     href={siteConfig.socials.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-plum-600 dark:text-cream-300 hover:text-teal-400 transition-colors"
+                    className="text-plum-600 dark:text-cream-300 hover:text-teal-700 dark:hover:text-teal-400 transition-colors"
                   >
                     Connect with us
                   </a>
@@ -228,7 +228,7 @@ export default function ContactForm() {
                     href={siteConfig.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-plum-600 dark:text-cream-300 hover:text-teal-400 transition-colors"
+                    className="text-plum-600 dark:text-cream-300 hover:text-teal-700 dark:hover:text-teal-400 transition-colors"
                   >
                     anduber.org
                   </a>

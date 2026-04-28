@@ -63,7 +63,7 @@ export default function ProjectsPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-lg md:text-xl text-plum-600 dark:text-plum-200 max-w-3xl mx-auto"
+              className="text-lg md:text-xl text-plum-700 dark:text-cream-300/80 max-w-3xl mx-auto"
             >
               Explore our portfolio of community-led development projects making
               a difference across East Africa.
@@ -78,7 +78,7 @@ export default function ProjectsPage() {
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
             {/* Search */}
             <div className="relative w-full md:w-80">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-plum-400" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-plum-700 dark:text-cream-300/70" />
               <input
                 type="text"
                 placeholder="Search projects..."
@@ -90,7 +90,7 @@ export default function ProjectsPage() {
 
             {/* Filters */}
             <div className="flex flex-wrap gap-3 items-center">
-              <Filter className="w-5 h-5 text-plum-500 dark:text-plum-300" />
+              <Filter className="w-5 h-5 text-plum-700 dark:text-cream-300/80" />
 
               <select
                 value={typeFilter}
@@ -119,7 +119,7 @@ export default function ProjectsPage() {
           </div>
 
           {/* Results count */}
-          <p className="mt-4 text-sm text-plum-500 dark:text-plum-300">
+          <p className="mt-4 text-sm text-plum-700 dark:text-cream-300/80">
             Showing {filteredProjects.length} of {projects.length} projects
           </p>
         </Container>
@@ -144,7 +144,7 @@ export default function ProjectsPage() {
                 animate={{ opacity: 1 }}
                 className="text-center py-20"
               >
-                <p className="text-plum-500 dark:text-plum-300 text-lg mb-4">
+                <p className="text-plum-700 dark:text-cream-300/80 text-lg mb-4">
                   No projects found matching your criteria.
                 </p>
                 <Button
@@ -181,7 +181,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           <div className="relative aspect-[16/10] bg-gradient-to-br from-plum-200 to-plum-300 dark:from-plum-700 dark:to-plum-800">
             <div className="absolute inset-0 flex items-center justify-center">
               <svg
-                className="w-16 h-16 text-plum-400 dark:text-plum-600 opacity-50"
+                className="w-16 h-16 text-plum-600 dark:text-cream-300/40 opacity-50"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -203,7 +203,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                     ? "bg-teal-500 text-white"
                     : project.status === "completed"
                     ? "bg-gold-500 text-plum-900"
-                    : "bg-plum-500 text-white"
+                    : "bg-plum-700 text-cream-50"
                 }`}
               >
                 {project.status.charAt(0).toUpperCase() + project.status.slice(1)}
@@ -220,7 +220,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
           {/* Content */}
           <div className="p-6">
-            <div className="flex items-center text-sm text-plum-500 dark:text-plum-300 mb-2">
+            <div className="flex items-center text-sm text-plum-700 dark:text-cream-300/80 mb-2">
               <MapPin className="w-4 h-4 mr-1" />
               {project.location}
             </div>
@@ -229,7 +229,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               {project.title}
             </h3>
 
-            <p className="text-plum-600 dark:text-plum-200 text-sm line-clamp-2 mb-4">
+            <p className="text-plum-700 dark:text-cream-300/80 text-sm line-clamp-2 mb-4">
               {project.shortDescription}
             </p>
 
@@ -241,7 +241,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                     {item.value.toLocaleString()}
                     {item.suffix}
                   </span>
-                  <span className="text-xs text-plum-500 dark:text-plum-300">
+                  <span className="text-xs text-plum-700 dark:text-cream-300/80">
                     {item.label}
                   </span>
                 </div>

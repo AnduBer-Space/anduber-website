@@ -5,20 +5,21 @@ import { ArrowRight, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
+import HybridSection from "@/components/ui/HybridSection";
 import ConstellationBackground from "@/components/sections/hero/ConstellationBackground";
 
 /**
- * Homepage hero. The constellation in the background IS the methodology made
- * visual: dots representing different disciplines that periodically connect
- * with thin gold lines, demonstrating Applied Intersectionality without a
- * single technical word. The text overlay tells visitors what AnduBer does in
- * one sentence, then offers two clear next steps.
+ * Homepage hero. The constellation in the background is the methodology made
+ * visual. Wrapped in HybridSection variant="dark" so the visitor's theme
+ * preference is respected — in force-light mode the hero flips to a cream
+ * palette while keeping the same composition.
  */
 export default function Hero() {
   return (
-    <section
-      className="dark relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-plum-900 text-cream-200"
-      data-section-mode="dark"
+    <HybridSection
+      variant="dark"
+      padding="none"
+      className="relative min-h-[100svh] flex items-center justify-center overflow-hidden"
     >
       <ConstellationBackground />
 
@@ -29,11 +30,15 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full
-                       border border-gold-400/30 bg-plum-800/40 backdrop-blur-sm
-                       text-gold-200 text-xs uppercase tracking-[0.18em] mb-8"
+                       border border-token-glass bg-token-secondary backdrop-blur-sm
+                       text-token-gold text-xs uppercase tracking-[0.18em] mb-8"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-gold-400" />
-            <span>Andu (People) + Ber (Good)</span>
+            <span
+              className="w-1.5 h-1.5 rounded-full"
+              style={{ background: "var(--accent-gold)" }}
+              aria-hidden="true"
+            />
+            <span>People + Good</span>
           </motion.div>
 
           <motion.h1
@@ -42,7 +47,7 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.05 }}
             className="font-serif font-bold leading-[1.05] tracking-tight
                        text-4xl sm:text-5xl md:text-6xl lg:text-7xl
-                       text-cream-200"
+                       text-token-primary"
           >
             An Engine for{" "}
             <span className="text-gradient-gold">Applied Imagination</span>
@@ -53,7 +58,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.15 }}
             className="font-accent italic text-lg sm:text-xl md:text-2xl
-                       text-cream-300/90 mt-7 mx-auto max-w-[52ch] leading-snug"
+                       text-token-secondary mt-7 mx-auto max-w-[52ch] leading-snug"
           >
             We solve complex problems by uniting people who don&rsquo;t normally
             work together, and turning their ideas into systems that last.
@@ -82,23 +87,22 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="mt-12 text-cream-300/70 italic text-sm md:text-base"
+            className="mt-12 text-token-muted italic text-sm md:text-base"
           >
             &ldquo;From friction to flow.&rdquo;
           </motion.p>
         </div>
       </Container>
 
-      {/* Scroll cue — anchored inside the hero so it doesn't stack on top of the next section */}
       <motion.a
         href="#the-silo-trap"
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.1, duration: 0.6 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10
-                   flex flex-col items-center gap-2 text-cream-300/70
-                   hover:text-gold-300 transition-colors duration-300
-                   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-2 focus-visible:ring-offset-plum-900 rounded"
+                   flex flex-col items-center gap-2 text-token-secondary
+                   hover:text-token-gold transition-colors duration-300
+                   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:ring-offset-2 rounded"
         aria-label="Scroll to learn how we work"
       >
         <span className="font-accent italic text-sm">How does it work?</span>
@@ -108,6 +112,6 @@ export default function Hero() {
           aria-hidden="true"
         />
       </motion.a>
-    </section>
+    </HybridSection>
   );
 }

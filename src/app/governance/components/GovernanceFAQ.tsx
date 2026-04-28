@@ -63,7 +63,7 @@ function FAQItem({
         </span>
         <ChevronDown
           className={cn(
-            "w-5 h-5 flex-shrink-0 text-plum-400 transition-transform duration-300",
+            "w-5 h-5 flex-shrink-0 text-plum-700 dark:text-cream-300/80 transition-transform duration-300",
             isOpen && "rotate-180"
           )}
         />

@@ -2,6 +2,69 @@
 
 A running log of each commit in the redesign. Newest first.
 
+## Round 2, Commit 1 — Light mode contrast fixes (CRITICAL)
+
+**Why:** users reported illegible text on cream backgrounds. Root causes: (a) my Phase-3 "dark" sections (Hero, SiloTrap, HomeContact, InsightsTeaser, ThreeEngines) hardcoded `text-cream-200/300` and `bg-plum-X`; when the user forced light mode, the wrapper flipped to cream but the inner cream-on-cream texts vanished. (b) the existing palette's `text-gold-700` was `#a87545`, which only hits ~3.7:1 on cream — below WCAG AA body. (c) several legacy files used `text-plum-400` / `text-plum-500` which are ~3:1 on cream. (d) `placeholder-plum-500` and `bg-plum-500 text-white` status badges failed AA.
+
+### Token system tightened
+
+`src/app/globals.css`:
+- `--text-muted` (light) now `#5C3A4A` (was `#6d4a5a`) — ratio ~9:1 on cream, matches the user's spec.
+- `--accent-gold` (light) now `#8B6914` (was `#B8860B`) — ratio ~4.8:1 on cream (passes AA body).
+- New `--accent-gold-strong` token resolving to `#6B5212` in light / `#F5E6C8` in dark — for small text on light surfaces or punchy callouts on dark.
+- New `.text-token-gold-strong` utility.
+- Form input class: placeholder strengthened (`placeholder:text-plum-600` light, `placeholder:text-cream-300/80` dark).
+
+`tailwind.config.ts`:
+- `gold-700` retuned to `#8B6914` (was `#a87545`). All 47 `text-gold-700` usages across the site now pass WCAG AA on cream automatically.
+- `gold-800` retuned to `#6B5212` for an even safer small-text variant.
+- `gold-900` / `gold-950` shifted accordingly.
+
+### Sections that hardcoded dark — now mode-aware
+
+The five sections that previously declared themselves dark (`.dark` class on the section, `bg-plum-900 text-cream-200`) are now wrapped in `<HybridSection variant="dark">` with their internal text using `text-token-*` classes:
+
+- `src/components/sections/Hero.tsx`
+- `src/components/sections/SiloTrap.tsx`
+- `src/components/sections/HomeContact.tsx`
+- `src/components/sections/InsightsTeaser.tsx`
+- `src/components/sections/ThreeEngines.tsx`
+
+Effect: in `hybrid` and `dark` preferences they look exactly the same as before. In `light` preference they now flip to cream-on-plum-text correctly — no more invisible cream text on cream backgrounds.
+
+### Legacy components — `text-plum-400/500` swept
+
+Replaced patterns that were ~3:1 or worse on cream with `text-plum-700 dark:text-cream-300/{70,80}` (which is ~14:1 on cream and stays readable on dark plum):
+
+- `src/app/contact/components/ContactForm.tsx`
+- `src/app/ecosystem/components/EcosystemDetail.tsx` (still imported by `/what-we-do`)
+- `src/components/sections/Ecosystem.tsx` (same)
+- `src/app/projects/components/ProjectsPage.tsx`
+- `src/app/projects/[slug]/components/ProjectDetail.tsx` (still imported by `/our-work/[slug]`)
+- `src/app/governance/components/GovernanceFAQ.tsx` (chevron icon)
+- `src/components/sections/FeaturedProjects.tsx`
+- `src/components/layout/Footer.tsx` (copyright bar + headquarters subtitle)
+
+### Hover states — light-mode variants added
+
+`hover:text-teal-400` (light bright cyan, ~2:1 on cream) → `hover:text-teal-700 dark:hover:text-teal-400` across `ContactForm.tsx`. Other components were already using the paired form via Footer's earlier conversion.
+
+### Status badges — `bg-plum-500 text-white` rebuilt
+
+The "upcoming" project status badge mixed `#C4A882` background with `#FFFFFF` text — ~2:1, unreadable. Now `bg-plum-700 text-cream-50` (~14:1).
+
+### Verified
+
+- `npm run build` — passing, no size regression.
+- `npm run lint` — passing.
+
+### What this commit does NOT yet cover
+
+- Blog system stays on the legacy InsightsPage / BlogList components — those will be replaced wholesale by the new MDX-driven blog in the next commit.
+- Any remaining contrast issues in `/blog`, `/blog/[slug]` pages will land with that rebuild.
+
+---
+
 ## Phase 6 — Tooling: Playwright screenshots + final pass
 
 **Goal:** ship the deliverables that travel with the redesign, not just the redesign itself.

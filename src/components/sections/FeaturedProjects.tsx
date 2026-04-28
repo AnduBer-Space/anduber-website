@@ -59,7 +59,7 @@ export default function FeaturedProjects() {
               {/* Project Image */}
               <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-plum-200 dark:bg-plum-800">
                 <div className="absolute inset-0 bg-gradient-to-t from-plum-900/60 to-transparent z-10" />
-                <div className="absolute inset-0 flex items-center justify-center text-plum-400 dark:text-plum-600">
+                <div className="absolute inset-0 flex items-center justify-center text-plum-600 dark:text-cream-300/40">
                   <svg
                     className="w-24 h-24 opacity-30"
                     fill="none"
@@ -83,7 +83,7 @@ export default function FeaturedProjects() {
                         ? "bg-teal-500 text-white"
                         : currentProject.status === "completed"
                         ? "bg-gold-500 text-plum-900"
-                        : "bg-plum-500 text-white"
+                        : "bg-plum-700 text-cream-50"
                     }`}
                   >
                     {currentProject.status.charAt(0).toUpperCase() +

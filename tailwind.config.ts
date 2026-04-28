@@ -43,11 +43,11 @@ const config: Config = {
           300: "#e2c57c",
           400: "#D4AA6A", // accent gold (golden orb — dark-mode)
           500: "#c9956c", // copper
-          600: "#B8860B", // accent gold (light-mode contrast — WCAG AA on cream)
-          700: "#a87545",
-          800: "#8a5f3b",
-          900: "#724e34",
-          950: "#3d281a",
+          600: "#B8860B", // accent gold (light-mode contrast — passes AA at large sizes)
+          700: "#8B6914", // accent gold (light-mode body text — WCAG AA on cream, ~4.8:1)
+          800: "#6B5212", // strong gold accent for small light-mode text
+          900: "#4f3c0d",
+          950: "#2e2308",
         },
         cream: {
           50: "#FAF7F2", // light mode background primary (slightly warmer)

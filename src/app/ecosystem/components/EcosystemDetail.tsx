@@ -81,7 +81,7 @@ export default function EcosystemDetail() {
                     </p>
 
                     <div className={`p-4 rounded-xl ${colors.bg} border ${colors.border} mb-8`}>
-                      <p className="text-sm text-plum-400 dark:text-cream-400 uppercase tracking-wider mb-1">Revenue Model</p>
+                      <p className="text-sm text-plum-700 dark:text-cream-300/80 uppercase tracking-wider mb-1">Revenue Model</p>
                       <p className={`font-medium ${colors.text}`}>{arm.revenueModel}</p>
                     </div>
 
@@ -137,7 +137,7 @@ export default function EcosystemDetail() {
 
                         {/* Connection arrows */}
                         <div className="mt-8 pt-8 border-t border-cream-200 dark:border-plum-700">
-                          <p className="text-sm text-center text-plum-400 dark:text-cream-400">
+                          <p className="text-sm text-center text-plum-700 dark:text-cream-300/80">
                             <span className="text-teal-600 dark:text-teal-400">Partners</span> funds{" "}
                             <span className="text-gold-700 dark:text-gold-400">Labs</span> develops{" "}
                             <span className="text-gold-700 dark:text-gold-400">Gathering</span> invests

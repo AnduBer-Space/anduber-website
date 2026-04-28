@@ -160,7 +160,7 @@ export default function Footer() {
                   <MapPin className="w-5 h-5 text-teal-500 flex-shrink-0 mt-0.5" />
                   <div>
                     <span className="text-plum-600 dark:text-cream-300">{siteConfig.address}</span>
-                    <p className="text-sm text-plum-400 dark:text-plum-500">Headquarters | Global Reach</p>
+                    <p className="text-sm text-plum-700 dark:text-cream-300/70">Headquarters | Global Reach</p>
                   </div>
                 </li>
                 <li className="flex items-center gap-3">
@@ -201,9 +201,9 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className="border-t border-cream-200 dark:border-plum-800">
         <Container>
-          <div className="py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-plum-500">
+          <div className="py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-plum-700 dark:text-cream-300/70">
             <p>&copy; {new Date().getFullYear()} AnduBer. All rights reserved.</p>
-            <p className="italic text-plum-400 dark:text-cream-300/60">
+            <p className="italic text-plum-700 dark:text-cream-300/60">
               &ldquo;From Friction to Flow&rdquo;
             </p>
           </div>

@@ -3,20 +3,17 @@
 import { motion } from "framer-motion";
 import { Coins, Link2Off, Bandage } from "lucide-react";
 import Container from "@/components/ui/Container";
+import HybridSection from "@/components/ui/HybridSection";
 
 /**
- * The problem section. Sets up the methodology that follows.
- * Brand-named "The Silo Trap" (intellectual property — kept), with a
- * plain-language subtitle right underneath that tells visitors what it
- * actually means before they have to decode the term.
+ * The problem section. Brand-named "The Silo Trap" (intellectual property —
+ * kept), with a plain-language subtitle right underneath. Wrapped in
+ * HybridSection so it respects the user's theme preference.
  */
 
 type Failure = {
-  /** Brand name — never abbreviated. */
   name: string;
-  /** Plain-language subtitle, the friendly voice. */
   plain: string;
-  /** Body copy. */
   description: string;
   icon: typeof Coins;
 };
@@ -47,11 +44,7 @@ const FAILURES: Failure[] = [
 
 export default function SiloTrap() {
   return (
-    <section
-      id="the-silo-trap"
-      className="dark relative bg-plum-900 text-cream-200 py-24 lg:py-32 overflow-hidden"
-      data-section-mode="dark"
-    >
+    <HybridSection variant="dark" id="the-silo-trap" padding="xl">
       {/* Subtle broken-grid pattern hints at the "fragmented" theme */}
       <div className="absolute inset-0 opacity-[0.07] pointer-events-none">
         <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -59,14 +52,14 @@ export default function SiloTrap() {
             <pattern id="brokenGrid" width="10" height="10" patternUnits="userSpaceOnUse">
               <path
                 d="M 0 0 L 0 10 M 10 0 L 10 10 M 0 0 L 10 0 M 0 10 L 10 10"
-                stroke="#F5E6C8"
+                stroke="currentColor"
                 strokeWidth="0.3"
                 fill="none"
                 strokeDasharray="2 2"
               />
             </pattern>
           </defs>
-          <rect width="100%" height="100%" fill="url(#brokenGrid)" />
+          <rect width="100%" height="100%" fill="url(#brokenGrid)" className="text-token-secondary" />
         </svg>
       </div>
 
@@ -78,13 +71,13 @@ export default function SiloTrap() {
           transition={{ duration: 0.6 }}
           className="max-w-3xl mb-14"
         >
-          <p className="text-xs uppercase tracking-[0.22em] font-semibold text-gold-400 mb-4">
+          <p className="text-xs uppercase tracking-[0.22em] font-semibold text-token-gold mb-4">
             The Problem
           </p>
-          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-cream-200 leading-[1.05] mb-5">
+          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-token-primary leading-[1.05] mb-5">
             The <span className="text-gradient-gold">Silo Trap</span>
           </h2>
-          <p className="font-accent italic text-lg md:text-xl text-cream-300/90 max-w-[60ch] leading-snug">
+          <p className="font-accent italic text-lg md:text-xl text-token-secondary max-w-[60ch] leading-snug">
             Why most solutions to big problems fail.
           </p>
         </motion.div>
@@ -97,21 +90,22 @@ export default function SiloTrap() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
-              className="group h-full p-6 lg:p-8 rounded-2xl border border-plum-700 bg-plum-800/40 backdrop-blur-sm
-                         transition-all duration-300 hover:border-gold-400/50 hover:bg-plum-800/60"
+              className="group h-full p-6 lg:p-8 rounded-2xl border bg-token-secondary backdrop-blur-sm
+                         transition-all duration-300 hover:-translate-y-0.5
+                         border-token-glass hover:border-gold-500/40 dark:hover:border-gold-400/50"
             >
-              <div className="w-12 h-12 rounded-xl bg-gold-400/10 flex items-center justify-center mb-6
-                              transition-all duration-300 group-hover:bg-gold-400/20">
-                <f.icon className="w-6 h-6 text-gold-400" aria-hidden="true" />
+              <div className="w-12 h-12 rounded-xl bg-gold-500/10 dark:bg-gold-400/10 flex items-center justify-center mb-6
+                              transition-all duration-300 group-hover:bg-gold-500/20 dark:group-hover:bg-gold-400/20">
+                <f.icon className="w-6 h-6 text-token-gold" aria-hidden="true" />
               </div>
 
-              <h3 className="font-serif text-xl md:text-2xl font-bold text-cream-200 mb-2 leading-tight">
+              <h3 className="font-serif text-xl md:text-2xl font-bold text-token-primary mb-2 leading-tight">
                 {f.name}
               </h3>
-              <p className="font-accent italic text-base text-cream-300/85 mb-4 leading-snug">
+              <p className="font-accent italic text-base text-token-secondary mb-4 leading-snug">
                 {f.plain}
               </p>
-              <p className="text-cream-300/80 leading-relaxed text-sm md:text-base">
+              <p className="text-token-secondary leading-relaxed text-sm md:text-base">
                 {f.description}
               </p>
             </motion.article>
@@ -125,13 +119,13 @@ export default function SiloTrap() {
           transition={{ duration: 0.6 }}
           className="text-center"
         >
-          <p className="font-serif text-xl md:text-2xl lg:text-3xl text-cream-200 italic max-w-3xl mx-auto leading-relaxed">
+          <p className="font-serif text-xl md:text-2xl lg:text-3xl text-token-primary italic max-w-3xl mx-auto leading-relaxed">
             AnduBer acts as the{" "}
-            <span className="text-teal-400 not-italic font-semibold">connective tissue</span>,
+            <span className="text-token-teal not-italic font-semibold">connective tissue</span>,
             turning friction into flow.
           </p>
         </motion.div>
       </Container>
-    </section>
+    </HybridSection>
   );
 }

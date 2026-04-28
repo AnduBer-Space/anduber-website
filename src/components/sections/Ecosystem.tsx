@@ -317,7 +317,7 @@ export default function Ecosystem() {
                             exit={{ opacity: 0, height: 0 }}
                             className="mt-4 pt-4 border-t border-cream-200 dark:border-plum-700"
                           >
-                            <p className="text-xs text-plum-400 dark:text-plum-500 mb-2 uppercase tracking-wider">
+                            <p className="text-xs text-plum-700 dark:text-cream-300/70 mb-2 uppercase tracking-wider">
                               Revenue Model
                             </p>
                             <p className="text-sm text-plum-600 dark:text-cream-300">{arm.revenueModel}</p>
