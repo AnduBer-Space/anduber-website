@@ -12,7 +12,16 @@ import {
 import Container from "@/components/ui/Container";
 import Logo from "@/components/ui/Logo";
 import HybridSection from "@/components/ui/HybridSection";
+import Marquee from "@/components/ui/motion/Marquee";
 import { siteConfig } from "@/data/site";
+
+const FOOTER_MARQUEE = [
+  "AnduBer collective",
+  "From friction to flow",
+  "Andu + Ber",
+  "Innovation at the intersection",
+  "Three engines, one ecosystem",
+];
 
 const socialLinks = [
   { icon: Linkedin, href: siteConfig.socials.linkedin, label: "LinkedIn" },
@@ -46,6 +55,18 @@ export default function Footer() {
       padding="none"
       className="border-t border-cream-200 dark:border-plum-800"
     >
+      {/* Footer marquee — subtle wraparound text strip above the newsletter */}
+      <div className="border-b border-cream-200 dark:border-plum-800">
+        <Marquee
+          items={FOOTER_MARQUEE}
+          duration={110}
+          direction="right"
+          className="py-3"
+          itemClassName="font-serif italic text-xl md:text-2xl text-token-secondary/55"
+          dividerClassName="text-token-gold/35 text-xl md:text-2xl"
+        />
+      </div>
+
       {/* Newsletter Section */}
       <div className="border-b border-cream-200 dark:border-plum-800">
         <Container>

@@ -1,4 +1,5 @@
 import Hero from "@/components/sections/Hero";
+import TaglineMarquee from "@/components/sections/TaglineMarquee";
 import SiloTrap from "@/components/sections/SiloTrap";
 import AppliedIntersectionality from "@/components/sections/AppliedIntersectionality";
 import ThreePillars from "@/components/sections/ThreePillars";
@@ -12,6 +13,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <TaglineMarquee variant="dark" />
       <SiloTrap />
       <AppliedIntersectionality />
       <ThreePillars />

@@ -2,6 +2,28 @@
 
 A running log of each commit in the redesign. Newest first.
 
+## Session A3 — Marquee tagline strips
+
+**Why:** subtle moving type adds rhythm and reinforces the brand vocabulary. Used sparingly — two instances total.
+
+### New primitive
+
+`src/components/ui/motion/Marquee.tsx` — pure CSS keyframe (`translate3d(0 → -50%)`) on a doubled content sequence for seamless looping. Configurable duration, direction, item/divider styling. Edge mask on the wrapper so items fade in/out at viewport edges. `prefers-reduced-motion` pauses the animation cleanly.
+
+### Two placements
+
+- **`src/components/sections/TaglineMarquee.tsx`** — homepage strip between Hero and SiloTrap. Six taglines drawn from the brand vocabulary ("Applied Intersectionality", "From friction to flow", "Three engines, one ecosystem", "Solve the whole web", "An Engine for Applied Imagination", "We are a room, not a name"). Italic serif, ~70% token-secondary opacity, gold dot dividers at 40% opacity. 90 s loop — slow enough not to compete with reading.
+- **Footer marquee** — added to `src/components/layout/Footer.tsx`, sits above the newsletter section, runs in the opposite direction at 110 s for variety. Five shorter taglines so the rhythm differs from the homepage strip. Italic serif at 55% opacity for a quieter tone (it's chrome, not content).
+
+Both inherit theme tokens (`text-token-secondary`, `text-token-gold`) so they look correct in hybrid / dark / light without per-mode logic.
+
+### Verified
+
+- `npm run build` — passing.
+- `npm run lint` — passing.
+
+---
+
 ## Session A2 — Page transitions: gold sweep + fade
 
 **Why:** Next.js page navigations should feel curated, not snappy and bare.
