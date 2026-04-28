@@ -7,6 +7,8 @@ import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
 import HybridSection from "@/components/ui/HybridSection";
 import ConstellationBackground from "@/components/sections/hero/ConstellationBackground";
+import GrainOverlay from "@/components/ui/motion/GrainOverlay";
+import MagneticButton from "@/components/ui/motion/MagneticButton";
 
 /**
  * Homepage hero. The constellation in the background is the methodology made
@@ -22,6 +24,8 @@ export default function Hero() {
       className="relative min-h-[100svh] flex items-center justify-center overflow-hidden"
     >
       <ConstellationBackground />
+      {/* Subtle grain — adds tactile depth on the dark backdrop */}
+      <GrainOverlay opacity={0.05} />
 
       <Container className="relative z-10 pt-32 pb-24 md:pt-36 md:pb-28">
         <div className="max-w-4xl mx-auto text-center">
@@ -70,17 +74,21 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.3 }}
             className="mt-10 flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <Link href="#how-we-work" scroll={true}>
-              <Button variant="primary" size="lg">
-                See how we work
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-            </Link>
-            <Link href="/contact">
-              <Button variant="outline" size="lg">
-                Partner with us
-              </Button>
-            </Link>
+            <MagneticButton strength={10}>
+              <Link href="#how-we-work" scroll={true}>
+                <Button variant="primary" size="lg">
+                  See how we work
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+              </Link>
+            </MagneticButton>
+            <MagneticButton strength={10}>
+              <Link href="/contact">
+                <Button variant="outline" size="lg">
+                  Partner with us
+                </Button>
+              </Link>
+            </MagneticButton>
           </motion.div>
 
           <motion.p

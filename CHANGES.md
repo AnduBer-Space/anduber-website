@@ -2,6 +2,41 @@
 
 A running log of each commit in the redesign. Newest first.
 
+## Round 2, Commit 5 — Design enhancements: motion primitives + signature interactions
+
+**Why:** to push the redesign toward design-award territory, the brand needs signature interactions that visitors *feel*, not just see. This commit adds a small toolkit of reusable motion primitives and applies them to the highest-leverage surfaces.
+
+### New motion primitives (in `src/components/ui/motion/`)
+
+- **`MagneticButton`** — wraps any element in a magnetic-pull effect on desktop pointers. Element follows the cursor with a spring response (stiffness 220, damping 18). No-op on touch devices and `prefers-reduced-motion`.
+- **`TextReveal`** — splits a string into words and reveals them with a staggered fade + lift on scroll-in. Optional `mount`-trigger variant for hero copy. Respects reduced-motion via the global CSS clamp.
+- **`TiltCard`** — subtle 3D rotateX/rotateY on hover, spring-smoothed, gated by fine-pointer + reduced-motion. Built on Framer Motion's `useTransform`.
+- **`GrainOverlay`** — fractal-noise SVG `<filter>` rendered as a `mix-blend-overlay` layer. Tactile depth for dark surfaces without a paint-heavy bitmap.
+
+### Applied to
+
+- `Hero` — `<GrainOverlay opacity={0.05} />` adds depth behind the constellation. Both primary CTAs ("See how we work", "Partner with us") are now wrapped in `<MagneticButton strength={10}>`.
+- `ConstellationBackground` — node dimensions now respond to a per-node `weight` (0.8–1.4), so disciplines have visual hierarchy instead of looking identical. Both halo radius and inner-dot radius scale.
+- `IntersectionalityDiagram` — **demo mode**. When the diagram first scrolls into view AND the visitor hasn&rsquo;t yet interacted, it auto-cycles through node activations every 2.6 s so the visitor sees the system move. Stops permanently the moment any hover/focus/click happens. Powered by an `IntersectionObserver` so it only burns frames when on-screen. Reduced-motion: cycle suppressed entirely.
+
+### What's deliberately deferred
+
+The brief is long. To keep this commit reviewable I shipped the highest-leverage subset and queued the rest:
+
+- **Smooth-scroll-with-momentum** (Lenis) — meaningful only with carefully tuned scroll velocities that don&rsquo;t fight the in-view reveals. Will land in a focused commit.
+- **Page transitions** — App-router page transitions need a layout-level transition orchestrator that doesn&rsquo;t conflict with the in-view reveals on the destination route. Worth its own pass.
+- **Marquee tagline strips** — easy to add but easy to over-do; want to choose one tagline and one section first.
+- **Custom illustrations** — separate asset commit.
+- **Tilt-on-cards** in case-study and feature cards — primitive is in place, will be wired in mobile-enhancement commit so the touch experience stays smooth.
+- **Branded skeleton loaders** — most pages are statically prerendered so the value is small until/unless a slow client-side load lands.
+
+### Verified
+
+- `npm run build` — passing. Homepage 16.3 kB / 169 kB FLJS (was 15.4 kB / 164 kB) — modest, attributable to MagneticButton + GrainOverlay imports.
+- `npm run lint` — passing.
+
+---
+
 ## Round 2, Commit 4 — Newsletter de-personalisation polish
 
 **Why:** the previous build still framed *Common Sense is Not Common* as a personal column. The brand voice should be plural. Most of the heavy lifting happened earlier in this round (Commits 2 + 3 retired the "by Dr. Victor Mugambi Nyaga" lines and rewrote both the homepage `<InsightsTeaser />` section and the new `BlogIndex` hero in collective voice). This commit tightens the remaining language so the framing is consistent everywhere.

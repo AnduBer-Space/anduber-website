@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -79,6 +79,70 @@ function polar(angleDeg: number, radius: number) {
 
 export default function IntersectionalityDiagram() {
   const [active, setActive] = useState<string | null>(null);
+  const [demoActive, setDemoActive] = useState<string | null>(null);
+  const [userTouched, setUserTouched] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Demo mode: when the diagram first scrolls into view AND the user
+  // hasn't interacted yet, auto-cycle through the nodes every 2.6s so the
+  // visitor sees the system move. Stops the moment any interaction happens
+  // (hover, focus, click) and never restarts. Respects reduced-motion.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) return;
+    if (userTouched) return;
+
+    const el = containerRef.current;
+    if (!el) return;
+
+    let intervalId: number | undefined;
+    let visible = false;
+    let idx = 0;
+
+    const start = () => {
+      if (intervalId) return;
+      intervalId = window.setInterval(() => {
+        if (userTouched) return;
+        idx = (idx + 1) % DOMAINS.length;
+        setDemoActive(DOMAINS[idx].id);
+      }, 2600);
+      // Set immediately so visitors don't have to wait one tick to see anything.
+      setDemoActive(DOMAINS[0].id);
+    };
+
+    const stop = () => {
+      if (intervalId) window.clearInterval(intervalId);
+      intervalId = undefined;
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          visible = entry.isIntersecting;
+          if (visible) start();
+          else stop();
+        });
+      },
+      { threshold: 0.4 }
+    );
+    observer.observe(el);
+
+    return () => {
+      stop();
+      observer.disconnect();
+    };
+  }, [userTouched]);
+
+  // Effective active = user choice if any; otherwise demo cycle.
+  const effectiveActive = active ?? (userTouched ? null : demoActive);
+
+  const markTouched = () => {
+    if (!userTouched) {
+      setUserTouched(true);
+      setDemoActive(null);
+    }
+  };
 
   const positions = useMemo(
     () => Object.fromEntries(DOMAINS.map((d) => [d.id, polar(d.angle, 36)])),
@@ -111,7 +175,7 @@ export default function IntersectionalityDiagram() {
     return result;
   }, [positions]);
 
-  const activeDomain = DOMAINS.find((d) => d.id === active) ?? null;
+  const activeDomain = DOMAINS.find((d) => d.id === effectiveActive) ?? null;
   const activeConnections = activeDomain
     ? DOMAINS.filter((d) => d.id !== activeDomain.id).map((d) => ({
         partner: d,
@@ -120,7 +184,7 @@ export default function IntersectionalityDiagram() {
     : null;
 
   return (
-    <div className="grid lg:grid-cols-[1.1fr,1fr] gap-12 lg:gap-16 items-center">
+    <div ref={containerRef} className="grid lg:grid-cols-[1.1fr,1fr] gap-12 lg:gap-16 items-center">
       {/* Diagram */}
       <div className="relative w-full max-w-[560px] mx-auto aspect-square">
         <svg
@@ -149,8 +213,9 @@ export default function IntersectionalityDiagram() {
 
           {/* All pairwise lines — dim by default, brighten when an endpoint is active */}
           {lines.map((line) => {
-            const isActive = active === line.from || active === line.to;
-            const isDimmed = active !== null && !isActive;
+            const isActive =
+              effectiveActive === line.from || effectiveActive === line.to;
+            const isDimmed = effectiveActive !== null && !isActive;
             return (
               <line
                 key={`${line.from}-${line.to}`}
@@ -170,15 +235,24 @@ export default function IntersectionalityDiagram() {
           {/* Nodes */}
           {DOMAINS.map((d) => {
             const pos = positions[d.id];
-            const isActive = active === d.id;
+            const isActive = effectiveActive === d.id;
             return (
               <g
                 key={d.id}
-                onMouseEnter={() => setActive(d.id)}
+                onMouseEnter={() => {
+                  markTouched();
+                  setActive(d.id);
+                }}
                 onMouseLeave={() => setActive(null)}
-                onFocus={() => setActive(d.id)}
+                onFocus={() => {
+                  markTouched();
+                  setActive(d.id);
+                }}
                 onBlur={() => setActive(null)}
-                onClick={() => setActive((prev) => (prev === d.id ? null : d.id))}
+                onClick={() => {
+                  markTouched();
+                  setActive((prev) => (prev === d.id ? null : d.id));
+                }}
                 tabIndex={0}
                 role="button"
                 aria-pressed={isActive}
@@ -226,16 +300,25 @@ export default function IntersectionalityDiagram() {
         {/* Labels — positioned in DOM around the SVG circle */}
         {DOMAINS.map((d) => {
           const labelPos = polar(d.angle, 47);
-          const isActive = active === d.id;
+          const isActive = effectiveActive === d.id;
           return (
             <button
               key={`label-${d.id}`}
               type="button"
-              onMouseEnter={() => setActive(d.id)}
+              onMouseEnter={() => {
+                markTouched();
+                setActive(d.id);
+              }}
               onMouseLeave={() => setActive(null)}
-              onFocus={() => setActive(d.id)}
+              onFocus={() => {
+                markTouched();
+                setActive(d.id);
+              }}
               onBlur={() => setActive(null)}
-              onClick={() => setActive((prev) => (prev === d.id ? null : d.id))}
+              onClick={() => {
+                markTouched();
+                setActive((prev) => (prev === d.id ? null : d.id));
+              }}
               className={cn(
                 "absolute -translate-x-1/2 -translate-y-1/2 px-3 py-1 rounded-full",
                 "text-xs sm:text-sm font-semibold tracking-wide uppercase whitespace-nowrap",
@@ -252,8 +335,8 @@ export default function IntersectionalityDiagram() {
           );
         })}
 
-        {/* Center hint */}
-        {!active && (
+        {/* Center hint — only shown before the visitor has interacted */}
+        {!effectiveActive && !userTouched && (
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <p className="font-accent italic text-sm md:text-base text-token-muted text-center max-w-[14ch] leading-snug">
               Hover any system

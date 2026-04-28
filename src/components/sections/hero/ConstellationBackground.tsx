@@ -20,21 +20,23 @@ type Node = {
   y: number;
   label: string;
   variant: "teal" | "gold";
+  /** relative size weight — bigger node = visually heavier discipline */
+  weight: number;
 };
 
 const NODES: Node[] = [
-  { id: 0, x: 12, y: 22, label: "Artists", variant: "gold" },
-  { id: 1, x: 28, y: 8, label: "Scientists", variant: "teal" },
-  { id: 2, x: 50, y: 18, label: "Elders", variant: "gold" },
-  { id: 3, x: 72, y: 8, label: "Engineers", variant: "teal" },
-  { id: 4, x: 88, y: 22, label: "Poets", variant: "gold" },
-  { id: 5, x: 90, y: 58, label: "Policymakers", variant: "teal" },
-  { id: 6, x: 72, y: 78, label: "Youth", variant: "gold" },
-  { id: 7, x: 50, y: 86, label: "Farmers", variant: "teal" },
-  { id: 8, x: 28, y: 78, label: "Healers", variant: "gold" },
-  { id: 9, x: 10, y: 58, label: "Builders", variant: "teal" },
-  { id: 10, x: 36, y: 42, label: "Designers", variant: "gold" },
-  { id: 11, x: 64, y: 42, label: "Storytellers", variant: "teal" },
+  { id: 0, x: 12, y: 22, label: "Artists", variant: "gold", weight: 1.1 },
+  { id: 1, x: 28, y: 8, label: "Scientists", variant: "teal", weight: 1.3 },
+  { id: 2, x: 50, y: 18, label: "Elders", variant: "gold", weight: 1.4 },
+  { id: 3, x: 72, y: 8, label: "Engineers", variant: "teal", weight: 1.0 },
+  { id: 4, x: 88, y: 22, label: "Poets", variant: "gold", weight: 0.85 },
+  { id: 5, x: 90, y: 58, label: "Policymakers", variant: "teal", weight: 1.2 },
+  { id: 6, x: 72, y: 78, label: "Youth", variant: "gold", weight: 1.3 },
+  { id: 7, x: 50, y: 86, label: "Farmers", variant: "teal", weight: 1.1 },
+  { id: 8, x: 28, y: 78, label: "Healers", variant: "gold", weight: 1.0 },
+  { id: 9, x: 10, y: 58, label: "Builders", variant: "teal", weight: 0.9 },
+  { id: 10, x: 36, y: 42, label: "Designers", variant: "gold", weight: 0.8 },
+  { id: 11, x: 64, y: 42, label: "Storytellers", variant: "teal", weight: 0.85 },
 ];
 
 /** Pick a small random subset of nodes that, drawn pairwise, makes a coherent shape. */
@@ -156,15 +158,17 @@ export default function ConstellationBackground({
           );
         })}
 
-        {/* Static nodes — gentle constant glow */}
+        {/* Static nodes — varying sizes, gentle constant glow */}
         {NODES.map((n) => {
           const isActive = activeIds.includes(n.id);
+          const haloR = (isActive ? 2.4 : 1.6) * n.weight;
+          const dotR = (isActive ? 0.7 : 0.55) * n.weight;
           return (
             <g key={n.id}>
               <circle
                 cx={n.x}
                 cy={n.y}
-                r={isActive ? 2.4 : 1.6}
+                r={haloR}
                 fill={
                   n.variant === "gold"
                     ? "url(#constellationNodeGlow)"
@@ -177,11 +181,11 @@ export default function ConstellationBackground({
               <circle
                 cx={n.x}
                 cy={n.y}
-                r="0.55"
+                r={dotR}
                 fill={n.variant === "gold" ? "#D4AA6A" : "#2DD4BF"}
                 style={{
                   opacity: isActive ? 1 : 0.7,
-                  transition: "opacity 600ms ease",
+                  transition: "opacity 600ms ease, r 600ms ease",
                 }}
               />
             </g>
