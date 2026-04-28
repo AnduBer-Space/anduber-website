@@ -1,34 +1,34 @@
 import type { Metadata } from "next";
-import ModelHero from "../model/components/ModelHero";
-import SiloTrap from "@/components/sections/SiloTrap";
-import CoreModel from "@/components/sections/CoreModel";
-import ThreePillars from "@/components/sections/ThreePillars";
-import CTA from "@/components/sections/CTA";
+import ApproachHero from "./components/ApproachHero";
+import CrenshawExtension from "./components/CrenshawExtension";
+import ApproachPillarsDeep from "./components/ApproachPillarsDeep";
+import LogicModel from "./components/LogicModel";
+import HomeContact from "@/components/sections/HomeContact";
 
 export const metadata: Metadata = {
   title: "Our Approach",
   description:
-    "Applied Intersectionality is AnduBer's original methodology for solving entangled problems. We extend Crenshaw's intersectionality from people to systems — water connects to health connects to governance. Solve one in isolation, the others pull back.",
+    "Applied Intersectionality is AnduBer's original methodology for solving entangled problems. We extend Kimberlé Crenshaw's intersectionality from people to systems — and translate it into Radical Collision, Applied Imagination, and Systemic Resilience.",
   keywords: [
     "applied intersectionality",
     "systems thinking",
-    "silo trap",
+    "Kimberlé Crenshaw",
+    "theory of change",
+    "logic model",
     "radical collision",
     "applied imagination",
     "systemic resilience",
-    "theory of change",
-    "Crenshaw",
   ],
 };
 
 export default function OurApproachPage() {
   return (
     <>
-      <ModelHero />
-      <SiloTrap />
-      <CoreModel />
-      <ThreePillars />
-      <CTA />
+      <ApproachHero />
+      <CrenshawExtension />
+      <ApproachPillarsDeep />
+      <LogicModel />
+      <HomeContact />
     </>
   );
 }

@@ -1,67 +1,89 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Sparkles } from "lucide-react";
 import Container from "@/components/ui/Container";
 
+/**
+ * About hero. The name itself is the headline — Andu (Kimbeere, "people")
+ * + Ber (Luo, "good") — typeset as the visual centerpiece so the
+ * etymology is the first thing visitors encounter.
+ */
 export default function AboutHero() {
   return (
-    <section className="relative pt-32 pb-20 overflow-hidden">
-      {/* Background */}
-      <div
-        className="absolute inset-0 gradient-section-bg"
-      />
+    <section className="relative pt-36 pb-16 md:pt-44 md:pb-24 overflow-hidden bg-cream-50 dark:bg-plum-900">
+      <div className="absolute inset-0 gradient-section-bg" />
 
-      {/* Decorative glows - static */}
+      {/* Soft glows */}
       <div
-        className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full opacity-40"
-        style={{ background: "radial-gradient(circle, rgba(26, 123, 122, 0.15) 0%, transparent 70%)" }}
+        className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full opacity-30 pointer-events-none"
+        style={{ background: "radial-gradient(circle, rgba(15, 118, 110, 0.18) 0%, transparent 70%)" }}
       />
       <div
-        className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full opacity-40"
-        style={{ background: "radial-gradient(circle, rgba(212, 170, 106, 0.15) 0%, transparent 70%)" }}
+        className="absolute bottom-1/4 right-1/4 w-[28rem] h-[28rem] rounded-full opacity-25 pointer-events-none"
+        style={{ background: "radial-gradient(circle, rgba(184, 134, 11, 0.18) 0%, transparent 70%)" }}
       />
 
       <Container className="relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-600 dark:text-teal-400 text-sm font-medium mb-6"
+            transition={{ duration: 0.5 }}
+            className="text-xs uppercase tracking-[0.22em] font-semibold text-token-gold mb-5"
           >
-            <Sparkles className="w-4 h-4" />
-            <span>The Fusion of Cultures</span>
+            About AnduBer
+          </motion.p>
+
+          {/* The name as visual centerpiece */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="font-serif font-bold leading-none mb-8"
+          >
+            <h1 className="text-5xl md:text-7xl lg:text-8xl text-token-primary">
+              <span className="text-token-gold">Andu</span>
+              <span className="text-token-secondary opacity-40 mx-2">+</span>
+              <span className="text-token-teal">Ber</span>
+            </h1>
           </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-plum-900 dark:text-cream-200 mb-6"
-          >
-            Who We Are:{" "}
-            <span className="text-gradient-gold">Good People</span>
-          </motion.h1>
-
+          {/* Etymology breakdown */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="space-y-4"
+            transition={{ duration: 0.6, delay: 0.25 }}
+            className="grid sm:grid-cols-2 gap-6 max-w-2xl mx-auto mb-10 text-left"
           >
-            <p className="text-lg md:text-xl text-plum-600 dark:text-cream-300 max-w-3xl mx-auto">
-              <span className="text-gold-700 dark:text-gold-400 font-semibold">ANDU</span> (People) +{" "}
-              <span className="text-teal-600 dark:text-teal-400 font-semibold">BER</span> (Good) &mdash;
-              A deliberate fusion of two African dialects, symbolizing our core belief
-              that innovation happens at the intersection.
-            </p>
-
-            <p className="text-base md:text-lg text-plum-600 dark:text-cream-300/80 max-w-2xl mx-auto">
-              AnduBer is a new breed of social enterprise headquartered in Nairobi.
-              We are a collective of systems thinkers, artists, scientists, and community
-              leaders united by one mission: to dismantle silos and build resilient systems.
-            </p>
+            <div className="p-5 rounded-2xl border border-plum-200 dark:border-plum-700 bg-white/50 dark:bg-plum-800/40 backdrop-blur-sm">
+              <p className="text-[10px] uppercase tracking-[0.2em] text-token-muted font-semibold mb-1">
+                Andu
+              </p>
+              <p className="font-serif text-xl text-token-gold mb-1">people</p>
+              <p className="text-sm text-token-secondary italic font-accent">
+                from Kĩmbeere
+              </p>
+            </div>
+            <div className="p-5 rounded-2xl border border-plum-200 dark:border-plum-700 bg-white/50 dark:bg-plum-800/40 backdrop-blur-sm">
+              <p className="text-[10px] uppercase tracking-[0.2em] text-token-muted font-semibold mb-1">
+                Ber
+              </p>
+              <p className="font-serif text-xl text-token-teal mb-1">good</p>
+              <p className="text-sm text-token-secondary italic font-accent">
+                from Dholuo
+              </p>
+            </div>
           </motion.div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="font-accent italic text-lg md:text-xl text-token-secondary max-w-[60ch] mx-auto leading-snug"
+          >
+            A deliberate fusion of two Kenyan languages — and our core belief:
+            innovation happens at the intersection.
+          </motion.p>
         </div>
       </Container>
     </section>

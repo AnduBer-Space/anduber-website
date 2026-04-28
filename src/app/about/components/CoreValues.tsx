@@ -11,133 +11,123 @@ import {
 } from "lucide-react";
 import Container from "@/components/ui/Container";
 
-const values = [
+/**
+ * Core values for the About page. The first three values are the brand IP
+ * (Radical Collision / Applied Imagination / Systemic Resilience). The
+ * remaining three describe how we work with whoever we work with.
+ */
+
+type Value = {
+  Icon: typeof Zap;
+  title: string;
+  plain: string;
+  description: string;
+  tone: "teal" | "gold" | "copper";
+};
+
+const VALUES: Value[] = [
   {
-    icon: Zap,
+    Icon: Zap,
     title: "Radical Collision",
+    plain: "Bring the unlikely room together.",
     description:
-      "We bring together 'unusual suspects'—poets with policymakers, elders with engineers—because innovation happens at the intersection.",
-    color: "teal",
+      "We collide unusual suspects — poets with policymakers, elders with engineers — because the angles a single discipline misses are the ones that matter.",
+    tone: "teal",
   },
   {
-    icon: Lightbulb,
+    Icon: Lightbulb,
     title: "Applied Imagination",
+    plain: "Move from ‘what if’ to ‘how to’.",
     description:
-      "We don't just dream—we equip teams with systems-thinking tools to turn 'what if' into 'how to'.",
-    color: "gold",
+      "We equip those rooms with systems-mapping, causal-loop and design-justice tools. Insight without structure is a feeling. Structure without insight is a spreadsheet.",
+    tone: "gold",
   },
   {
-    icon: Shield,
+    Icon: Shield,
     title: "Systemic Resilience",
+    plain: "Ship things that hold up after we leave.",
     description:
-      "We design solutions that address interconnected issues simultaneously, building community-owned and self-sustaining systems.",
-    color: "copper",
+      "Solutions that address the whole web, not one strand. Community-owned and self-sustaining are non-negotiables.",
+    tone: "copper",
   },
   {
-    icon: Users,
+    Icon: Users,
     title: "Community Ownership",
+    plain: "Work with, not for.",
     description:
-      "We work with communities, not for them. Local ownership drives lasting impact and prevents dependency.",
-    color: "teal",
+      "Local ownership, local governance, local maintenance — by design, on a stated timeline, with a stated handover.",
+    tone: "teal",
   },
   {
-    icon: Network,
+    Icon: Network,
     title: "Connective Tissue",
+    plain: "Be the bridge no one else is bridging.",
     description:
-      "We act as the bridge between silos—turning friction into flow across disciplines, cultures, and sectors.",
-    color: "gold",
+      "We treat the gap between disciplines as the actual job. Translating, convening, and brokering trust across boundaries is the work — not the overhead.",
+    tone: "gold",
   },
   {
-    icon: Heart,
-    title: "Human-Centric Design",
+    Icon: Heart,
+    title: "Human-Centric",
+    plain: "Dignity, equity, and inclusion are floors, not ceilings.",
     description:
-      "Every solution starts and ends with people. Dignity, equity, and inclusion are non-negotiable.",
-    color: "copper",
+      "Every solution starts and ends with the people it touches. If a metric is satisfied while a person is diminished, we threw away the metric.",
+    tone: "copper",
   },
 ];
 
-const colorStyles = {
-  teal: {
-    bg: "bg-teal-500/10",
-    border: "border-teal-500/30",
-    iconBg: "bg-teal-500/20",
-    text: "text-teal-600 dark:text-teal-400",
-  },
-  gold: {
-    bg: "bg-gold-400/10",
-    border: "border-gold-400/30",
-    iconBg: "bg-gold-400/20",
-    text: "text-gold-700 dark:text-gold-400",
-  },
-  copper: {
-    bg: "bg-gold-600/10",
-    border: "border-gold-600/30",
-    iconBg: "bg-gold-600/20",
-    text: "text-gold-700 dark:text-gold-400",
-  },
+const TONES = {
+  teal: { text: "text-token-teal", bg: "bg-teal-500/10", iconBg: "bg-teal-500/15" },
+  gold: { text: "text-token-gold", bg: "bg-gold-400/10", iconBg: "bg-gold-400/15" },
+  copper: { text: "text-gold-800 dark:text-gold-400", bg: "bg-gold-600/10", iconBg: "bg-gold-600/15" },
 };
 
 export default function CoreValues() {
   return (
-    <section className="relative py-24 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-cream-100 via-cream-50 to-cream-100 dark:from-plum-800 dark:via-plum-900 dark:to-plum-800" />
-
+    <section className="relative py-20 md:py-28 overflow-hidden bg-cream-50 dark:bg-plum-900">
       <Container className="relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
+          viewport={{ once: true, amount: 0.3 }}
+          className="max-w-3xl mb-12"
         >
-          <span className="inline-block px-4 py-2 rounded-full bg-gold-400/10 border border-gold-400/30 text-gold-700 dark:text-gold-400 text-sm font-medium mb-6">
-            Our Foundation
-          </span>
-          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-plum-900 dark:text-cream-200 mb-4">
-            Core <span className="text-gradient-gold">Values</span>
+          <p className="text-xs uppercase tracking-[0.22em] font-semibold text-token-gold mb-4">
+            Our foundation
+          </p>
+          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-token-primary leading-[1.1] mb-5">
+            Core <span className="text-gradient-gold">values</span>
           </h2>
-          <div className="divider-gold" />
-          <p className="mt-6 text-lg text-plum-600 dark:text-cream-300 max-w-2xl mx-auto">
-            These principles guide every decision we make and every solution we build.
+          <p className="font-accent italic text-lg md:text-xl text-token-secondary leading-snug max-w-[60ch]">
+            Six commitments that decide what we say yes to.
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {values.map((value, index) => {
-            const styles = colorStyles[value.color as keyof typeof colorStyles];
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+          {VALUES.map((v, idx) => {
+            const tone = TONES[v.tone];
             return (
-              <motion.div
-                key={value.title}
-                initial={{ opacity: 0, y: 20 }}
+              <motion.article
+                key={v.title}
+                initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="group"
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ delay: idx * 0.06 }}
+                className="p-5 lg:p-6 rounded-2xl border border-plum-200 dark:border-plum-700 bg-white/50 dark:bg-plum-800/40 backdrop-blur-sm hover:-translate-y-0.5 transition-transform duration-300"
               >
-                <div
-                  className={`
-                    h-full p-6 rounded-2xl
-                    ${styles.bg} border ${styles.border}
-                    backdrop-blur-sm
-                    transition-all duration-300
-                    hover:border-opacity-60 hover:translate-y-[-4px]
-                  `}
-                >
-                  <div className="flex items-start gap-4">
-                    <div className={`p-3 rounded-xl ${styles.iconBg} transition-colors`}>
-                      <value.icon className={`w-6 h-6 ${styles.text}`} />
-                    </div>
-                    <div>
-                      <h3 className={`font-serif text-xl font-bold ${styles.text} mb-2`}>
-                        {value.title}
-                      </h3>
-                      <p className="text-plum-600 dark:text-cream-300 text-sm leading-relaxed">
-                        {value.description}
-                      </p>
-                    </div>
-                  </div>
+                <div className={`inline-flex w-10 h-10 rounded-xl items-center justify-center mb-4 ${tone.iconBg}`}>
+                  <v.Icon className={`w-5 h-5 ${tone.text}`} aria-hidden="true" />
                 </div>
-              </motion.div>
+                <h3 className="font-serif text-lg md:text-xl font-bold text-token-primary leading-tight mb-1">
+                  {v.title}
+                </h3>
+                <p className={`font-accent italic text-sm md:text-base leading-snug mb-3 ${tone.text}`}>
+                  {v.plain}
+                </p>
+                <p className="text-sm text-token-secondary leading-relaxed">
+                  {v.description}
+                </p>
+              </motion.article>
             );
           })}
         </div>

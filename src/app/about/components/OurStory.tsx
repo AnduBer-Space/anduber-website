@@ -3,87 +3,81 @@
 import { motion } from "framer-motion";
 import Container from "@/components/ui/Container";
 
+/**
+ * Origin story for the About page. Frames AnduBer as a bet someone made
+ * after watching a pattern of failure — fragmented, single-discipline
+ * solutions to deeply entangled problems.
+ */
 export default function OurStory() {
   return (
-    <section className="relative py-24 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-cream-50 via-cream-100 to-cream-50 dark:from-plum-900 dark:via-plum-800 dark:to-plum-900" />
+    <section className="relative py-20 md:py-28 overflow-hidden bg-cream-50 dark:bg-plum-900">
+      <div className="absolute inset-0 gradient-section-vertical" />
 
       <Container className="relative z-10">
-        <div className="max-w-4xl mx-auto">
-          {/* Section header */}
+        <div className="max-w-3xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
+            viewport={{ once: true, amount: 0.3 }}
+            className="mb-12"
           >
-            <span className="inline-block px-4 py-2 rounded-full bg-gold-400/10 border border-gold-400/30 text-gold-700 dark:text-gold-400 text-sm font-medium mb-6">
+            <p className="text-xs uppercase tracking-[0.22em] font-semibold text-token-gold mb-4">
               Our Story
-            </span>
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-plum-900 dark:text-cream-200 mb-4">
-              The Birth of <span className="text-gradient-gold">AnduBer</span>
+            </p>
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-token-primary leading-[1.1] mb-5">
+              The bet behind <span className="text-gradient-gold">AnduBer</span>
             </h2>
+            <p className="font-accent italic text-lg md:text-xl text-token-secondary leading-snug max-w-[60ch]">
+              Why a veterinarian started a social enterprise.
+            </p>
           </motion.div>
 
-          {/* Story content */}
-          <div className="space-y-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
+          <div className="space-y-6 text-token-primary text-base md:text-lg leading-relaxed prose-readable">
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="glass-card p-8 rounded-2xl"
+              viewport={{ once: true, amount: 0.5 }}
             >
-              <p className="text-lg text-plum-600 dark:text-cream-300 leading-relaxed">
-                AnduBer was born from a realization: the world&apos;s biggest challenges&mdash;pandemics,
-                climate change, inequality&mdash;are entangled. Yet, the systems designed to solve
-                them are fragmented.
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              The world&rsquo;s biggest problems &mdash; pandemics, climate change,
+              inequality &mdash; are entangled. The systems built to solve them
+              are not. Scientists don&rsquo;t talk to artists. Policymakers
+              don&rsquo;t listen to communities. Donor reports reward outputs
+              the field already knows are the wrong outputs.
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.5 }}
               transition={{ delay: 0.1 }}
-              className="glass-card p-8 rounded-2xl border-l-4 border-teal-500"
+              className="border-l-2 border-gold-500/60 pl-5"
             >
-              <p className="text-lg text-plum-600 dark:text-cream-300 leading-relaxed">
-                Scientists don&apos;t talk to artists. Policymakers don&apos;t listen to communities.
-                This <span className="text-teal-600 dark:text-teal-400 font-semibold">linear thinking</span> leads
-                to &ldquo;band-aid&rdquo; solutions that collapse when funding ends, leaving root causes unaddressed.
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              We started AnduBer because we&rsquo;d watched this pattern enough
+              times to be sure of two things: nobody was coming to fix it, and
+              the people who could were already in the village &mdash; just not
+              in the same room as the people writing the cheques.
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.5 }}
               transition={{ delay: 0.2 }}
-              className="glass-card p-8 rounded-2xl border-l-4 border-gold-400"
             >
-              <p className="text-lg text-plum-600 dark:text-cream-300 leading-relaxed">
-                We decided to try something different. What if we collided &ldquo;unusual suspects&rdquo;&mdash;poets
-                with policymakers, elders with engineers, artists with scientists? What if we equipped
-                them with <span className="text-gold-700 dark:text-gold-400 font-semibold">systems-thinking tools</span> and
-                let them reimagine how the world works?
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              So we built a methodology around bringing them together &mdash;
+              <em> Applied Intersectionality</em> &mdash; and an organisation
+              shaped to pay for itself: a consultancy that funds the
+              experiments, an R&amp;D lab that ships the prototypes, a venture
+              arm that backs the founders the standard pipeline overlooks.
+              Three engines, one ecosystem.
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.5 }}
               transition={{ delay: 0.3 }}
-              className="text-center py-8"
+              className="font-serif italic text-xl md:text-2xl text-token-primary pt-4"
             >
-              <p className="font-serif text-2xl md:text-3xl text-plum-900 dark:text-cream-200 italic">
-                &ldquo;AnduBer acts as the connective tissue,
-                <br />
-                <span className="text-teal-600 dark:text-teal-400">turning friction</span> into{" "}
-                <span className="text-gold-700 dark:text-gold-400">flow</span>.&rdquo;
-              </p>
-            </motion.div>
+              &ldquo;We turn friction into flow &mdash; and &lsquo;what if&rsquo; into &lsquo;how to&rsquo;.&rdquo;
+            </motion.p>
           </div>
         </div>
       </Container>

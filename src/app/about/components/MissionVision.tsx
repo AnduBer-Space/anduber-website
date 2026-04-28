@@ -1,119 +1,83 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Target, Eye, Lightbulb } from "lucide-react";
+import { Target, Eye } from "lucide-react";
 import Container from "@/components/ui/Container";
 import { mission, vision } from "@/data/site";
 
-const items = [
+/**
+ * Mission + Vision panel. Two cards, plain-language one-liners up top so
+ * the reader can decide whether to read the full sentence underneath.
+ */
+
+const ITEMS = [
   {
-    icon: Target,
-    title: "Our Mission",
-    description: mission,
-    color: "teal",
+    Icon: Target,
+    label: "Mission",
+    plain: "What we do, day to day.",
+    body: mission,
+    tone: "teal" as const,
   },
   {
-    icon: Eye,
-    title: "Our Vision",
-    description: vision,
-    color: "gold",
-  },
-  {
-    icon: Lightbulb,
-    title: "Our Approach",
-    description:
-      "Applied Intersectionality: We unite diverse expertise across disciplines, cultures, and sectors, then equip teams with systems-thinking tools to reimagine how the world works. We turn 'what if' into 'how to'.",
-    color: "copper",
+    Icon: Eye,
+    label: "Vision",
+    plain: "The world we&rsquo;re betting toward.",
+    body: vision,
+    tone: "gold" as const,
   },
 ];
 
-const colorStyles = {
-  teal: {
-    bg: "bg-teal-500/10",
-    border: "border-teal-500/30",
-    text: "text-teal-600 dark:text-teal-400",
-  },
-  gold: {
-    bg: "bg-gold-400/10",
-    border: "border-gold-400/30",
-    text: "text-gold-700 dark:text-gold-400",
-  },
-  copper: {
-    bg: "bg-gold-600/10",
-    border: "border-gold-600/30",
-    text: "text-gold-700 dark:text-gold-400",
-  },
+const TONES = {
+  teal: { text: "text-token-teal", bg: "bg-teal-500/10", border: "border-teal-500/30" },
+  gold: { text: "text-token-gold", bg: "bg-gold-400/10", border: "border-gold-500/30" },
 };
 
 export default function MissionVision() {
   return (
-    <section className="relative py-24 overflow-hidden">
-      {/* Background */}
-      <div
-        className="absolute inset-0 gradient-section-vertical"
-      />
-
-      {/* Decorative glows - static */}
-      <div
-        className="absolute top-1/4 -left-20 w-80 h-80 rounded-full opacity-40"
-        style={{ background: "radial-gradient(circle, rgba(26, 123, 122, 0.1) 0%, transparent 70%)" }}
-      />
-      <div
-        className="absolute bottom-1/4 -right-20 w-96 h-96 rounded-full opacity-30"
-        style={{ background: "radial-gradient(circle, rgba(212, 170, 106, 0.1) 0%, transparent 70%)" }}
-      />
-
+    <section className="relative py-20 md:py-28 overflow-hidden bg-cream-100 dark:bg-plum-800">
       <Container className="relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
+          viewport={{ once: true, amount: 0.3 }}
+          className="max-w-3xl mb-12"
         >
-          <span className="inline-block px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-600 dark:text-teal-400 text-sm font-medium mb-6">
-            What Drives Us
-          </span>
-          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-plum-900 dark:text-cream-200 mb-4">
-            Mission, Vision & <span className="text-gradient-gold">Approach</span>
+          <p className="text-xs uppercase tracking-[0.22em] font-semibold text-token-gold mb-4">
+            What drives us
+          </p>
+          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-token-primary leading-[1.1]">
+            Mission &amp; Vision
           </h2>
-          <div className="divider-teal" />
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {items.map((item, index) => {
-            const styles = colorStyles[item.color as keyof typeof colorStyles];
+        <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+          {ITEMS.map((item, idx) => {
+            const tone = TONES[item.tone];
             return (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 30 }}
+              <motion.article
+                key={item.label}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.15 }}
-                className="relative group"
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ delay: idx * 0.1 }}
+                className={`p-8 rounded-2xl border ${tone.border} ${tone.bg} backdrop-blur-sm`}
               >
-                <div
-                  className={`
-                    h-full p-8 rounded-2xl
-                    ${styles.bg} border ${styles.border}
-                    backdrop-blur-sm
-                    transition-all duration-300
-                    hover:border-opacity-60
-                  `}
-                >
-                  {/* Icon */}
-                  <div className={`inline-flex p-4 rounded-xl mb-6 ${styles.bg}`}>
-                    <item.icon className={`w-8 h-8 ${styles.text}`} />
-                  </div>
-
-                  <h3 className={`font-serif text-2xl font-bold ${styles.text} mb-4`}>
-                    {item.title}
-                  </h3>
-
-                  <p className="text-plum-600 dark:text-cream-300 leading-relaxed">
-                    {item.description}
+                <div className="flex items-center gap-3 mb-5">
+                  <span className={`w-10 h-10 rounded-xl flex items-center justify-center ${tone.bg}`}>
+                    <item.Icon className={`w-5 h-5 ${tone.text}`} aria-hidden="true" />
+                  </span>
+                  <p className={`text-xs uppercase tracking-[0.18em] font-semibold ${tone.text}`}>
+                    Our {item.label}
                   </p>
                 </div>
-              </motion.div>
+                <p
+                  className={`font-accent italic text-base md:text-lg leading-snug mb-4 ${tone.text}`}
+                  dangerouslySetInnerHTML={{ __html: item.plain }}
+                />
+                <p className="text-base md:text-lg text-token-primary leading-relaxed">
+                  {item.body}
+                </p>
+              </motion.article>
             );
           })}
         </div>

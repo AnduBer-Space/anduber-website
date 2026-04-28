@@ -6,108 +6,115 @@ import { Linkedin, Mail } from "lucide-react";
 import Container from "@/components/ui/Container";
 import { teamMembers } from "@/data/team";
 
+/**
+ * Founder profile + collective framing. AnduBer is consciously a collective,
+ * not a personality cult — but the founder profile carries enough weight
+ * (especially for funders evaluating credibility) that it leads here.
+ */
 export default function TeamSection() {
   return (
-    <section className="relative py-24 overflow-hidden">
-      {/* Background */}
-      <div
-        className="absolute inset-0 gradient-section-vertical"
-      />
-
+    <section className="relative py-20 md:py-28 overflow-hidden bg-cream-100 dark:bg-plum-800">
       <Container className="relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
+          viewport={{ once: true, amount: 0.3 }}
+          className="max-w-3xl mb-12"
         >
-          <span className="inline-block px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-600 dark:text-teal-400 text-sm font-medium mb-6">
-            The Team
-          </span>
-          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-plum-900 dark:text-cream-200 mb-4">
-            Meet the <span className="text-gradient-gold">Good People</span>
+          <p className="text-xs uppercase tracking-[0.22em] font-semibold text-token-gold mb-4">
+            The collective
+          </p>
+          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-token-primary leading-[1.1] mb-5">
+            Good people, in the same room
           </h2>
-          <div className="divider-teal" />
-          <p className="mt-6 text-lg text-plum-600 dark:text-cream-300 max-w-2xl mx-auto">
-            Systems thinkers, artists, scientists, and community leaders united
-            by one mission: to dismantle silos and build resilient systems.
+          <p className="font-accent italic text-lg md:text-xl text-token-secondary leading-snug max-w-[60ch]">
+            AnduBer is a collective of systems thinkers, scientists, artists,
+            community leaders, and the unusual suspects we&rsquo;ve learned to
+            keep close. The list grows with every project.
           </p>
         </motion.div>
 
-        {/* Founder Card - Featured */}
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-3xl mx-auto">
           {teamMembers.map((member, index) => (
-            <motion.div
+            <motion.article
               key={member.id}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.3 }}
               transition={{ delay: index * 0.1 }}
-              className="group"
+              className="relative rounded-3xl overflow-hidden border border-plum-200 dark:border-plum-700 bg-white/60 dark:bg-plum-900/50 backdrop-blur-sm shadow-md"
             >
-              <div className="relative glass-card p-8 rounded-3xl overflow-hidden border border-cream-200 dark:border-plum-700 hover:border-teal-500/30 transition-all duration-300">
-                {/* Decorative gradient */}
-                <div
-                  className="absolute top-0 right-0 w-64 h-64 rounded-full opacity-30"
-                  style={{
-                    background: "radial-gradient(circle, rgba(26, 123, 122, 0.3) 0%, transparent 70%)",
-                  }}
-                />
+              <div
+                className="absolute top-0 right-0 w-64 h-64 rounded-full opacity-20 pointer-events-none"
+                style={{ background: "radial-gradient(circle, rgba(15, 118, 110, 0.4) 0%, transparent 70%)" }}
+              />
 
-                <div className="relative flex flex-col md:flex-row gap-8 items-center">
-                  {/* Avatar */}
-                  <div className="flex-shrink-0">
-                    <div className="relative w-48 h-64 rounded-2xl overflow-hidden border-2 border-teal-500/30 bg-white dark:bg-plum-800">
-                      <Image
-                        src={member.image}
-                        alt={member.name}
-                        fill
-                        className="object-contain"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-plum-900/30 to-transparent pointer-events-none" />
-                    </div>
-                  </div>
+              <div className="relative grid md:grid-cols-[200px,1fr] gap-8 p-6 md:p-10 items-center">
+                <div className="relative w-40 h-52 md:w-48 md:h-60 mx-auto md:mx-0 rounded-2xl overflow-hidden border-2 border-teal-500/30 bg-cream-50 dark:bg-plum-800">
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    fill
+                    className="object-contain"
+                    sizes="200px"
+                  />
+                </div>
 
-                  {/* Info */}
-                  <div className="flex-1 text-center md:text-left">
-                    <h3 className="font-serif text-2xl md:text-3xl font-bold text-plum-900 dark:text-cream-200 mb-2">
-                      {member.name}
-                    </h3>
-                    <p className="text-gold-700 dark:text-gold-400 font-medium mb-4">{member.role}</p>
-                    <p className="text-plum-600 dark:text-cream-300 leading-relaxed mb-6">
-                      {member.bio}
+                <div className="text-center md:text-left">
+                  <h3 className="font-serif text-2xl md:text-3xl font-bold text-token-primary leading-tight">
+                    {member.name}
+                  </h3>
+                  <p className="text-token-gold font-medium mt-1 mb-1">{member.role}</p>
+                  {member.credentials && (
+                    <p className="text-xs uppercase tracking-wider text-token-muted font-semibold mb-4">
+                      {member.credentials}
                     </p>
+                  )}
+                  <p className="text-base md:text-lg text-token-primary leading-relaxed mb-5 prose-readable">
+                    {member.bio}
+                  </p>
 
-                    {/* Social Links */}
-                    {member.socials && (
-                      <div className="flex gap-3 justify-center md:justify-start">
-                        {member.socials.linkedin && (
-                          <a
-                            href={member.socials.linkedin}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-3 rounded-full bg-cream-200/50 dark:bg-plum-700/50 text-plum-600 dark:text-cream-300 hover:bg-teal-500 hover:text-white transition-colors"
-                            aria-label={`${member.name}'s LinkedIn`}
-                          >
-                            <Linkedin className="w-5 h-5" />
-                          </a>
-                        )}
-                        {member.socials.email && (
-                          <a
-                            href={`mailto:${member.socials.email}`}
-                            className="p-3 rounded-full bg-cream-200/50 dark:bg-plum-700/50 text-plum-600 dark:text-cream-300 hover:bg-gold-400 hover:text-plum-900 transition-colors"
-                            aria-label={`Email ${member.name}`}
-                          >
-                            <Mail className="w-5 h-5" />
-                          </a>
-                        )}
-                      </div>
-                    )}
-                  </div>
+                  {member.socials && (
+                    <div className="flex gap-2 justify-center md:justify-start">
+                      {member.socials.linkedin && (
+                        <a
+                          href={member.socials.linkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2.5 rounded-full bg-cream-200/60 dark:bg-plum-800/60 text-token-primary hover:bg-teal-500 hover:text-white transition-colors"
+                          aria-label={`${member.name}'s LinkedIn`}
+                        >
+                          <Linkedin className="w-4 h-4" />
+                        </a>
+                      )}
+                      {member.socials.email && (
+                        <a
+                          href={`mailto:${member.socials.email}`}
+                          className="p-2.5 rounded-full bg-cream-200/60 dark:bg-plum-800/60 text-token-primary hover:bg-gold-400 hover:text-plum-900 transition-colors"
+                          aria-label={`Email ${member.name}`}
+                        >
+                          <Mail className="w-4 h-4" />
+                        </a>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
-            </motion.div>
+            </motion.article>
           ))}
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ delay: 0.3 }}
+            className="mt-10 text-center"
+          >
+            <p className="font-accent italic text-base md:text-lg text-token-secondary max-w-[60ch] mx-auto leading-snug">
+              The rest of the collective is named in the projects we ship and the
+              papers we co-author. We hire by collision, not by CV.
+            </p>
+          </motion.div>
         </div>
       </Container>
     </section>

@@ -2,6 +2,50 @@
 
 A running log of each commit in the redesign. Newest first.
 
+## Phase 4 — Page restructures: About, Our Approach, Our Work
+
+**Goal:** rebuild the three deepest pages so each one stands on its own. The brief asked for the AnduBer name etymology to be prominent on About, Crenshaw + logic model + deep pillars on Our Approach, and ComeThru + Maji Maisha as full case studies on Our Work.
+
+### About page
+
+- `src/app/about/components/AboutHero.tsx` — name etymology is now the visual centerpiece. Two language origin cards underneath: **Andu** *(from Kĩmbeere — people)* and **Ber** *(from Dholuo — good)*. The headline plays the two on either side of a faded `+` glyph.
+- `src/app/about/components/OurStory.tsx` — origin story rewritten as a four-paragraph essay framed by the heading "The bet behind AnduBer". Replaces the prior multi-card layout with prose that reads in one breath.
+- `src/app/about/components/MissionVision.tsx` — same source data (`mission`, `vision` from `data/site.ts`) but with Fraunces-italic plain-language one-liners under each card heading.
+- `src/app/about/components/CoreValues.tsx` — six values, each with its plain-language line. Brand IP retained for the first three (Radical Collision, Applied Imagination, Systemic Resilience); the remaining three (Community Ownership, Connective Tissue, Human-Centric) are voice-y descriptions of how we work, not generic platitudes.
+- `src/app/about/components/TeamSection.tsx` — Dr. Victor Mugambi Nyaga's profile now leads with full credentials per the brief: **DVM, University of Nairobi · MIPH, Liverpool John Moores University**. Updated bio to ground his story in the cross-disciplinary work the methodology was built around.
+  - `src/types/index.ts` — added optional `credentials` field to `TeamMember`.
+  - `src/data/team.ts` — populated.
+- Closing CTA now uses the new `<HomeContact />` ("Let's build new worlds") instead of the old generic CTA.
+
+### Our Approach page
+
+The methodology page where funders dig in.
+
+- `src/app/our-approach/components/ApproachHero.tsx` — brand-named heading with the brief's plain-language line directly underneath.
+- `src/app/our-approach/components/CrenshawExtension.tsx` — names Kimberlé Crenshaw and explains the move from people to systems in four paragraphs and a pull-quote: *"Solve one problem in isolation and the others pull it back into the failure mode it came from."*
+- `src/app/our-approach/components/ApproachPillarsDeep.tsx` — long-form treatment of the Three Pillars. Each pillar gets a left-rail card (stage / icon / brand name / plain line) and a right-column body covering the methods we use, what we ask of partners, and a "We know it worked when" success criterion grounded enough to write into a contract.
+- `src/app/our-approach/components/LogicModel.tsx` — five-stage flow diagram (**Inputs → Activities → Outputs → Outcomes → Impact**). Drawn organically with a single SVG path linking the five nodes; each stage has a question, four bullet items, and its own hue. Closing line: *"We negotiate every engagement against this chain. If a funder wants us to optimise for an output we don't believe ladders up to a real outcome, we say so before the contract is signed."*
+
+### Our Work page
+
+- `src/data/projects.ts` — populated with two real projects matching the brief:
+  - **ComeThru** — WhatsApp-native, 24/7, multilingual, no install. Tagged to The Good Labs.
+  - **Maji Maisha** (Gangara, Mbeere North) — 3,500+ people served, 3 solar hubs, 50% women in leadership, 75% operating cost reduction, 0 litres of diesel, 18 months to community ownership.
+- `src/types/index.ts` — extended `Project` with optional `tagline`, `engine`, and `caseStudy` ({ problem, approach, body, learnings }) fields. Existing fields untouched.
+- `src/app/our-work/components/WorkHero.tsx` — brief's heading "What this looks like in practice" + plain-language explainer.
+- `src/app/our-work/components/CaseStudy.tsx` — the long-form template. Sticky "Impact" rail on desktop with metric chips that consume either numeric `value`/`suffix` or a prebaked `display` string (so we can render "WhatsApp-native" alongside "3,500+"). Body splits the brief's required structure into "The problem" / "What we did" / paragraph body / "What we learned".
+- `src/app/our-work/components/FutureProjects.tsx` — "More to come" section that reads as an invitation rather than a placeholder. Links to the contact form pre-filtered to `intent=back`.
+- `src/app/our-work/page.tsx` — composes `WorkHero → CaseStudy(ComeThru) → CaseStudy(Maji Maisha) → FutureProjects → HomeContact`. Iterates the `projects` array filtered by `featured: true` so adding a third featured project is one entry in `data/projects.ts`.
+
+The dynamic `/our-work/[slug]` route now also generates static pages for `/our-work/comethru` and `/our-work/maji-maisha` from the seeded data. The legacy `ProjectDetail` component still renders them; richer per-slug rendering can land later.
+
+### Verified
+
+- `npm run build` — passing. Routes: `/about` 5.27 kB / 158 kB FLJS, `/our-approach` 5.72 kB / 152 kB, `/our-work` 3.09 kB / 150 kB, `/our-work/[slug]` static-prerendered for both featured projects.
+- `npm run lint` — passing.
+
+---
+
 ## Phase 3c — Three Pillars + Three Engines + the rest of the homepage flow
 
 **Goal:** finish the new homepage. The visitor now travels Hero → Silo Trap → Applied Intersectionality → Three Pillars → Three Engines → Featured Projects → Who It's For → Insights → Contact, end-to-end on the new IA. Plain-language explainers under every technical heading.

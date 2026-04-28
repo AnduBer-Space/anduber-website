@@ -4,12 +4,12 @@ import OurStory from "./components/OurStory";
 import MissionVision from "./components/MissionVision";
 import CoreValues from "./components/CoreValues";
 import TeamSection from "./components/TeamSection";
-import CTA from "@/components/sections/CTA";
+import HomeContact from "@/components/sections/HomeContact";
 
 export const metadata: Metadata = {
-  title: "About Us",
+  title: "About",
   description:
-    "Learn about AnduBer's mission to empower East African communities through sustainable, community-led development initiatives and our unique distributed governance model.",
+    "AnduBer means ANDU (people, in Kĩmbeere) + BER (good, in Dholuo) — innovation at the intersection. Founded by Dr. Victor Mugambi Nyaga (DVM, MIPH) to bring the rooms that don't normally meet into the same conversation.",
 };
 
 export default function AboutPage() {
@@ -20,7 +20,7 @@ export default function AboutPage() {
       <MissionVision />
       <CoreValues />
       <TeamSection />
-      <CTA />
+      <HomeContact />
     </>
   );
 }
