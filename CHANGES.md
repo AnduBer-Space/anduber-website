@@ -2,6 +2,83 @@
 
 A running log of each commit in the redesign. Newest first.
 
+## Phase 3c — Three Pillars + Three Engines + the rest of the homepage flow
+
+**Goal:** finish the new homepage. The visitor now travels Hero → Silo Trap → Applied Intersectionality → Three Pillars → Three Engines → Featured Projects → Who It's For → Insights → Contact, end-to-end on the new IA. Plain-language explainers under every technical heading.
+
+### Three Pillars — rewritten
+
+`src/components/sections/ThreePillars.tsx`. Now reads as a connected flow rather than three isolated cards. A single SVG path draws across the three pillars on desktop (animated `pathLength` 0 → 1 on first scroll), reinforcing the input → process → output movement without making it mechanical.
+
+For each pillar I kept the brand-name heading (Radical Collision / Applied Imagination / Systemic Resilience) and the original description as IP, then added:
+
+- A stage badge (Input / Process / Output)
+- A friendly Fraunces-italic plain-language line — the brief's required subtitles:
+  - *Radical Collision*: "Bringing unlikely people together — poets with policymakers, grandmothers with engineers."
+  - *Applied Imagination*: "Equipping these teams with tools to map problems and find leverage points."
+  - *Systemic Resilience*: "Producing solutions that hold up because they address multiple problems at once."
+- An "In practice" example block grounding each pillar in a real Maji Maisha vignette.
+
+Heading: **"How we put Applied Intersectionality to work"** — the brief's exact framing. Closing line carries the *"From friction to flow"* refrain.
+
+### Three Engines — orbital visualization
+
+Replaces the old `Ecosystem.tsx` flywheel on the homepage. New components:
+
+- `src/components/sections/engines/OrbitalEngines.tsx` — three engine cores positioned on an SVG orbital ring; light particles travel the orbit at staggered phases (CSS `offset-path` keyframe), creating a gentle "exchange" feel without continuous rotation. Each engine label is a `<button>` — hover/focus/click reveals its full description, revenue model, and recent outcomes in the side panel. Reduced-motion suppresses the orbit.
+- `src/components/sections/ThreeEngines.tsx` — homepage section wrapper with the heading **"Three engines, one ecosystem"** and the brief's plain-language subtitle: *"How AnduBer turns ideas into lasting impact."*
+
+Engine names are unchanged (AnduBer Partners, **The Good Labs** — adopted per brief, replacing "AnduBer Labs" — and The Gathering). Each carries the brief's mandated subtitles:
+- *AnduBer Partners (Strategic Engine)*: "We advise foundations, NGOs and governments."
+- *The Good Labs (Invention Engine)*: "We build solutions ourselves — like ComeThru and Maji Maisha."
+- *The Gathering (Ecosystem Engine)*: "We back grassroots innovators with capital and networks."
+
+(The legacy `Ecosystem.tsx` section remains in the codebase — `/what-we-do` still uses it. Phase 4 rebuilds that page.)
+
+### Featured Projects (homepage edition)
+
+`src/components/sections/HomeFeaturedProjects.tsx` is new. Two cards using the brief's exact taglines and the real impact numbers from the brief's content:
+
+- **ComeThru** — "A mental wellness companion that meets people where they already are — on WhatsApp." Problem / What we did / WhatsApp-native + 24/7 metric chips.
+- **Maji Maisha** — "Solar-powered water systems owned and run by the community." Problem / What we did / four metric chips: 3,500+ people served, 75% operating cost reduction, 0 litres of diesel, 50% women in leadership.
+
+### Who It's For
+
+`src/components/sections/WhoItsFor.tsx` — three pathways the brief specifies:
+
+- **Funders & Philanthropists** → `/contact?intent=fund`
+- **Organisations & Governments** → `/contact?intent=advise`
+- **Innovators with Ideas** → `/contact?intent=back`
+
+Each pathway has a Fraunces-italic one-liner so the visitor recognises themselves before reading further. The intent query parameter sets up the upcoming Start Here picker (Phase 5) to deep-link straight to a pre-filled inquiry type on the contact form.
+
+### Insights teaser
+
+`src/components/sections/InsightsTeaser.tsx` — the brief's "Common Sense is Not Common" LinkedIn newsletter, with the plain-language subtitle *"Honest takes on what works and what doesn't in development."* Links to the LinkedIn newsletter externally and to `/blog` internally. Includes a mock latest-edition card to give the section visual weight.
+
+### Closing contact
+
+`src/components/sections/HomeContact.tsx` replaces the old generic `<CTA />` at the homepage close. Dark with a soft gold radial wash (the brief's "dark with gold glow"). Heading: **"Let's build new worlds"** + plain-language line *"Tell us what you're working on."* Four contact tiles (email, phone, location, LinkedIn) plus a primary CTA button to `/contact` where the existing Resend-backed form lives.
+
+### Homepage composition
+
+`src/app/page.tsx`:
+
+```
+Hero → SiloTrap → AppliedIntersectionality → ThreePillars
+     → ThreeEngines → HomeFeaturedProjects → WhoItsFor
+     → InsightsTeaser → HomeContact
+```
+
+That's the brief's nine-section flow, end-to-end. The legacy `Ecosystem`, `CoreModel`, `CTA`, `FeaturedProjects` components remain in the codebase to keep `/what-we-do`, `/our-approach`, `/our-work`, and the old `/projects` redirect targets working. Phase 4 prunes them.
+
+### Verified
+
+- `npm run build` — passing. Homepage route now 15.1 kB (was 3.05 kB) — extra weight is content + the two interactive visualizations; First Load JS only grew 1 kB (87.3 → 164 kB) so most of the new bytes are static markup.
+- `npm run lint` — passing.
+
+---
+
 ## Phase 3b — Silo Trap rewrite + Applied Intersectionality interactive diagram
 
 **Goal:** the second and third sections of the homepage. Visitors learn what's broken (Silo Trap) and how AnduBer thinks (Applied Intersectionality) — both with plain-language subtitles right under the technical headings, and a hands-on diagram that lets the methodology be *felt* instead of read.

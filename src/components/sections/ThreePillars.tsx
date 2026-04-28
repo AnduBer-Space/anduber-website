@@ -1,188 +1,215 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Zap, Sparkles, Shield, ArrowRight } from "lucide-react";
+import { Zap, Sparkles, Shield } from "lucide-react";
 import Container from "@/components/ui/Container";
-import { pillars } from "@/data/site";
+import HybridSection from "@/components/ui/HybridSection";
 
-const pillarIcons = {
-  collision: Zap,
-  imagination: Sparkles,
-  resilience: Shield,
+/**
+ * Theory of Change. Three pillars connected as a flow (input → process →
+ * output) — visually presented as three sections that share a flowing line,
+ * not isolated cards. Plain-language subtitles sit right beneath each
+ * technical name.
+ *
+ * Brand IP retained: Radical Collision, Applied Imagination, Systemic
+ * Resilience. The original descriptions are preserved; the friendly voice
+ * sits on top, not as a replacement.
+ */
+
+type Pillar = {
+  id: string;
+  /** Brand name. */
+  title: string;
+  /** Friendly one-liner — the plain voice. */
+  plain: string;
+  /** Stage label — Input / Process / Output. */
+  stage: string;
+  description: string;
+  example: string;
+  Icon: typeof Zap;
+  accent: "teal" | "gold" | "copper";
 };
 
-const pillarGradients = {
+const PILLARS: Pillar[] = [
+  {
+    id: "collision",
+    title: "Radical Collision",
+    plain: "Bringing unlikely people together — poets with policymakers, grandmothers with engineers.",
+    stage: "Input",
+    description:
+      "We collide the unusual suspects. Outside their disciplines and inside the same room, people see angles their training trained them to ignore.",
+    example: "A Maji Maisha planning session put a hydrogeologist, a youth pastor, a women's-group treasurer, and a solar engineer at the same table. The pump survived because they did.",
+    Icon: Zap,
+    accent: "teal",
+  },
+  {
+    id: "imagination",
+    title: "Applied Imagination",
+    plain: "Equipping these teams with tools to map problems and find leverage points.",
+    stage: "Process",
+    description:
+      "Systems mapping. Causal-loop diagrams. Design-justice methods. We move groups from \"what if\" to \"how to\" — turning intuition into structures decisions can be made on.",
+    example: "We map the system on the wall before we touch a budget. Half the time, the solution turns out to be a smaller, weirder, cheaper intervention than anyone in the room arrived expecting.",
+    Icon: Sparkles,
+    accent: "gold",
+  },
+  {
+    id: "resilience",
+    title: "Systemic Resilience",
+    plain: "Producing solutions that hold up because they address multiple problems at once.",
+    stage: "Output",
+    description:
+      "What we ship is not a project. It's a system — community-owned, self-sustaining, designed to keep working when the funding cycle ends and the consultant leaves.",
+    example: "Maji Maisha graduated to community ownership in 18 months. Three years on, the pumps still run, costs are 75% lower, and zero litres of diesel are burned.",
+    Icon: Shield,
+    accent: "copper",
+  },
+];
+
+const ACCENTS: Record<
+  Pillar["accent"],
+  { ring: string; text: string; iconBg: string; dot: string }
+> = {
   teal: {
-    border: "border-teal-500/30 hover:border-teal-500/60",
-    bg: "from-teal-500/10 to-transparent",
-    icon: "bg-teal-500/20 text-teal-600 dark:text-teal-400",
-    text: "text-teal-600 dark:text-teal-400",
-    cardClass: "card-premium",
+    ring: "ring-teal-500/40",
+    text: "text-teal-700 dark:text-teal-400",
+    iconBg: "bg-teal-500/10",
+    dot: "bg-teal-500",
   },
   gold: {
-    border: "border-gold-400/30 hover:border-gold-400/60",
-    bg: "from-gold-400/10 to-transparent",
-    icon: "bg-gold-400/20 text-gold-700 dark:text-gold-400",
+    ring: "ring-gold-500/40",
     text: "text-gold-700 dark:text-gold-400",
-    cardClass: "card-premium card-premium-gold",
+    iconBg: "bg-gold-400/10",
+    dot: "bg-gold-500",
   },
   copper: {
-    border: "border-gold-600/30 hover:border-gold-600/60",
-    bg: "from-gold-600/10 to-transparent",
-    icon: "bg-gold-600/20 text-gold-700 dark:text-gold-400",
-    text: "text-gold-700 dark:text-gold-400",
-    cardClass: "card-premium card-premium-copper",
+    ring: "ring-gold-600/40",
+    text: "text-gold-800 dark:text-gold-400",
+    iconBg: "bg-gold-600/10",
+    dot: "bg-gold-600",
   },
 };
 
 export default function ThreePillars() {
   return (
-    <section id="how-we-work" className="relative py-24 lg:py-32 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-cream-100 via-cream-50 to-cream-100 dark:from-plum-800 dark:via-plum-900 dark:to-plum-800" />
-
-      {/* Network line decorations */}
-      <svg
-        className="absolute inset-0 w-full h-full pointer-events-none opacity-10 dark:opacity-20"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-      >
-        <defs>
-          <linearGradient id="pillarLineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#1A7B7A" stopOpacity="0.5" />
-            <stop offset="50%" stopColor="#D4AA6A" stopOpacity="0.3" />
-            <stop offset="100%" stopColor="#C9956C" stopOpacity="0.5" />
-          </linearGradient>
-        </defs>
-        <path
-          d="M 0 50 Q 25 30 50 50 T 100 50"
-          stroke="url(#pillarLineGrad)"
-          strokeWidth="0.2"
-          fill="none"
-        />
-        <path
-          d="M 0 60 Q 25 80 50 60 T 100 60"
-          stroke="url(#pillarLineGrad)"
-          strokeWidth="0.15"
-          fill="none"
-        />
-      </svg>
-
+    <HybridSection variant="light" id="how-we-work" padding="xl">
       <Container className="relative z-10">
-        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6 }}
+          className="max-w-3xl mb-12 lg:mb-16"
         >
-          <span className="inline-block px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-600 dark:text-teal-400 text-sm font-medium mb-6">
+          <p className="text-xs uppercase tracking-[0.22em] font-semibold text-token-gold mb-4">
             Theory of Change
-          </span>
-          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-plum-900 dark:text-cream-200 mb-6">
-            Three Pillars of <span className="text-gradient-gold">Transformation</span>
+          </p>
+          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-token-primary leading-[1.1] mb-5">
+            How we put Applied Intersectionality to work
           </h2>
-          <p className="text-lg text-plum-600 dark:text-cream-300 max-w-3xl mx-auto">
-            Our methodology transforms how the world solves complex challenges through three
-            interconnected phases.
+          <p className="font-accent italic text-lg md:text-xl text-token-secondary leading-snug max-w-[60ch]">
+            Three pillars, in order: bring the room together, give them tools, ship something that lasts.
           </p>
         </motion.div>
 
-        {/* Pillars Grid */}
-        <div className="grid md:grid-cols-3 gap-8 lg:gap-10">
-          {pillars.map((pillar, index) => {
-            const Icon = pillarIcons[pillar.icon as keyof typeof pillarIcons];
-            const colors = pillarGradients[pillar.color as keyof typeof pillarGradients];
+        {/* Connected flow: vertical on mobile, horizontal on desktop, with a single thread linking them. */}
+        <div className="relative">
+          {/* Flow thread (desktop) — drawn behind cards. Decorative; aria-hidden. */}
+          <svg
+            aria-hidden="true"
+            className="hidden lg:block absolute inset-x-0 top-[64px] w-full h-12 pointer-events-none"
+            viewBox="0 0 100 6"
+            preserveAspectRatio="none"
+          >
+            <defs>
+              <linearGradient id="pillarFlow" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#0F766E" />
+                <stop offset="50%" stopColor="#B8860B" />
+                <stop offset="100%" stopColor="#a87545" />
+              </linearGradient>
+            </defs>
+            <motion.path
+              d="M 4 3 Q 25 0 50 3 T 96 3"
+              stroke="url(#pillarFlow)"
+              strokeWidth="0.4"
+              fill="none"
+              strokeLinecap="round"
+              initial={{ pathLength: 0, opacity: 0 }}
+              whileInView={{ pathLength: 1, opacity: 0.6 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 1.4, ease: "easeOut" }}
+            />
+          </svg>
 
-            return (
-              <motion.div
-                key={pillar.id}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.2, duration: 0.6 }}
-                className="group relative"
-              >
-                {/* Card - Pure CSS hover effects for better performance */}
-                <div
-                  className={`
-                    relative h-full p-8 lg:p-10
-                    ${colors.cardClass}
-                    border ${colors.border}
-                    bg-gradient-to-br ${colors.bg}
-                    backdrop-blur-sm
-                  `}
+          <div className="grid lg:grid-cols-3 gap-8 lg:gap-6 relative">
+            {PILLARS.map((p, index) => {
+              const accent = ACCENTS[p.accent];
+              return (
+                <motion.article
+                  key={p.id}
+                  initial={{ opacity: 0, y: 32 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ delay: index * 0.15, duration: 0.6 }}
+                  className="relative group"
                 >
-                  {/* Number badge */}
-                  <div className="absolute -top-4 -right-4 w-12 h-12 rounded-full bg-cream-50 dark:bg-plum-900 border border-cream-200 dark:border-plum-700 flex items-center justify-center">
-                    <span className={`font-serif text-xl font-bold ${colors.text}`}>
-                      {String(index + 1).padStart(2, "0")}
+                  {/* Stage label + numeric bullet */}
+                  <div className="flex items-center gap-3 mb-5">
+                    <span
+                      className={`inline-flex items-center justify-center w-12 h-12 rounded-full ring-2 ${accent.ring} ${accent.iconBg} relative z-10`}
+                    >
+                      <p.Icon className={`w-5 h-5 ${accent.text}`} aria-hidden="true" />
                     </span>
+                    <div>
+                      <p className={`text-[10px] uppercase tracking-[0.18em] font-semibold ${accent.text}`}>
+                        {p.stage}
+                      </p>
+                      <p className="text-xs uppercase tracking-wider text-token-muted">
+                        Pillar {String(index + 1).padStart(2, "0")}
+                      </p>
+                    </div>
                   </div>
 
-                  {/* Subtitle */}
-                  <span className={`text-sm font-medium uppercase tracking-wider ${colors.text}`}>
-                    {pillar.subtitle}
-                  </span>
-
-                  {/* Icon */}
-                  <div className={`w-16 h-16 rounded-2xl ${colors.icon} flex items-center justify-center mt-4 mb-6 transition-transform duration-300 group-hover:scale-110`}>
-                    <Icon className="w-8 h-8" />
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="font-serif text-2xl lg:text-3xl font-bold text-plum-900 dark:text-cream-200 mb-4">
-                    {pillar.title}
+                  {/* Title + plain-language line */}
+                  <h3 className="font-serif text-2xl md:text-3xl font-bold text-token-primary leading-tight mb-2">
+                    {p.title}
                   </h3>
-
-                  {/* Description */}
-                  <p className="text-plum-600 dark:text-cream-300 leading-relaxed mb-6">
-                    {pillar.description}
+                  <p className={`font-accent italic text-base md:text-lg leading-snug mb-4 ${accent.text}`}>
+                    {p.plain}
                   </p>
 
-                  {/* Quote */}
-                  <div className={`pt-6 border-t ${colors.border}`}>
-                    <p className={`font-serif italic ${colors.text}`}>
-                      &ldquo;{pillar.quote}&rdquo;
-                    </p>
-                  </div>
-                </div>
+                  {/* Original description — IP preserved */}
+                  <p className="text-sm md:text-base text-token-secondary leading-relaxed mb-4">
+                    {p.description}
+                  </p>
 
-                {/* Connector arrow (not on last item) */}
-                {index < pillars.length - 1 && (
-                  <div className="hidden md:flex absolute -right-5 top-1/2 -translate-y-1/2 z-10">
-                    <motion.div
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.2 + 0.4 }}
-                    >
-                      <ArrowRight className="w-6 h-6 text-plum-400 dark:text-plum-500" />
-                    </motion.div>
+                  {/* Concrete example */}
+                  <div className="border-l-2 border-gold-500/40 pl-4 py-1">
+                    <p className="text-xs uppercase tracking-wider font-semibold text-token-gold mb-1">
+                      In practice
+                    </p>
+                    <p className="text-sm text-token-primary leading-snug">{p.example}</p>
                   </div>
-                )}
-              </motion.div>
-            );
-          })}
+                </motion.article>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Key phrase */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.8 }}
-          className="mt-16 text-center"
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.6 }}
+          className="mt-14 max-w-3xl"
         >
-          <p className="text-2xl md:text-3xl font-serif text-plum-900 dark:text-cream-200">
-            From <span className="text-teal-600 dark:text-teal-400">Friction</span> to{" "}
-            <span className="text-gold-700 dark:text-gold-400">Flow</span>
-          </p>
-          <p className="text-lg text-plum-600 dark:text-cream-300 mt-2">
-            We turn &apos;what if&apos; into &apos;how to&apos;
+          <p className="font-serif italic text-xl md:text-2xl text-token-primary leading-relaxed">
+            From <span className="not-italic font-semibold text-token-teal">friction</span> to{" "}
+            <span className="not-italic font-semibold text-token-gold">flow</span>. We turn
+            &ldquo;what if&rdquo; into &ldquo;how to&rdquo;.
           </p>
         </motion.div>
       </Container>
-    </section>
+    </HybridSection>
   );
 }
