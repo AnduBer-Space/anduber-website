@@ -2,6 +2,56 @@
 
 A running log of each commit in the redesign. Newest first.
 
+## Phase 6 — Tooling: Playwright screenshots + final pass
+
+**Goal:** ship the deliverables that travel with the redesign, not just the redesign itself.
+
+### Playwright screenshot script
+
+`scripts/screenshots.mjs`. Captures every public route in all three theme modes (`hybrid` / `dark` / `light`) at desktop (1440×900) and mobile (390×844) viewports. Output goes to `screenshots/<theme>/<route>-<viewport>.png` plus a `MANIFEST.md` listing what was captured and when.
+
+Behaviour worth knowing:
+- Pre-seeds `localStorage.anduber-theme` before navigation, so the inline theme bootstrap script picks the requested mode and the page renders in the correct theme without a flash.
+- Sets Playwright `reducedMotion: "reduce"` on every context — screenshots stable across runs.
+- Waits for `networkidle` + `document.fonts.ready` + a 600ms beat before the shutter so font swap and on-mount animations don't ghost.
+- `BASE_URL` env var defaults to `http://localhost:3000`. Set it to `https://anduber.org` to capture the live site instead.
+
+Run locally:
+
+```bash
+npm install --save-dev playwright       # one-time
+npx playwright install chromium         # one-time
+npm run build && npm run start          # in another terminal
+npm run screenshots                     # in this terminal
+```
+
+I deliberately did *not* add Playwright as a project dependency — browsers weigh ~250 MB and only the screenshot workflow needs them.
+
+### Hygiene
+
+- `package.json` — added `screenshots` script.
+- `.gitignore` — added `/screenshots/`. The PNGs are large and noisy in diffs.
+- Verified no raw `<img>` tags in `src/`. Every image goes through `next/image`. The hero logo (Header / Footer / Logo component / TeamSection avatar) carries `priority` already.
+- Routes: 23 in total, FLJS for the homepage 164 kB after the full new flow lands.
+
+### Decisions worth flagging
+
+- I left the legacy routes in place (`/ecosystem`, `/model`, `/projects`, `/projects/[slug]`) as static pages alongside the redirects. They render once at build time, are 142–145 B each, and are a safety net if a redirect rule ever breaks. Removing them is a one-line cleanup if you'd rather.
+- The legacy `Ecosystem`, `CoreModel`, `CTA`, `FeaturedProjects`, and `ProjectsPage` components stay in the codebase for the same reason — they're still imported by the legacy redirect targets and by `/projects/[slug]`. Pruning them would be a separate, easy change.
+
+### What I did not do (and you'll want to do)
+
+- I cannot generate the actual PNG files — that needs a Chromium browser running. Run `npm run screenshots` locally once the Vercel deploy is up, or against `localhost:3000`.
+- Lighthouse scores are not measured here. The structure is set up for ≥95 (no raw `<img>`, fonts loaded with `display: swap` + `next/font`, the heavy interactive components are client-only and below the fold). Run Lighthouse against the live URL or the Vercel preview to verify.
+- Mobile-viewport visual QA (375 px / 414 px) hasn't been done with a real browser. Markup-level review and the build passing are the available signals; a quick run of `npm run screenshots` against mobile will surface anything off.
+
+### Verified
+
+- `npm run build` — passing. 23 routes total. Homepage 15.4 kB, FLJS 164 kB; About 5.27 kB / 158 kB; Our Approach 5.72 kB / 152 kB; Our Work 3.09 kB / 150 kB.
+- `npm run lint` — passing.
+
+---
+
 ## Phase 5 — Flourishes: Start Here picker, scroll thread, cursor glow, intent-aware contact form
 
 **Goal:** the layer of polish the brief asked for — the things that make the site feel like it&rsquo;s actually paying attention to the visitor.

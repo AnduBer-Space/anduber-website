@@ -41,6 +41,9 @@ secrets.json
 # vercel
 .vercel
 
+# screenshots produced by scripts/screenshots.mjs
+/screenshots/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
