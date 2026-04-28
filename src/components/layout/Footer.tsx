@@ -34,16 +34,16 @@ const ecosystemLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-plum-900 text-cream-200 border-t border-plum-800">
+    <footer className="bg-cream-100 dark:bg-plum-900 text-plum-900 dark:text-cream-200 border-t border-cream-200 dark:border-plum-800">
       {/* Newsletter Section */}
-      <div className="border-b border-plum-800">
+      <div className="border-b border-cream-200 dark:border-plum-800">
         <Container>
           <div className="py-12 md:py-16 flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="text-center md:text-left">
               <h3 className="font-serif text-2xl md:text-3xl font-bold mb-2">
-                Join the <span className="text-gold-400">Movement</span>
+                Join the <span className="text-gold-700 dark:text-gold-400">Movement</span>
               </h3>
-              <p className="text-cream-300">
+              <p className="text-plum-600 dark:text-cream-300">
                 Subscribe to stay updated on our work dismantling silos and building resilient systems.
               </p>
             </div>
@@ -67,11 +67,11 @@ export default function Footer() {
             {/* Brand Column */}
             <div className="lg:col-span-1">
               <Logo size="lg" className="mb-6" />
-              <p className="text-cream-300 mb-4 leading-relaxed">
-                <span className="text-gold-400 font-semibold">ANDU</span> (People) +{" "}
-                <span className="text-teal-400 font-semibold">BER</span> (Good)
+              <p className="text-plum-600 dark:text-cream-300 mb-4 leading-relaxed">
+                <span className="text-gold-700 dark:text-gold-400 font-semibold">ANDU</span> (People) +{" "}
+                <span className="text-teal-600 dark:text-teal-400 font-semibold">BER</span> (Good)
               </p>
-              <p className="text-cream-300 mb-6 leading-relaxed text-sm">
+              <p className="text-plum-600 dark:text-cream-300 mb-6 leading-relaxed text-sm">
                 A new breed of social enterprise dismantling silos and building
                 resilient systems through applied imagination.
               </p>
@@ -82,7 +82,7 @@ export default function Footer() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 rounded-full bg-plum-800 text-cream-200 hover:bg-teal-500 hover:text-plum-900 transition-colors"
+                    className="p-2 rounded-full bg-cream-200 dark:bg-plum-800 text-plum-700 dark:text-cream-200 hover:bg-teal-500 hover:text-white transition-colors"
                     aria-label={social.label}
                   >
                     <social.icon className="w-5 h-5" />
@@ -93,7 +93,7 @@ export default function Footer() {
 
             {/* Quick Links */}
             <div>
-              <h4 className="font-serif text-lg font-semibold mb-6 text-gold-400">
+              <h4 className="font-serif text-lg font-semibold mb-6 text-gold-700 dark:text-gold-400">
                 Quick Links
               </h4>
               <ul className="space-y-3">
@@ -101,7 +101,7 @@ export default function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-cream-300 hover:text-teal-400 transition-colors"
+                      className="text-plum-600 dark:text-cream-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -112,7 +112,7 @@ export default function Footer() {
 
             {/* Ecosystem */}
             <div>
-              <h4 className="font-serif text-lg font-semibold mb-6 text-gold-400">
+              <h4 className="font-serif text-lg font-semibold mb-6 text-gold-700 dark:text-gold-400">
                 Our Ecosystem
               </h4>
               <ul className="space-y-3">
@@ -120,7 +120,7 @@ export default function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-cream-300 hover:text-teal-400 transition-colors"
+                      className="text-plum-600 dark:text-cream-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -131,22 +131,22 @@ export default function Footer() {
 
             {/* Contact */}
             <div>
-              <h4 className="font-serif text-lg font-semibold mb-6 text-gold-400">
+              <h4 className="font-serif text-lg font-semibold mb-6 text-gold-700 dark:text-gold-400">
                 Contact Us
               </h4>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
                   <MapPin className="w-5 h-5 text-teal-500 flex-shrink-0 mt-0.5" />
                   <div>
-                    <span className="text-cream-300">{siteConfig.address}</span>
-                    <p className="text-sm text-plum-500">Headquarters | Global Reach</p>
+                    <span className="text-plum-600 dark:text-cream-300">{siteConfig.address}</span>
+                    <p className="text-sm text-plum-400 dark:text-plum-500">Headquarters | Global Reach</p>
                   </div>
                 </li>
                 <li className="flex items-center gap-3">
                   <Phone className="w-5 h-5 text-teal-500 flex-shrink-0" />
                   <a
                     href={`tel:${siteConfig.phone}`}
-                    className="text-cream-300 hover:text-teal-400 transition-colors"
+                    className="text-plum-600 dark:text-cream-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
                   >
                     {siteConfig.phone}
                   </a>
@@ -155,7 +155,7 @@ export default function Footer() {
                   <Mail className="w-5 h-5 text-teal-500 flex-shrink-0" />
                   <a
                     href={`mailto:${siteConfig.email}`}
-                    className="text-cream-300 hover:text-teal-400 transition-colors"
+                    className="text-plum-600 dark:text-cream-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
                   >
                     {siteConfig.email}
                   </a>
@@ -166,7 +166,7 @@ export default function Footer() {
                     href={siteConfig.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-cream-300 hover:text-teal-400 transition-colors"
+                    className="text-plum-600 dark:text-cream-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
                   >
                     anduber.org
                   </a>
@@ -178,11 +178,11 @@ export default function Footer() {
       </Container>
 
       {/* Bottom Bar */}
-      <div className="border-t border-plum-800">
+      <div className="border-t border-cream-200 dark:border-plum-800">
         <Container>
           <div className="py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-plum-500">
             <p>&copy; {new Date().getFullYear()} AnduBer. All rights reserved.</p>
-            <p className="italic text-cream-300/60">
+            <p className="italic text-plum-400 dark:text-cream-300/60">
               &ldquo;From Friction to Flow&rdquo;
             </p>
           </div>

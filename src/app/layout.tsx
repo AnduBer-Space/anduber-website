@@ -1,19 +1,29 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Playfair_Display, Fraunces } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import BackToTop from "@/components/ui/BackToTop";
 import ComeThruAnnouncement from "@/components/ui/ComeThruAnnouncement";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
 });
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-playfair",
+  display: "swap",
+});
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-fraunces",
+  display: "swap",
+  axes: ["SOFT"],
 });
 
 export const metadata: Metadata = {
@@ -84,30 +94,38 @@ export const metadata: Metadata = {
   },
 };
 
+// Inline script: applied before React hydrates so users with a saved
+// theme preference don't see a flash of the wrong theme.
+const themeBootstrapScript = `(function(){try{var p=localStorage.getItem('anduber-theme');if(p!=='dark'&&p!=='light'&&p!=='hybrid')p='hybrid';var r=document.documentElement;r.classList.remove('theme-hybrid','theme-dark','theme-light','dark');r.classList.add('theme-'+p);if(p==='dark')r.classList.add('dark');}catch(e){document.documentElement.classList.add('theme-hybrid');}})();`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeBootstrapScript }} />
+      </head>
       <body
-        className={`${inter.variable} ${playfair.variable} font-sans antialiased`}
+        className={`${inter.variable} ${playfair.variable} ${fraunces.variable} font-sans antialiased`}
       >
-        {/* Skip to content for keyboard users */}
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-6 focus:py-3 focus:rounded-full focus:bg-gold-400 focus:text-plum-900 focus:font-medium focus:outline-none"
-        >
-          Skip to content
-        </a>
-        <div className="flex min-h-screen flex-col bg-plum-900 text-cream-200 transition-colors duration-300 overflow-x-hidden">
-          <Header />
-          <main id="main-content" className="flex-1 overflow-x-hidden">{children}</main>
-          <Footer />
-          <BackToTop />
-          <ComeThruAnnouncement />
-        </div>
+        <ThemeProvider>
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-6 focus:py-3 focus:rounded-full focus:bg-gold-400 focus:text-plum-900 focus:font-medium focus:outline-none"
+          >
+            Skip to content
+          </a>
+          <div className="flex min-h-screen flex-col overflow-x-hidden">
+            <Header />
+            <main id="main-content" className="flex-1 overflow-x-hidden">{children}</main>
+            <Footer />
+            <BackToTop />
+            <ComeThruAnnouncement />
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );

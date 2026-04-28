@@ -26,7 +26,7 @@ export default function LoadingSpinner({
         transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
       >
         {/* Outer ring */}
-        <div className="absolute inset-0 rounded-full border-2 border-plum-600" />
+        <div className="absolute inset-0 rounded-full border-2 border-cream-200 dark:border-plum-600" />
         {/* Animated arc */}
         <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-gold-500 border-r-gold-500" />
         {/* Inner glow - static */}
@@ -38,7 +38,7 @@ export default function LoadingSpinner({
 
 export function PageLoader() {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-plum-900">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-cream-50 dark:bg-plum-900">
       <div className="text-center">
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
@@ -56,7 +56,7 @@ export function PageLoader() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="mt-6 text-gold-500 font-medium"
+          className="mt-6 text-gold-700 dark:text-gold-500 font-medium"
         >
           Loading...
         </motion.p>

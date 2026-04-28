@@ -105,7 +105,7 @@ export default function ContactForm() {
   return (
     <section className="relative py-16 overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-plum-800 via-plum-900 to-plum-800" />
+      <div className="absolute inset-0 bg-gradient-to-b from-cream-100 via-cream-50 to-cream-100 dark:from-plum-800 dark:via-plum-900 dark:to-plum-800" />
 
       <Container className="relative z-10">
         <div className="grid lg:grid-cols-5 gap-12">
@@ -115,10 +115,10 @@ export default function ContactForm() {
             animate={{ opacity: 1, x: 0 }}
             className="lg:col-span-2"
           >
-            <h2 className="font-serif text-2xl md:text-3xl font-bold text-cream-200 mb-6">
-              Let&apos;s Start a <span className="text-gold-400">Conversation</span>
+            <h2 className="font-serif text-2xl md:text-3xl font-bold text-plum-900 dark:text-cream-200 mb-6">
+              Let&apos;s Start a <span className="text-gold-700 dark:text-gold-400">Conversation</span>
             </h2>
-            <p className="text-cream-300 mb-8">
+            <p className="text-plum-600 dark:text-cream-300 mb-8">
               Whether you&apos;re looking for strategic consulting, research collaboration,
               or want to support our mission&mdash;we&apos;re here to help turn friction into flow.
             </p>
@@ -126,13 +126,13 @@ export default function ContactForm() {
             <div className="space-y-6">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-teal-500/20 flex items-center justify-center flex-shrink-0">
-                  <Mail className="w-6 h-6 text-teal-400" />
+                  <Mail className="w-6 h-6 text-teal-600 dark:text-teal-400" />
                 </div>
                 <div>
-                  <h3 className="font-medium text-cream-200 mb-1">Email</h3>
+                  <h3 className="font-medium text-plum-900 dark:text-cream-200 mb-1">Email</h3>
                   <a
                     href={`mailto:${siteConfig.email}`}
-                    className="text-cream-300 hover:text-teal-400 transition-colors"
+                    className="text-plum-600 dark:text-cream-300 hover:text-teal-400 transition-colors"
                   >
                     {siteConfig.email}
                   </a>
@@ -141,13 +141,13 @@ export default function ContactForm() {
 
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-gold-400/20 flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-6 h-6 text-gold-400" />
+                  <Phone className="w-6 h-6 text-gold-700 dark:text-gold-400" />
                 </div>
                 <div>
-                  <h3 className="font-medium text-cream-200 mb-1">Phone</h3>
+                  <h3 className="font-medium text-plum-900 dark:text-cream-200 mb-1">Phone</h3>
                   <a
                     href={`tel:${siteConfig.phone}`}
-                    className="text-cream-300 hover:text-teal-400 transition-colors"
+                    className="text-plum-600 dark:text-cream-300 hover:text-teal-400 transition-colors"
                   >
                     {siteConfig.phone}
                   </a>
@@ -156,26 +156,26 @@ export default function ContactForm() {
 
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-gold-600/20 flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-6 h-6 text-gold-600" />
+                  <MapPin className="w-6 h-6 text-gold-700 dark:text-gold-400" />
                 </div>
                 <div>
-                  <h3 className="font-medium text-cream-200 mb-1">Headquarters</h3>
-                  <p className="text-cream-300">{siteConfig.address}</p>
-                  <p className="text-sm text-plum-500">Global Reach</p>
+                  <h3 className="font-medium text-plum-900 dark:text-cream-200 mb-1">Headquarters</h3>
+                  <p className="text-plum-600 dark:text-cream-300">{siteConfig.address}</p>
+                  <p className="text-sm text-plum-400 dark:text-plum-500">Global Reach</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-teal-500/20 flex items-center justify-center flex-shrink-0">
-                  <Linkedin className="w-6 h-6 text-teal-400" />
+                  <Linkedin className="w-6 h-6 text-teal-600 dark:text-teal-400" />
                 </div>
                 <div>
-                  <h3 className="font-medium text-cream-200 mb-1">LinkedIn</h3>
+                  <h3 className="font-medium text-plum-900 dark:text-cream-200 mb-1">LinkedIn</h3>
                   <a
                     href={siteConfig.socials.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-cream-300 hover:text-teal-400 transition-colors"
+                    className="text-plum-600 dark:text-cream-300 hover:text-teal-400 transition-colors"
                   >
                     Connect with us
                   </a>
@@ -184,15 +184,15 @@ export default function ContactForm() {
 
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-gold-400/20 flex items-center justify-center flex-shrink-0">
-                  <Globe className="w-6 h-6 text-gold-400" />
+                  <Globe className="w-6 h-6 text-gold-700 dark:text-gold-400" />
                 </div>
                 <div>
-                  <h3 className="font-medium text-cream-200 mb-1">Website</h3>
+                  <h3 className="font-medium text-plum-900 dark:text-cream-200 mb-1">Website</h3>
                   <a
                     href={siteConfig.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-cream-300 hover:text-teal-400 transition-colors"
+                    className="text-plum-600 dark:text-cream-300 hover:text-teal-400 transition-colors"
                   >
                     anduber.org
                   </a>
@@ -216,12 +216,12 @@ export default function ContactForm() {
                   className="text-center py-12"
                 >
                   <div className="w-20 h-20 rounded-full bg-teal-500/20 flex items-center justify-center mx-auto mb-6">
-                    <CheckCircle className="w-10 h-10 text-teal-400" />
+                    <CheckCircle className="w-10 h-10 text-teal-600 dark:text-teal-400" />
                   </div>
-                  <h3 className="font-serif text-2xl font-bold text-cream-200 mb-4">
+                  <h3 className="font-serif text-2xl font-bold text-plum-900 dark:text-cream-200 mb-4">
                     Message Sent!
                   </h3>
-                  <p className="text-cream-300 mb-6">
+                  <p className="text-plum-600 dark:text-cream-300 mb-6">
                     Thank you for reaching out. We&apos;ll get back to you soon.
                   </p>
                   <Button onClick={() => setIsSubmitted(false)}>
@@ -278,13 +278,13 @@ export default function ContactForm() {
                   <div>
                     <label
                       htmlFor="inquiryType"
-                      className="block text-sm font-medium mb-2 text-cream-200"
+                      className="block text-sm font-medium mb-2 text-plum-900 dark:text-cream-200"
                     >
                       What brings you here?
                     </label>
                     <select
                       id="inquiryType"
-                      className="w-full px-4 py-3 rounded-lg bg-plum-800 border border-plum-700 text-cream-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 rounded-lg bg-white dark:bg-plum-800 border border-cream-200 dark:border-plum-700 text-plum-900 dark:text-cream-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all"
                       {...register("inquiryType")}
                     >
                       <option value="">Select an option...</option>

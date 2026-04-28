@@ -63,15 +63,15 @@ export default function GovernanceProcess() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="relative p-6 rounded-2xl bg-plum-800/50 border border-plum-700 hover:border-gold-500/50 transition-colors group"
+              className="relative p-6 rounded-2xl bg-cream-100/50 dark:bg-plum-800/50 border border-cream-200 dark:border-plum-700 hover:border-gold-500/50 transition-colors group"
             >
               <span className="text-5xl font-bold text-gold-500/20 group-hover:text-gold-500/40 transition-colors">
                 {step.number}
               </span>
-              <h3 className="font-serif text-xl font-bold text-cream-50 mt-2 mb-3">
+              <h3 className="font-serif text-xl font-bold text-plum-900 dark:text-cream-50 mt-2 mb-3">
                 {step.title}
               </h3>
-              <p className="text-plum-200">{step.description}</p>
+              <p className="text-plum-600 dark:text-plum-200">{step.description}</p>
             </motion.div>
           ))}
         </div>

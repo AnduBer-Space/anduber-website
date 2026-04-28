@@ -15,22 +15,22 @@ const pillarGradients = {
   teal: {
     border: "border-teal-500/30 hover:border-teal-500/60",
     bg: "from-teal-500/10 to-transparent",
-    icon: "bg-teal-500/20 text-teal-400",
-    text: "text-teal-400",
+    icon: "bg-teal-500/20 text-teal-600 dark:text-teal-400",
+    text: "text-teal-600 dark:text-teal-400",
     cardClass: "card-premium",
   },
   gold: {
     border: "border-gold-400/30 hover:border-gold-400/60",
     bg: "from-gold-400/10 to-transparent",
-    icon: "bg-gold-400/20 text-gold-400",
-    text: "text-gold-400",
+    icon: "bg-gold-400/20 text-gold-700 dark:text-gold-400",
+    text: "text-gold-700 dark:text-gold-400",
     cardClass: "card-premium card-premium-gold",
   },
   copper: {
     border: "border-gold-600/30 hover:border-gold-600/60",
     bg: "from-gold-600/10 to-transparent",
-    icon: "bg-gold-600/20 text-gold-600",
-    text: "text-gold-600",
+    icon: "bg-gold-600/20 text-gold-700 dark:text-gold-400",
+    text: "text-gold-700 dark:text-gold-400",
     cardClass: "card-premium card-premium-copper",
   },
 };
@@ -39,11 +39,11 @@ export default function ThreePillars() {
   return (
     <section className="relative py-24 lg:py-32 overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-plum-800 via-plum-900 to-plum-800" />
+      <div className="absolute inset-0 bg-gradient-to-b from-cream-100 via-cream-50 to-cream-100 dark:from-plum-800 dark:via-plum-900 dark:to-plum-800" />
 
       {/* Network line decorations */}
       <svg
-        className="absolute inset-0 w-full h-full pointer-events-none opacity-20"
+        className="absolute inset-0 w-full h-full pointer-events-none opacity-10 dark:opacity-20"
         viewBox="0 0 100 100"
         preserveAspectRatio="none"
       >
@@ -76,13 +76,13 @@ export default function ThreePillars() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-400 text-sm font-medium mb-6">
+          <span className="inline-block px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-600 dark:text-teal-400 text-sm font-medium mb-6">
             Theory of Change
           </span>
-          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-cream-200 mb-6">
+          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-plum-900 dark:text-cream-200 mb-6">
             Three Pillars of <span className="text-gradient-gold">Transformation</span>
           </h2>
-          <p className="text-lg text-cream-300 max-w-3xl mx-auto">
+          <p className="text-lg text-plum-600 dark:text-cream-300 max-w-3xl mx-auto">
             Our methodology transforms how the world solves complex challenges through three
             interconnected phases.
           </p>
@@ -114,7 +114,7 @@ export default function ThreePillars() {
                   `}
                 >
                   {/* Number badge */}
-                  <div className="absolute -top-4 -right-4 w-12 h-12 rounded-full bg-plum-900 border border-plum-700 flex items-center justify-center">
+                  <div className="absolute -top-4 -right-4 w-12 h-12 rounded-full bg-cream-50 dark:bg-plum-900 border border-cream-200 dark:border-plum-700 flex items-center justify-center">
                     <span className={`font-serif text-xl font-bold ${colors.text}`}>
                       {String(index + 1).padStart(2, "0")}
                     </span>
@@ -131,12 +131,12 @@ export default function ThreePillars() {
                   </div>
 
                   {/* Title */}
-                  <h3 className="font-serif text-2xl lg:text-3xl font-bold text-cream-200 mb-4">
+                  <h3 className="font-serif text-2xl lg:text-3xl font-bold text-plum-900 dark:text-cream-200 mb-4">
                     {pillar.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-cream-300 leading-relaxed mb-6">
+                  <p className="text-plum-600 dark:text-cream-300 leading-relaxed mb-6">
                     {pillar.description}
                   </p>
 
@@ -157,7 +157,7 @@ export default function ThreePillars() {
                       viewport={{ once: true }}
                       transition={{ delay: index * 0.2 + 0.4 }}
                     >
-                      <ArrowRight className="w-6 h-6 text-plum-500" />
+                      <ArrowRight className="w-6 h-6 text-plum-400 dark:text-plum-500" />
                     </motion.div>
                   </div>
                 )}
@@ -174,11 +174,11 @@ export default function ThreePillars() {
           transition={{ delay: 0.8 }}
           className="mt-16 text-center"
         >
-          <p className="text-2xl md:text-3xl font-serif text-cream-200">
-            From <span className="text-teal-400">Friction</span> to{" "}
-            <span className="text-gold-400">Flow</span>
+          <p className="text-2xl md:text-3xl font-serif text-plum-900 dark:text-cream-200">
+            From <span className="text-teal-600 dark:text-teal-400">Friction</span> to{" "}
+            <span className="text-gold-700 dark:text-gold-400">Flow</span>
           </p>
-          <p className="text-lg text-cream-300 mt-2">
+          <p className="text-lg text-plum-600 dark:text-cream-300 mt-2">
             We turn &apos;what if&apos; into &apos;how to&apos;
           </p>
         </motion.div>

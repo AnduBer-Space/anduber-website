@@ -49,7 +49,7 @@ export default function BlogPostDetail({ post, relatedPosts }: BlogPostDetailPro
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-32 pb-16 overflow-hidden bg-plum-900">
+      <section className="relative pt-32 pb-16 overflow-hidden bg-cream-50 dark:bg-plum-900">
         <div className="absolute inset-0">
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl" />
           <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gold-500/10 rounded-full blur-3xl" />
@@ -63,7 +63,7 @@ export default function BlogPostDetail({ post, relatedPosts }: BlogPostDetailPro
           >
             <Link
               href="/blog"
-              className="inline-flex items-center gap-2 text-teal-400 hover:text-teal-300 transition-colors mb-6"
+              className="inline-flex items-center gap-2 text-teal-600 dark:text-teal-400 hover:text-teal-300 transition-colors mb-6"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to Blog
@@ -73,11 +73,11 @@ export default function BlogPostDetail({ post, relatedPosts }: BlogPostDetailPro
               {post.category}
             </span>
 
-            <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-cream-50 mb-6">
+            <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-plum-900 dark:text-cream-50 mb-6">
               {post.title}
             </h1>
 
-            <div className="flex flex-wrap items-center gap-6 text-plum-200">
+            <div className="flex flex-wrap items-center gap-6 text-plum-600 dark:text-plum-200">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-full bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center text-white font-medium">
                   {post.author.name
@@ -86,8 +86,8 @@ export default function BlogPostDetail({ post, relatedPosts }: BlogPostDetailPro
                     .join("")}
                 </div>
                 <div>
-                  <p className="font-medium text-cream-50">{post.author.name}</p>
-                  <p className="text-sm text-plum-300">{post.author.role}</p>
+                  <p className="font-medium text-plum-900 dark:text-cream-50">{post.author.name}</p>
+                  <p className="text-sm text-plum-500 dark:text-plum-300">{post.author.role}</p>
                 </div>
               </div>
               <div className="flex items-center gap-4 text-sm">

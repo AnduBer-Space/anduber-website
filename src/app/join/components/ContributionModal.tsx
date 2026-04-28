@@ -188,7 +188,7 @@ export default function ContributionModal({
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={handleBackdropClick}
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-plum-900/90 backdrop-blur-sm"
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-cream-50/90 dark:bg-plum-900/90 backdrop-blur-sm"
       >
         <motion.div
           ref={modalRef}
@@ -197,7 +197,7 @@ export default function ContributionModal({
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ duration: 0.3 }}
           className={`relative w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl border shadow-2xl
-            bg-plum-800
+            bg-white dark:bg-plum-800
             ${
               category.accentColor === "teal"
                 ? "border-teal-500/30"
@@ -206,7 +206,7 @@ export default function ContributionModal({
         >
           {/* Header */}
           <div
-            className={`sticky top-0 z-10 px-6 py-4 border-b bg-plum-800
+            className={`sticky top-0 z-10 px-6 py-4 border-b bg-white dark:bg-plum-800
               ${
                 category.accentColor === "teal"
                   ? "border-teal-500/20"
@@ -215,9 +215,9 @@ export default function ContributionModal({
           >
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 p-2 rounded-lg hover:bg-plum-700 transition-colors"
+              className="absolute top-4 right-4 p-2 rounded-lg hover:bg-cream-200 dark:hover:bg-plum-700 transition-colors"
             >
-              <X className="w-5 h-5 text-cream-300" />
+              <X className="w-5 h-5 text-plum-600 dark:text-cream-300" />
             </button>
 
             <div className="flex items-center gap-3">
@@ -232,8 +232,8 @@ export default function ContributionModal({
                 <category.icon
                   className={`w-5 h-5 ${
                     category.accentColor === "teal"
-                      ? "text-teal-400"
-                      : "text-gold-400"
+                      ? "text-teal-600 dark:text-teal-400"
+                      : "text-gold-700 dark:text-gold-400"
                   }`}
                 />
               </div>
@@ -241,13 +241,13 @@ export default function ContributionModal({
                 <span
                   className={`text-xs uppercase tracking-wider ${
                     category.accentColor === "teal"
-                      ? "text-teal-400"
-                      : "text-gold-400"
+                      ? "text-teal-600 dark:text-teal-400"
+                      : "text-gold-700 dark:text-gold-400"
                   }`}
                 >
                   {category.subtitle}
                 </span>
-                <h2 className="text-xl font-serif text-cream-200">
+                <h2 className="text-xl font-serif text-plum-900 dark:text-cream-200">
                   {category.title}
                 </h2>
               </div>
@@ -273,15 +273,15 @@ export default function ContributionModal({
                   <CheckCircle
                     className={`w-8 h-8 ${
                       category.accentColor === "teal"
-                        ? "text-teal-400"
-                        : "text-gold-400"
+                        ? "text-teal-600 dark:text-teal-400"
+                        : "text-gold-700 dark:text-gold-400"
                     }`}
                   />
                 </div>
-                <h3 className="text-2xl font-serif text-cream-200 mb-2">
+                <h3 className="text-2xl font-serif text-plum-900 dark:text-cream-200 mb-2">
                   Thank You!
                 </h3>
-                <p className="text-cream-300/80 mb-6">
+                <p className="text-plum-600/80 dark:text-cream-300/80 mb-6">
                   We&apos;ve received your application. Our team will review it and
                   get back to you soon.
                 </p>
@@ -291,7 +291,7 @@ export default function ContributionModal({
               </motion.div>
             ) : (
               <>
-                <p className="text-cream-300/80 text-sm mb-6">
+                <p className="text-plum-600/80 dark:text-cream-300/80 text-sm mb-6">
                   {category.description}
                 </p>
 
@@ -320,7 +320,7 @@ export default function ContributionModal({
                     <div key={field.name}>
                       {field.type === "select" ? (
                         <div>
-                          <label className="block text-sm font-medium text-cream-200 mb-2">
+                          <label className="block text-sm font-medium text-plum-900 dark:text-cream-200 mb-2">
                             {field.label}
                             {field.required && (
                               <span className="text-red-400 ml-1">*</span>
@@ -328,8 +328,8 @@ export default function ContributionModal({
                           </label>
                           <select
                             {...register(field.name)}
-                            className="w-full px-4 py-3 rounded-lg bg-plum-700 border border-plum-600
-                              text-cream-200 focus:outline-none focus:ring-2 focus:ring-teal-500
+                            className="w-full px-4 py-3 rounded-lg bg-cream-100 dark:bg-plum-700 border border-cream-200 dark:border-plum-600
+                              text-plum-900 dark:text-cream-200 focus:outline-none focus:ring-2 focus:ring-teal-500
                               focus:border-transparent transition-all"
                           >
                             <option value="">Select an option</option>
@@ -347,7 +347,7 @@ export default function ContributionModal({
                         </div>
                       ) : field.type === "multiselect" ? (
                         <div>
-                          <label className="block text-sm font-medium text-cream-200 mb-2">
+                          <label className="block text-sm font-medium text-plum-900 dark:text-cream-200 mb-2">
                             {field.label}
                             {field.required && (
                               <span className="text-red-400 ml-1">*</span>
@@ -367,7 +367,7 @@ export default function ContributionModal({
                                       ? category.accentColor === "teal"
                                         ? "bg-teal-500 text-white"
                                         : "bg-gold-400 text-plum-900"
-                                      : "bg-plum-700 text-cream-300 hover:bg-plum-600"
+                                      : "bg-cream-100 dark:bg-plum-700 text-plum-600 dark:text-cream-300 hover:bg-cream-200 dark:hover:bg-plum-600"
                                   }`}
                               >
                                 {option}
@@ -382,7 +382,7 @@ export default function ContributionModal({
                         </div>
                       ) : field.type === "textarea" ? (
                         <div>
-                          <label className="block text-sm font-medium text-cream-200 mb-2">
+                          <label className="block text-sm font-medium text-plum-900 dark:text-cream-200 mb-2">
                             {field.label}
                             {field.required && (
                               <span className="text-red-400 ml-1">*</span>
@@ -392,8 +392,8 @@ export default function ContributionModal({
                             {...register(field.name)}
                             rows={4}
                             placeholder={field.placeholder}
-                            className="w-full px-4 py-3 rounded-lg bg-plum-700 border border-plum-600
-                              text-cream-200 placeholder-cream-300/40 focus:outline-none focus:ring-2
+                            className="w-full px-4 py-3 rounded-lg bg-cream-100 dark:bg-plum-700 border border-cream-200 dark:border-plum-600
+                              text-plum-900 dark:text-cream-200 placeholder-plum-400/40 dark:placeholder-cream-300/40 focus:outline-none focus:ring-2
                               focus:ring-teal-500 focus:border-transparent transition-all resize-none"
                           />
                           {errors[field.name] && (

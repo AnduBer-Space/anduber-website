@@ -35,7 +35,7 @@ export default function ProjectDetail({ project, relatedProjects }: Props) {
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-32 pb-20 bg-plum-900">
+      <section className="relative pt-32 pb-20 bg-cream-50 dark:bg-plum-900">
         <div className="absolute inset-0">
           <div className="absolute top-0 right-1/4 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl" />
         </div>
@@ -43,7 +43,7 @@ export default function ProjectDetail({ project, relatedProjects }: Props) {
         <Container className="relative z-10">
           <Link
             href="/projects"
-            className="inline-flex items-center text-plum-300 hover:text-gold-500 transition-colors mb-8"
+            className="inline-flex items-center text-plum-600 dark:text-plum-300 hover:text-gold-500 transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Projects
@@ -64,7 +64,7 @@ export default function ProjectDetail({ project, relatedProjects }: Props) {
                   {project.status.charAt(0).toUpperCase() +
                     project.status.slice(1)}
                 </span>
-                <span className="px-3 py-1 rounded-full text-sm font-medium bg-plum-700 text-cream-50 capitalize">
+                <span className="px-3 py-1 rounded-full text-sm font-medium bg-cream-200/50 dark:bg-plum-700 text-plum-900 dark:text-cream-50 capitalize">
                   {project.type}
                 </span>
               </div>
@@ -72,7 +72,7 @@ export default function ProjectDetail({ project, relatedProjects }: Props) {
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-cream-50 mb-4"
+                className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-plum-900 dark:text-cream-50 mb-4"
               >
                 {project.title}
               </motion.h1>
@@ -81,7 +81,7 @@ export default function ProjectDetail({ project, relatedProjects }: Props) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="text-lg text-plum-200 mb-6"
+                className="text-lg text-plum-600 dark:text-plum-200 mb-6"
               >
                 {project.shortDescription}
               </motion.p>
@@ -90,7 +90,7 @@ export default function ProjectDetail({ project, relatedProjects }: Props) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="flex flex-wrap gap-6 text-sm text-plum-300"
+                className="flex flex-wrap gap-6 text-sm text-plum-600 dark:text-plum-300"
               >
                 <div className="flex items-center">
                   <MapPin className="w-4 h-4 mr-2 text-teal-500" />
@@ -149,9 +149,9 @@ export default function ProjectDetail({ project, relatedProjects }: Props) {
                 <Counter
                   value={item.value}
                   suffix={item.suffix}
-                  className="block font-serif text-3xl md:text-4xl font-bold text-gold-500 mb-2"
+                  className="block font-serif text-3xl md:text-4xl font-bold text-gold-600 dark:text-gold-400 mb-2"
                 />
-                <span className="text-plum-200 text-sm">{item.label}</span>
+                <span className="text-plum-600 dark:text-plum-200 text-sm">{item.label}</span>
               </motion.div>
             ))}
           </div>
@@ -252,8 +252,8 @@ export default function ProjectDetail({ project, relatedProjects }: Props) {
                     href={`/projects/${related.slug}`}
                     className="block group"
                   >
-                    <div className="bg-plum-800/50 rounded-2xl overflow-hidden border border-plum-700 hover:border-gold-500/30 transition-all">
-                      <div className="aspect-video bg-plum-700 flex items-center justify-center">
+                    <div className="bg-cream-100/50 dark:bg-plum-800/50 rounded-2xl overflow-hidden border border-cream-200 dark:border-plum-700 hover:border-gold-500/30 transition-all">
+                      <div className="aspect-video bg-cream-200/50 dark:bg-plum-700 flex items-center justify-center">
                         <svg
                           className="w-12 h-12 text-plum-600 opacity-50"
                           fill="none"
@@ -269,10 +269,10 @@ export default function ProjectDetail({ project, relatedProjects }: Props) {
                         </svg>
                       </div>
                       <div className="p-6">
-                        <h3 className="font-serif text-lg font-bold text-cream-50 mb-2 group-hover:text-gold-500 transition-colors">
+                        <h3 className="font-serif text-lg font-bold text-plum-900 dark:text-cream-50 mb-2 group-hover:text-gold-500 transition-colors">
                           {related.title}
                         </h3>
-                        <p className="text-plum-300 text-sm line-clamp-2">
+                        <p className="text-plum-600 dark:text-plum-300 text-sm line-clamp-2">
                           {related.shortDescription}
                         </p>
                       </div>

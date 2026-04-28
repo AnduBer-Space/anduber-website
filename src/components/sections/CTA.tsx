@@ -37,19 +37,19 @@ const colorStyles = {
   teal: {
     bg: "bg-teal-500/10",
     border: "border-teal-500/30",
-    text: "text-teal-400",
+    text: "text-teal-600 dark:text-teal-400",
     hover: "hover:border-teal-500/60",
   },
   gold: {
     bg: "bg-gold-400/10",
     border: "border-gold-400/30",
-    text: "text-gold-400",
+    text: "text-gold-700 dark:text-gold-400",
     hover: "hover:border-gold-400/60",
   },
   copper: {
     bg: "bg-gold-600/10",
     border: "border-gold-600/30",
-    text: "text-gold-600",
+    text: "text-gold-700 dark:text-gold-400",
     hover: "hover:border-gold-600/60",
   },
 };
@@ -58,12 +58,7 @@ export default function CTA() {
   return (
     <section className="relative py-24 overflow-hidden">
       {/* Background */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: "linear-gradient(135deg, #1E0A14 0%, #2A0E1A 50%, #1E0A14 100%)",
-        }}
-      />
+      <div className="absolute inset-0 gradient-section-bg" />
 
       {/* Decorative elements - static */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -83,7 +78,7 @@ export default function CTA() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-block px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-400 text-sm font-medium mb-6"
+            className="inline-block px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-600 dark:text-teal-400 text-sm font-medium mb-6"
           >
             Get Involved
           </motion.span>
@@ -92,7 +87,7 @@ export default function CTA() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-cream-200 mb-4"
+            className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-plum-900 dark:text-cream-200 mb-4"
           >
             Join the <span className="text-gradient-gold">Movement</span>
           </motion.h2>
@@ -102,7 +97,7 @@ export default function CTA() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-lg text-cream-300"
+            className="text-lg text-plum-600 dark:text-cream-300"
           >
             Whether you&apos;re an organization seeking strategic guidance, a researcher
             looking for collaboration, or a supporter of our mission—there&apos;s a place for you.
@@ -137,11 +132,11 @@ export default function CTA() {
                       {card.subtitle}
                     </p>
 
-                    <h3 className="font-serif text-2xl font-bold text-cream-200 mb-3 group-hover:text-gold-400 transition-colors">
+                    <h3 className="font-serif text-2xl font-bold text-plum-900 dark:text-cream-200 mb-3 group-hover:text-gold-700 dark:group-hover:text-gold-400 transition-colors">
                       {card.title}
                     </h3>
 
-                    <p className="text-cream-300 mb-6">{card.description}</p>
+                    <p className="text-plum-600 dark:text-cream-300 mb-6">{card.description}</p>
 
                     <span className={`inline-flex items-center ${styles.text} font-medium group-hover:gap-3 gap-2 transition-all`}>
                       Learn More
@@ -162,7 +157,7 @@ export default function CTA() {
           transition={{ delay: 0.4 }}
           className="text-center mt-16"
         >
-          <p className="text-cream-300 mb-4 italic">
+          <p className="text-plum-600 dark:text-cream-300 mb-4 italic">
             &ldquo;AnduBer acts as the connective tissue, turning friction into flow.&rdquo;
           </p>
           <Link href="/about">

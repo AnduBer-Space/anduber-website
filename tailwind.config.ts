@@ -28,9 +28,9 @@ const config: Config = {
           100: "#ccfbf7",
           200: "#99f6ef",
           300: "#5eeade",
-          400: "#2DD4BF", // accent teal light (hover states)
+          400: "#2DD4BF", // accent teal (dark-mode bright)
           500: "#1A7B7A", // accent teal (logo figures)
-          600: "#166564",
+          600: "#0F766E", // accent teal (light-mode contrast — WCAG AA on cream)
           700: "#145251",
           800: "#144142",
           900: "#133636",
@@ -41,17 +41,17 @@ const config: Config = {
           100: "#F5E6C8", // accent gold light (glow/highlights)
           200: "#edd9a8",
           300: "#e2c57c",
-          400: "#D4AA6A", // accent gold (golden orb)
-          500: "#c9956c", // accent copper
-          600: "#C9956C", // accent copper (bronze accents)
+          400: "#D4AA6A", // accent gold (golden orb — dark-mode)
+          500: "#c9956c", // copper
+          600: "#B8860B", // accent gold (light-mode contrast — WCAG AA on cream)
           700: "#a87545",
           800: "#8a5f3b",
           900: "#724e34",
           950: "#3d281a",
         },
         cream: {
-          50: "#FDF8F3", // light mode background primary
-          100: "#F5EDE4", // light mode background secondary
+          50: "#FAF7F2", // light mode background primary (slightly warmer)
+          100: "#FDF8F0", // light mode background secondary
           200: "#F5E6C8", // text primary (dark mode)
           300: "#D4A57B", // text secondary (rose gold)
           400: "#C9956C", // copper
@@ -61,6 +61,13 @@ const config: Config = {
       fontFamily: {
         serif: ["var(--font-playfair)", "Playfair Display", "Georgia", "Cambria", "serif"],
         sans: ["var(--font-inter)", "Inter", "system-ui", "sans-serif"],
+        accent: [
+          "var(--font-fraunces)",
+          "Fraunces",
+          "Cambria",
+          "Georgia",
+          "serif",
+        ],
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -86,6 +93,10 @@ const config: Config = {
         "spin-slow": "spinSlow 45s linear infinite",
         "pulse-glow": "pulseGlow 4s ease-in-out infinite",
         "float": "float 6s ease-in-out infinite",
+        // Constellation hero
+        "constellation-pulse": "constellationPulse 6s ease-in-out infinite",
+        // Scroll thread
+        "thread-draw": "threadDraw 1.4s ease-out forwards",
       },
       keyframes: {
         fadeIn: {
@@ -104,20 +115,25 @@ const config: Config = {
           "0%": { strokeDashoffset: "1000" },
           "100%": { strokeDashoffset: "0" },
         },
-        // Slow continuous rotation for flywheel (45s = smooth, not distracting)
         spinSlow: {
           "0%": { transform: "rotate(0deg)" },
           "100%": { transform: "rotate(360deg)" },
         },
-        // Subtle glow pulse
         pulseGlow: {
           "0%, 100%": { opacity: "0.4" },
           "50%": { opacity: "0.7" },
         },
-        // Floating effect
         float: {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-10px)" },
+        },
+        constellationPulse: {
+          "0%, 100%": { opacity: "0.4" },
+          "50%": { opacity: "1" },
+        },
+        threadDraw: {
+          "0%": { strokeDashoffset: "1" },
+          "100%": { strokeDashoffset: "0" },
         },
       },
       backdropBlur: {

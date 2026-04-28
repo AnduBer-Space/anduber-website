@@ -31,17 +31,17 @@ const colorStyles = {
   teal: {
     bg: "bg-teal-500/10",
     border: "border-teal-500/30",
-    text: "text-teal-400",
+    text: "text-teal-600 dark:text-teal-400",
   },
   gold: {
     bg: "bg-gold-400/10",
     border: "border-gold-400/30",
-    text: "text-gold-400",
+    text: "text-gold-700 dark:text-gold-400",
   },
   copper: {
     bg: "bg-gold-600/10",
     border: "border-gold-600/30",
-    text: "text-gold-600",
+    text: "text-gold-700 dark:text-gold-400",
   },
 };
 
@@ -50,10 +50,7 @@ export default function MissionVision() {
     <section className="relative py-24 overflow-hidden">
       {/* Background */}
       <div
-        className="absolute inset-0"
-        style={{
-          background: "linear-gradient(180deg, #1E0A14 0%, #2A0E1A 50%, #1E0A14 100%)",
-        }}
+        className="absolute inset-0 gradient-section-vertical"
       />
 
       {/* Decorative glows - static */}
@@ -73,10 +70,10 @@ export default function MissionVision() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-400 text-sm font-medium mb-6">
+          <span className="inline-block px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-600 dark:text-teal-400 text-sm font-medium mb-6">
             What Drives Us
           </span>
-          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-cream-200 mb-4">
+          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-plum-900 dark:text-cream-200 mb-4">
             Mission, Vision & <span className="text-gradient-gold">Approach</span>
           </h2>
           <div className="divider-teal" />
@@ -112,7 +109,7 @@ export default function MissionVision() {
                     {item.title}
                   </h3>
 
-                  <p className="text-cream-300 leading-relaxed">
+                  <p className="text-plum-600 dark:text-cream-300 leading-relaxed">
                     {item.description}
                   </p>
                 </div>

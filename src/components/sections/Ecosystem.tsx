@@ -18,7 +18,7 @@ const armColors = {
     light: "#2DD4BF",
     bg: "bg-teal-500/10",
     border: "border-teal-500/30",
-    text: "text-teal-400",
+    text: "text-teal-600 dark:text-teal-400",
     glow: "rgba(26, 123, 122, 0.3)",
   },
   gold: {
@@ -26,7 +26,7 @@ const armColors = {
     light: "#F5E6C8",
     bg: "bg-gold-400/10",
     border: "border-gold-400/30",
-    text: "text-gold-400",
+    text: "text-gold-700 dark:text-gold-400",
     glow: "rgba(212, 170, 106, 0.3)",
   },
   copper: {
@@ -34,7 +34,7 @@ const armColors = {
     light: "#D4A57B",
     bg: "bg-gold-600/10",
     border: "border-gold-600/30",
-    text: "text-gold-600",
+    text: "text-gold-700 dark:text-gold-400",
     glow: "rgba(201, 149, 108, 0.3)",
   },
 };
@@ -43,15 +43,15 @@ const armColors = {
 const FlywheelVisualization = ({ activeArm }: { activeArm: string | null }) => {
   // Label data for the three engines
   const labels = [
-    { angle: 60, label: "AnduBer Partners", color: "#1A7B7A" },
-    { angle: 180, label: "AnduBer Labs", color: "#D4AA6A" },
-    { angle: 300, label: "The Gathering", color: "#C9956C" },
+    { angle: 60, label: "AnduBer Partners", color: "#1A7B7A", textClass: "text-teal-700 dark:text-teal-400" },
+    { angle: 180, label: "AnduBer Labs", color: "#D4AA6A", textClass: "text-gold-700 dark:text-gold-400" },
+    { angle: 300, label: "The Gathering", color: "#C9956C", textClass: "text-gold-700 dark:text-gold-400" },
   ];
 
   return (
     <div className="relative w-[400px] h-[400px] mx-auto">
       {/* Outer decorative ring - static */}
-      <div className="absolute inset-0 rounded-full border-2 border-dashed border-plum-700 opacity-50" />
+      <div className="absolute inset-0 rounded-full border-2 border-dashed border-cream-300 dark:border-plum-700 opacity-50" />
 
       {/* Main SVG with rotating wheel */}
       <svg viewBox="0 0 400 400" className="w-full h-full">
@@ -122,7 +122,7 @@ const FlywheelVisualization = ({ activeArm }: { activeArm: string | null }) => {
               <polygon
                 key={i}
                 points="0,-7 10,0 0,7"
-                fill="#F5E6C8"
+                className="fill-plum-900 dark:fill-cream-200"
                 opacity={0.7}
                 transform={`translate(${x}, ${y}) rotate(${angle + 90})`}
               />
@@ -135,11 +135,11 @@ const FlywheelVisualization = ({ activeArm }: { activeArm: string | null }) => {
           cx="200"
           cy="200"
           r="55"
-          fill="#1E0A14"
-          stroke={activeArm ? armColors[activeArm === "partners" ? "teal" : activeArm === "labs" ? "gold" : "copper"].primary : "#3D1525"}
+          className="fill-cream-50 dark:fill-plum-900 stroke-cream-300 dark:stroke-plum-700"
+          stroke={activeArm ? armColors[activeArm === "partners" ? "teal" : activeArm === "labs" ? "gold" : "copper"].primary : undefined}
           strokeWidth="3"
           filter="url(#glowStrong)"
-          className="transition-all duration-500"
+          style={{ transition: 'stroke 0.5s' }}
         />
 
         {/* Inner decorative ring */}
@@ -148,21 +148,21 @@ const FlywheelVisualization = ({ activeArm }: { activeArm: string | null }) => {
           cy="200"
           r="45"
           fill="none"
-          stroke="#3D1525"
+          className="stroke-cream-200 dark:stroke-plum-700"
           strokeWidth="1"
           strokeDasharray="4 4"
         />
 
         {/* Center text - static */}
-        <text x="200" y="192" textAnchor="middle" className="fill-cream-200 font-serif text-base font-bold" style={{ fontFamily: 'Playfair Display, serif' }}>
+        <text x="200" y="192" textAnchor="middle" className="fill-plum-900 dark:fill-cream-200 font-serif text-base font-bold" style={{ fontFamily: 'Playfair Display, serif' }}>
           Symbiotic
         </text>
-        <text x="200" y="212" textAnchor="middle" className="fill-cream-300 text-xs" style={{ fontFamily: 'Inter, sans-serif' }}>
+        <text x="200" y="212" textAnchor="middle" className="fill-plum-600 dark:fill-cream-300 text-xs" style={{ fontFamily: 'Inter, sans-serif' }}>
           Engines
         </text>
       </svg>
 
-      {/* Floating labels around the wheel - static position, counter-rotate text would be complex */}
+      {/* Floating labels around the wheel - static position */}
       {labels.map((item, i) => {
         const rad = (item.angle - 90) * Math.PI / 180;
         const x = 50 + 50 * Math.cos(rad); // percentage
@@ -170,14 +170,13 @@ const FlywheelVisualization = ({ activeArm }: { activeArm: string | null }) => {
         return (
           <div
             key={i}
-            className="absolute px-3 py-1.5 rounded-full text-xs font-medium backdrop-blur-sm border transition-all duration-300 hover:scale-110"
+            className={`absolute px-3 py-1.5 rounded-full text-xs font-medium backdrop-blur-sm border transition-all duration-300 hover:scale-110 ${item.textClass}`}
             style={{
               left: `${x}%`,
               top: `${y}%`,
               transform: 'translate(-50%, -50%)',
               backgroundColor: `${item.color}15`,
               borderColor: `${item.color}40`,
-              color: item.color,
             }}
           >
             {item.label}
@@ -214,7 +213,7 @@ export default function Ecosystem() {
   return (
     <section id="ecosystem" className="relative py-24 lg:py-32 overflow-hidden scroll-mt-24">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-plum-900 via-plum-800 to-plum-900" />
+      <div className="absolute inset-0 bg-gradient-to-b from-cream-50 via-cream-100 to-cream-50 dark:from-plum-900 dark:via-plum-800 dark:to-plum-900" />
 
       {/* Decorative glows - static */}
       <div
@@ -234,13 +233,13 @@ export default function Ecosystem() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-2 rounded-full bg-gold-400/10 border border-gold-400/30 text-gold-400 text-sm font-medium mb-6">
+          <span className="inline-block px-4 py-2 rounded-full bg-gold-400/10 border border-gold-400/30 text-gold-700 dark:text-gold-400 text-sm font-medium mb-6">
             Our Structure
           </span>
-          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-cream-200 mb-6">
+          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-plum-900 dark:text-cream-200 mb-6">
             The AnduBer <span className="text-gradient-gold">Ecosystem</span>
           </h2>
-          <p className="text-lg text-cream-300 max-w-3xl mx-auto">
+          <p className="text-lg text-plum-600 dark:text-cream-300 max-w-3xl mx-auto">
             We operate through three symbiotic arms, creating a continuous cycle of
             sustainability and social impact. Each arm powers the others.
           </p>
@@ -300,14 +299,14 @@ export default function Ecosystem() {
                           <h3 className={`font-serif text-xl font-bold ${colors.text}`}>
                             {arm.title}
                           </h3>
-                          <span className="text-xs px-2 py-0.5 rounded-full bg-plum-700 text-cream-300">
+                          <span className="text-xs px-2 py-0.5 rounded-full bg-cream-200 dark:bg-plum-700 text-plum-600 dark:text-cream-300">
                             {arm.type}
                           </span>
                         </div>
 
-                        <p className="text-sm text-cream-300 mb-2">{arm.subtitle}</p>
+                        <p className="text-sm text-plum-600 dark:text-cream-300 mb-2">{arm.subtitle}</p>
 
-                        <p className="text-cream-300 text-sm leading-relaxed">
+                        <p className="text-plum-600 dark:text-cream-300 text-sm leading-relaxed">
                           {arm.description}
                         </p>
 
@@ -316,12 +315,12 @@ export default function Ecosystem() {
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: "auto" }}
                             exit={{ opacity: 0, height: 0 }}
-                            className="mt-4 pt-4 border-t border-plum-700"
+                            className="mt-4 pt-4 border-t border-cream-200 dark:border-plum-700"
                           >
-                            <p className="text-xs text-plum-500 mb-2 uppercase tracking-wider">
+                            <p className="text-xs text-plum-400 dark:text-plum-500 mb-2 uppercase tracking-wider">
                               Revenue Model
                             </p>
-                            <p className="text-sm text-cream-300">{arm.revenueModel}</p>
+                            <p className="text-sm text-plum-600 dark:text-cream-300">{arm.revenueModel}</p>
                           </motion.div>
                         )}
                       </div>

@@ -16,7 +16,7 @@ export default function CoreModel() {
   return (
     <section className="relative py-24 lg:py-32 overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-plum-900 via-plum-800 to-plum-900" />
+      <div className="absolute inset-0 bg-gradient-to-b from-cream-50 via-cream-100 to-cream-50 dark:from-plum-900 dark:via-plum-800 dark:to-plum-900" />
 
       {/* Decorative elements - static */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -38,13 +38,13 @@ export default function CoreModel() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-2 rounded-full bg-gold-400/10 border border-gold-400/30 text-gold-400 text-sm font-medium mb-6">
+          <span className="inline-block px-4 py-2 rounded-full bg-gold-400/10 border border-gold-400/30 text-gold-700 dark:text-gold-400 text-sm font-medium mb-6">
             Our Core Model
           </span>
-          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-cream-200 mb-6">
+          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-plum-900 dark:text-cream-200 mb-6">
             Applied <span className="text-gradient-gold">Intersectionality</span>
           </h2>
-          <p className="text-lg text-cream-300 max-w-3xl mx-auto">
+          <p className="text-lg text-plum-600 dark:text-cream-300 max-w-3xl mx-auto">
             This is the engine that powers everything we do. A hypothesis that guides our work
             and drives our impact.
           </p>
@@ -74,12 +74,12 @@ export default function CoreModel() {
                 `}>
                   <div className={`
                     flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center
-                    ${step.color === "teal" ? "bg-teal-500/20 text-teal-400" : "bg-gold-400/20 text-gold-400"}
+                    ${step.color === "teal" ? "bg-teal-500/20 text-teal-600 dark:text-teal-400" : "bg-gold-400/20 text-gold-700 dark:text-gold-400"}
                   `}>
                     <step.icon className="w-6 h-6" />
                   </div>
                   <div>
-                    <p className="text-lg text-cream-200 leading-relaxed">{step.text}</p>
+                    <p className="text-lg text-plum-900 dark:text-cream-200 leading-relaxed">{step.text}</p>
                   </div>
                 </div>
 
@@ -111,7 +111,7 @@ export default function CoreModel() {
           className="mt-16 text-center"
         >
           <div className="inline-block p-8 rounded-3xl glass-card border border-teal-500/30">
-            <p className="font-serif text-2xl md:text-3xl text-cream-200 italic">
+            <p className="font-serif text-2xl md:text-3xl text-plum-900 dark:text-cream-200 italic">
               &ldquo;A world where challenges are met with systemic innovation that leaves no one behind.&rdquo;
             </p>
           </div>

@@ -9,10 +9,7 @@ export default function EcosystemHero() {
     <section className="relative pt-32 pb-16 overflow-hidden">
       {/* Background */}
       <div
-        className="absolute inset-0"
-        style={{
-          background: "linear-gradient(135deg, #1E0A14 0%, #2A0E1A 50%, #1E0A14 100%)",
-        }}
+        className="absolute inset-0 gradient-section-bg"
       />
 
       {/* Decorative glows - static */}
@@ -34,7 +31,7 @@ export default function EcosystemHero() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-400 text-sm font-medium mb-6"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-600 dark:text-teal-400 text-sm font-medium mb-6"
           >
             <Cog className="w-4 h-4" />
             <span>How We Work</span>
@@ -44,7 +41,7 @@ export default function EcosystemHero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-cream-200 mb-6"
+            className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-plum-900 dark:text-cream-200 mb-6"
           >
             The AnduBer <span className="text-gradient-gold">Ecosystem</span>
           </motion.h1>
@@ -53,7 +50,7 @@ export default function EcosystemHero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-lg md:text-xl text-cream-300 max-w-3xl mx-auto"
+            className="text-lg md:text-xl text-plum-600 dark:text-cream-300 max-w-3xl mx-auto"
           >
             Three symbiotic engines working together in a continuous cycle of sustainability
             and social impact. Each arm powers the others, creating a self-reinforcing flywheel

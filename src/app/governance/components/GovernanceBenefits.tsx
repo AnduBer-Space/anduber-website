@@ -60,7 +60,7 @@ export default function GovernanceBenefits() {
               <div className="w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-gold-400 to-gold-500 flex items-center justify-center mb-4">
                 <benefit.icon className="w-8 h-8 text-plum-900" />
               </div>
-              <div className="text-4xl font-bold text-teal-500 mb-2">
+              <div className="text-4xl font-bold text-teal-600 dark:text-teal-500 mb-2">
                 {benefit.stat}
               </div>
               <h3 className="font-serif text-lg font-bold text-plum-900 dark:text-cream-50 mb-2">

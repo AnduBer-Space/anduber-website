@@ -425,7 +425,7 @@ export default function ContributionCards() {
 
   return (
     <section className="relative py-16 md:py-24">
-      <div className="absolute inset-0 bg-plum-900" />
+      <div className="absolute inset-0 bg-cream-50 dark:bg-plum-900" />
 
       <Container className="relative z-10">
         <motion.div
@@ -444,7 +444,7 @@ export default function ContributionCards() {
             >
               <div
                 className={`relative h-full p-6 rounded-2xl border transition-all duration-300
-                  bg-plum-800/50 backdrop-blur-sm
+                  bg-cream-100/50 dark:bg-plum-800/50 backdrop-blur-sm
                   ${
                     category.accentColor === "teal"
                       ? "border-teal-500/20 hover:border-teal-400/50 hover:shadow-[0_0_30px_rgba(45,212,191,0.15)]"
@@ -464,8 +464,8 @@ export default function ContributionCards() {
                   <category.icon
                     className={`w-7 h-7 ${
                       category.accentColor === "teal"
-                        ? "text-teal-400"
-                        : "text-gold-400"
+                        ? "text-teal-600 dark:text-teal-400"
+                        : "text-gold-700 dark:text-gold-400"
                     }`}
                   />
                 </div>
@@ -474,33 +474,33 @@ export default function ContributionCards() {
                 <span
                   className={`text-xs uppercase tracking-wider ${
                     category.accentColor === "teal"
-                      ? "text-teal-400"
-                      : "text-gold-400"
+                      ? "text-teal-600 dark:text-teal-400"
+                      : "text-gold-700 dark:text-gold-400"
                   }`}
                 >
                   {category.subtitle}
                 </span>
 
                 {/* Title */}
-                <h3 className="text-xl font-serif text-cream-200 mt-1 mb-3">
+                <h3 className="text-xl font-serif text-plum-900 dark:text-cream-200 mt-1 mb-3">
                   {category.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-cream-300/80 text-sm leading-relaxed mb-4">
+                <p className="text-plum-600/80 dark:text-cream-300/80 text-sm leading-relaxed mb-4">
                   {category.description}
                 </p>
 
                 {/* Note (if exists) */}
                 {category.note && (
-                  <p className="text-xs text-cream-300/60 italic mb-4">
+                  <p className="text-xs text-plum-600/60 dark:text-cream-300/60 italic mb-4">
                     {category.note}
                   </p>
                 )}
 
                 {/* Details Tags */}
                 <div className="mt-auto">
-                  <span className="text-xs text-cream-300/50 uppercase tracking-wider block mb-2">
+                  <span className="text-xs text-plum-600/50 dark:text-cream-300/50 uppercase tracking-wider block mb-2">
                     {category.detailsLabel}
                   </span>
                   <div className="flex flex-wrap gap-1.5">
@@ -510,8 +510,8 @@ export default function ContributionCards() {
                         className={`text-xs px-2 py-1 rounded-full
                           ${
                             category.accentColor === "teal"
-                              ? "bg-teal-500/10 text-teal-400/80"
-                              : "bg-gold-400/10 text-gold-400/80"
+                              ? "bg-teal-500/10 text-teal-600/80 dark:text-teal-400/80"
+                              : "bg-gold-400/10 text-gold-700/80 dark:text-gold-400/80"
                           }`}
                       >
                         {detail}
@@ -522,8 +522,8 @@ export default function ContributionCards() {
                         className={`text-xs px-2 py-1 rounded-full
                           ${
                             category.accentColor === "teal"
-                              ? "bg-teal-500/10 text-teal-400/80"
-                              : "bg-gold-400/10 text-gold-400/80"
+                              ? "bg-teal-500/10 text-teal-600/80 dark:text-teal-400/80"
+                              : "bg-gold-400/10 text-gold-700/80 dark:text-gold-400/80"
                           }`}
                       >
                         +{category.details.length - 4}
@@ -537,8 +537,8 @@ export default function ContributionCards() {
                   className={`mt-6 text-center py-2 rounded-lg transition-all duration-300
                     ${
                       category.accentColor === "teal"
-                        ? "bg-teal-500/10 text-teal-400 group-hover:bg-teal-500/20"
-                        : "bg-gold-400/10 text-gold-400 group-hover:bg-gold-400/20"
+                        ? "bg-teal-500/10 text-teal-600 dark:text-teal-400 group-hover:bg-teal-500/20"
+                        : "bg-gold-400/10 text-gold-700 dark:text-gold-400 group-hover:bg-gold-400/20"
                     }`}
                 >
                   <span className="text-sm font-medium">Apply Now</span>

@@ -15,19 +15,19 @@ const armColors = {
   teal: {
     bg: "bg-teal-500/10",
     border: "border-teal-500/30",
-    text: "text-teal-400",
+    text: "text-teal-600 dark:text-teal-400",
     checkBg: "bg-teal-500/20",
   },
   gold: {
     bg: "bg-gold-400/10",
     border: "border-gold-400/30",
-    text: "text-gold-400",
+    text: "text-gold-700 dark:text-gold-400",
     checkBg: "bg-gold-400/20",
   },
   copper: {
     bg: "bg-gold-600/10",
     border: "border-gold-600/30",
-    text: "text-gold-600",
+    text: "text-gold-700 dark:text-gold-400",
     checkBg: "bg-gold-600/20",
   },
 };
@@ -36,7 +36,7 @@ export default function EcosystemDetail() {
   return (
     <section className="relative py-16 overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-plum-800 via-plum-900 to-plum-800" />
+      <div className="absolute inset-0 bg-gradient-to-b from-cream-100 via-cream-50 to-cream-100 dark:from-plum-800 dark:via-plum-900 dark:to-plum-800" />
 
       <Container className="relative z-10">
         <div className="space-y-24">
@@ -70,22 +70,22 @@ export default function EcosystemDetail() {
                         <span className={`text-sm font-medium uppercase tracking-wider ${colors.text}`}>
                           {arm.type}
                         </span>
-                        <h3 className="font-serif text-3xl md:text-4xl font-bold text-cream-200">
+                        <h3 className="font-serif text-3xl md:text-4xl font-bold text-plum-900 dark:text-cream-200">
                           {arm.title}
                         </h3>
                       </div>
                     </div>
 
-                    <p className="text-cream-300 text-lg leading-relaxed mb-6">
+                    <p className="text-plum-600 dark:text-cream-300 text-lg leading-relaxed mb-6">
                       {arm.description}
                     </p>
 
                     <div className={`p-4 rounded-xl ${colors.bg} border ${colors.border} mb-8`}>
-                      <p className="text-sm text-cream-400 uppercase tracking-wider mb-1">Revenue Model</p>
+                      <p className="text-sm text-plum-400 dark:text-cream-400 uppercase tracking-wider mb-1">Revenue Model</p>
                       <p className={`font-medium ${colors.text}`}>{arm.revenueModel}</p>
                     </div>
 
-                    <h4 className="font-serif text-xl font-bold text-cream-200 mb-4">
+                    <h4 className="font-serif text-xl font-bold text-plum-900 dark:text-cream-200 mb-4">
                       What We Offer
                     </h4>
                     <ul className="space-y-3">
@@ -101,7 +101,7 @@ export default function EcosystemDetail() {
                           <div className={`flex-shrink-0 w-6 h-6 rounded-full ${colors.checkBg} flex items-center justify-center mt-0.5`}>
                             <Check className={`w-4 h-4 ${colors.text}`} />
                           </div>
-                          <span className="text-cream-300">{service}</span>
+                          <span className="text-plum-600 dark:text-cream-300">{service}</span>
                         </motion.li>
                       ))}
                     </ul>
@@ -129,18 +129,18 @@ export default function EcosystemDetail() {
                           {arm.subtitle}
                         </h4>
 
-                        <p className="text-cream-300 text-center text-lg">
+                        <p className="text-plum-600 dark:text-cream-300 text-center text-lg">
                           {arm.id === "partners" && "Funding the mission through strategic consulting"}
                           {arm.id === "labs" && "Developing the tools and frameworks for change"}
                           {arm.id === "foundation" && "Investing in overlooked innovators across Africa"}
                         </p>
 
                         {/* Connection arrows */}
-                        <div className="mt-8 pt-8 border-t border-plum-700">
-                          <p className="text-sm text-center text-cream-400">
-                            <span className="text-teal-400">Partners</span> funds{" "}
-                            <span className="text-gold-400">Labs</span> develops{" "}
-                            <span className="text-gold-600">Gathering</span> invests
+                        <div className="mt-8 pt-8 border-t border-cream-200 dark:border-plum-700">
+                          <p className="text-sm text-center text-plum-400 dark:text-cream-400">
+                            <span className="text-teal-600 dark:text-teal-400">Partners</span> funds{" "}
+                            <span className="text-gold-700 dark:text-gold-400">Labs</span> develops{" "}
+                            <span className="text-gold-700 dark:text-gold-400">Gathering</span> invests
                           </p>
                         </div>
                       </div>

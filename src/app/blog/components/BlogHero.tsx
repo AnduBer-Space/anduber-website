@@ -5,7 +5,7 @@ import Container from "@/components/ui/Container";
 
 export default function BlogHero() {
   return (
-    <section className="relative pt-32 pb-16 overflow-hidden bg-plum-900">
+    <section className="relative pt-32 pb-16 overflow-hidden bg-cream-50 dark:bg-plum-900">
       {/* Background elements */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl" />
@@ -17,7 +17,7 @@ export default function BlogHero() {
           <motion.span
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-block px-4 py-2 rounded-full bg-teal-500/20 text-teal-400 text-sm font-medium mb-6"
+            className="inline-block px-4 py-2 rounded-full bg-teal-500/20 text-teal-600 dark:text-teal-400 text-sm font-medium mb-6"
           >
             Stories & Insights
           </motion.span>
@@ -26,7 +26,7 @@ export default function BlogHero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-cream-50 mb-6"
+            className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-plum-900 dark:text-cream-50 mb-6"
           >
             Our <span className="text-gradient-gold">Blog</span>
           </motion.h1>
@@ -35,7 +35,7 @@ export default function BlogHero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-lg md:text-xl text-plum-200 max-w-3xl mx-auto"
+            className="text-lg md:text-xl text-plum-600 dark:text-plum-200 max-w-3xl mx-auto"
           >
             Insights, updates, and stories from our work with communities across
             East Africa. Learn about our projects, governance approach, and the

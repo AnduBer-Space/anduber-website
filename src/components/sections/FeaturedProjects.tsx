@@ -119,7 +119,7 @@ export default function FeaturedProjects() {
                       key={i}
                       className="p-4 rounded-xl bg-plum-50 dark:bg-plum-800/50"
                     >
-                      <span className="block text-2xl font-bold text-gold-500">
+                      <span className="block text-2xl font-bold text-gold-600 dark:text-gold-400">
                         {item.value.toLocaleString()}
                         {item.suffix}
                       </span>

@@ -9,10 +9,7 @@ export default function AboutHero() {
     <section className="relative pt-32 pb-20 overflow-hidden">
       {/* Background */}
       <div
-        className="absolute inset-0"
-        style={{
-          background: "linear-gradient(135deg, #1E0A14 0%, #2A0E1A 50%, #1E0A14 100%)",
-        }}
+        className="absolute inset-0 gradient-section-bg"
       />
 
       {/* Decorative glows - static */}
@@ -30,7 +27,7 @@ export default function AboutHero() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-400 text-sm font-medium mb-6"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-600 dark:text-teal-400 text-sm font-medium mb-6"
           >
             <Sparkles className="w-4 h-4" />
             <span>The Fusion of Cultures</span>
@@ -40,7 +37,7 @@ export default function AboutHero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-cream-200 mb-6"
+            className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-plum-900 dark:text-cream-200 mb-6"
           >
             Who We Are:{" "}
             <span className="text-gradient-gold">Good People</span>
@@ -52,14 +49,14 @@ export default function AboutHero() {
             transition={{ delay: 0.2 }}
             className="space-y-4"
           >
-            <p className="text-lg md:text-xl text-cream-300 max-w-3xl mx-auto">
-              <span className="text-gold-400 font-semibold">ANDU</span> (People) +{" "}
-              <span className="text-teal-400 font-semibold">BER</span> (Good) &mdash;
+            <p className="text-lg md:text-xl text-plum-600 dark:text-cream-300 max-w-3xl mx-auto">
+              <span className="text-gold-700 dark:text-gold-400 font-semibold">ANDU</span> (People) +{" "}
+              <span className="text-teal-600 dark:text-teal-400 font-semibold">BER</span> (Good) &mdash;
               A deliberate fusion of two African dialects, symbolizing our core belief
               that innovation happens at the intersection.
             </p>
 
-            <p className="text-base md:text-lg text-cream-300/80 max-w-2xl mx-auto">
+            <p className="text-base md:text-lg text-plum-600 dark:text-cream-300/80 max-w-2xl mx-auto">
               AnduBer is a new breed of social enterprise headquartered in Nairobi.
               We are a collective of systems thinkers, artists, scientists, and community
               leaders united by one mission: to dismantle silos and build resilient systems.

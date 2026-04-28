@@ -32,8 +32,8 @@ export default function Logo({ className, showText = true, size = "md" }: LogoPr
 
       {showText && (
         <span className={cn("font-serif font-bold tracking-wide", text)}>
-          <span className="text-gold-400">Andu</span>
-          <span className="text-teal-500">Ber</span>
+          <span className="text-gold-700 dark:text-gold-400">Andu</span>
+          <span className="text-teal-600 dark:text-teal-400">Ber</span>
         </span>
       )}
     </div>

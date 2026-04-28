@@ -14,21 +14,18 @@ export default function Error({
   }, [error]);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-plum-900">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-cream-50 dark:bg-plum-900">
       <div
-        className="absolute inset-0"
-        style={{
-          background: "linear-gradient(135deg, #1E0A14 0%, #2A0E1A 50%, #1E0A14 100%)",
-        }}
+        className="absolute inset-0 gradient-section-bg"
       />
       <div
         className="absolute top-1/3 left-1/3 w-96 h-96 rounded-full opacity-30"
         style={{ background: "radial-gradient(circle, rgba(201, 149, 108, 0.2) 0%, transparent 70%)" }}
       />
       <div className="relative z-10 text-center px-6">
-        <p className="text-gold-400 text-sm font-medium tracking-widest uppercase mb-4">Something went wrong</p>
-        <h1 className="font-serif text-5xl md:text-7xl font-bold text-cream-200 mb-6">Error</h1>
-        <p className="text-lg text-cream-300 max-w-md mx-auto mb-10">
+        <p className="text-gold-700 dark:text-gold-400 text-sm font-medium tracking-widest uppercase mb-4">Something went wrong</p>
+        <h1 className="font-serif text-5xl md:text-7xl font-bold text-plum-900 dark:text-cream-200 mb-6">Error</h1>
+        <p className="text-lg text-plum-600 dark:text-cream-300 max-w-md mx-auto mb-10">
           An unexpected error occurred. Please try again or contact us if the problem persists.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -40,7 +37,7 @@ export default function Error({
           </button>
           <a
             href="/"
-            className="inline-flex items-center justify-center font-medium rounded-full px-8 py-4 text-lg border-2 border-gold-400 text-gold-400 hover:bg-gold-400 hover:text-plum-900 transition-all duration-300 active:scale-95"
+            className="inline-flex items-center justify-center font-medium rounded-full px-8 py-4 text-lg border-2 border-gold-400 text-gold-700 dark:text-gold-400 hover:bg-gold-400 hover:text-plum-900 transition-all duration-300 active:scale-95"
           >
             Back to Home
           </a>

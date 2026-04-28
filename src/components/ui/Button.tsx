@@ -12,17 +12,17 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = "primary", size = "md", isLoading, children, disabled, ...props }, ref) => {
     const baseStyles =
-      "inline-flex items-center justify-center font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:ring-offset-plum-900 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 transition-all duration-300 ease-out hover:-translate-y-0.5";
+      "inline-flex items-center justify-center font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:ring-offset-cream-50 dark:focus:ring-offset-plum-900 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 transition-all duration-300 ease-out hover:-translate-y-0.5";
 
     const variants = {
       primary:
         "bg-gold-400 text-plum-900 hover:bg-teal-400 hover:shadow-[0_0_20px_rgba(212,170,106,0.4),0_10px_30px_rgba(212,170,106,0.3)]",
       secondary:
-        "bg-teal-500 text-cream-200 hover:bg-teal-400 hover:shadow-[0_10px_30px_rgba(26,123,122,0.3)]",
+        "bg-teal-500 text-cream-50 hover:bg-teal-400 hover:shadow-[0_10px_30px_rgba(26,123,122,0.3)]",
       outline:
-        "border-2 border-gold-400 text-gold-400 hover:bg-gold-400 hover:text-plum-900 hover:shadow-[0_10px_30px_rgba(212,170,106,0.2)]",
+        "border-2 border-gold-700 text-gold-700 dark:border-gold-400 dark:text-gold-400 hover:bg-gold-400 hover:text-plum-900 hover:border-gold-400 hover:shadow-[0_10px_30px_rgba(212,170,106,0.2)]",
       ghost:
-        "text-cream-200 hover:bg-plum-700/50 hover:shadow-[0_5px_20px_rgba(0,0,0,0.2)]",
+        "text-plum-900 dark:text-cream-200 hover:bg-cream-100 dark:hover:bg-plum-700/50 hover:shadow-[0_5px_20px_rgba(0,0,0,0.1)]",
     };
 
     const sizes = {

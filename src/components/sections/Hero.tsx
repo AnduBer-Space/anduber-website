@@ -210,14 +210,9 @@ const NetworkNodes = () => {
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-plum-900">
-      {/* Background gradient - static */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: "linear-gradient(135deg, #1E0A14 0%, #2A0E1A 50%, #1E0A14 100%)",
-        }}
-      />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-cream-50 dark:bg-plum-900">
+      {/* Background gradient */}
+      <div className="absolute inset-0 gradient-section-bg" />
 
       {/* Premium Network Lines Background */}
       <NetworkBackground />
@@ -261,25 +256,25 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-400 text-sm font-medium mb-6"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-600 dark:text-teal-400 text-sm font-medium mb-6"
             >
               <Sparkles className="w-4 h-4" />
               <span>The Fusion of Cultures</span>
             </motion.div>
 
             {/* Main heading */}
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-cream-200 mb-6 leading-tight">
+            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-plum-900 dark:text-cream-200 mb-6 leading-tight">
               An Engine for{" "}
               <span className="text-gradient-gold">Applied Imagination</span>
             </h1>
 
             {/* Subheading */}
-            <p className="text-lg md:text-xl text-cream-300 mb-4 max-w-xl mx-auto lg:mx-0">
-              <span className="text-gold-400 font-semibold">ANDU</span> (People) +{" "}
-              <span className="text-teal-400 font-semibold">BER</span> (Good)
+            <p className="text-lg md:text-xl text-plum-600 dark:text-cream-300 mb-4 max-w-xl mx-auto lg:mx-0">
+              <span className="text-gold-700 dark:text-gold-400 font-semibold">ANDU</span> (People) +{" "}
+              <span className="text-teal-600 dark:text-teal-400 font-semibold">BER</span> (Good)
             </p>
 
-            <p className="text-base md:text-lg text-plum-500 mb-8 max-w-xl mx-auto lg:mx-0">
+            <p className="text-base md:text-lg text-plum-400 dark:text-plum-500 mb-8 max-w-xl mx-auto lg:mx-0">
               A new breed of social enterprise dismantling silos and building
               resilient systems. We collide diverse expertise to unlock solutions
               that leave no one behind.
@@ -305,9 +300,9 @@ export default function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
-              className="mt-12 pt-8 border-t border-plum-700"
+              className="mt-12 pt-8 border-t border-cream-200 dark:border-plum-700"
             >
-              <p className="text-cream-300 italic text-lg">
+              <p className="text-plum-600 dark:text-cream-300 italic text-lg">
                 &ldquo;From Friction to Flow &mdash; We turn &apos;what if&apos; into &apos;how to&apos;&rdquo;
               </p>
             </motion.div>
@@ -381,7 +376,7 @@ export default function Hero() {
                     transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
                   >
                     <div className="px-3 py-1.5 rounded-full text-xs font-medium glass-card">
-                      <span className={i % 2 === 0 ? "text-teal-400" : "text-gold-400"}>
+                      <span className={i % 2 === 0 ? "text-teal-600 dark:text-teal-400" : "text-gold-700 dark:text-gold-400"}>
                         {label}
                       </span>
                     </div>
@@ -400,10 +395,10 @@ export default function Hero() {
         transition={{ delay: 1.5 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
       >
-        <div className="flex flex-col items-center text-plum-500">
+        <div className="flex flex-col items-center text-plum-400 dark:text-plum-500">
           <span className="text-sm mb-2">Scroll to explore</span>
-          <div className="w-6 h-10 rounded-full border-2 border-plum-700 flex items-start justify-center p-1">
-            <div className="w-1.5 h-3 rounded-full bg-gold-400 animate-bounce" style={{ animationDuration: '2s' }} />
+          <div className="w-6 h-10 rounded-full border-2 border-cream-300 dark:border-plum-700 flex items-start justify-center p-1">
+            <div className="w-1.5 h-3 rounded-full bg-gold-500 dark:bg-gold-400 animate-bounce" style={{ animationDuration: '2s' }} />
           </div>
         </div>
       </motion.div>

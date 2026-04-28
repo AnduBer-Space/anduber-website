@@ -33,7 +33,7 @@ export default function ProjectsPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 bg-plum-900">
+      <section className="relative pt-32 pb-20 bg-cream-50 dark:bg-plum-900">
         <div className="absolute inset-0">
           <div className="absolute top-0 right-1/4 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl" />
           <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-gold-500/10 rounded-full blur-3xl" />
@@ -44,7 +44,7 @@ export default function ProjectsPage() {
             <motion.span
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="inline-block px-4 py-2 rounded-full bg-teal-500/20 text-teal-400 text-sm font-medium mb-6"
+              className="inline-block px-4 py-2 rounded-full bg-teal-500/20 text-teal-600 dark:text-teal-400 text-sm font-medium mb-6"
             >
               Our Impact
             </motion.span>
@@ -53,7 +53,7 @@ export default function ProjectsPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-cream-50 mb-6"
+              className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-plum-900 dark:text-cream-50 mb-6"
             >
               Projects That{" "}
               <span className="text-gradient-gold">Transform Lives</span>
@@ -63,7 +63,7 @@ export default function ProjectsPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-lg md:text-xl text-plum-200 max-w-3xl mx-auto"
+              className="text-lg md:text-xl text-plum-600 dark:text-plum-200 max-w-3xl mx-auto"
             >
               Explore our portfolio of community-led development projects making
               a difference across East Africa.
@@ -237,7 +237,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             <div className="flex gap-4 pt-4 border-t border-plum-100 dark:border-plum-700">
               {project.impact.slice(0, 2).map((item, i) => (
                 <div key={i} className="flex-1">
-                  <span className="block text-lg font-bold text-gold-500">
+                  <span className="block text-lg font-bold text-gold-600 dark:text-gold-400">
                     {item.value.toLocaleString()}
                     {item.suffix}
                   </span>

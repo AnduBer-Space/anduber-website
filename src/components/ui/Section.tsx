@@ -14,10 +14,10 @@ export default function Section({
   ...props
 }: SectionProps) {
   const variants = {
-    dark: "bg-plum-900 text-cream-50",
-    light: "bg-cream-50 text-plum-900",
+    dark: "dark bg-plum-900 text-cream-50",
+    light: "bg-cream-50 dark:bg-plum-900 text-plum-900 dark:text-cream-50",
     gradient:
-      "bg-gradient-to-b from-plum-900 via-plum-800 to-plum-900 text-cream-50",
+      "bg-gradient-to-b from-cream-50 via-cream-100 to-cream-50 dark:from-plum-900 dark:via-plum-800 dark:to-plum-900 text-plum-900 dark:text-cream-50",
   };
 
   const paddings = {

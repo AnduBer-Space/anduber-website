@@ -9,10 +9,7 @@ export default function ContactHero() {
     <section className="relative pt-32 pb-16 overflow-hidden">
       {/* Background */}
       <div
-        className="absolute inset-0"
-        style={{
-          background: "linear-gradient(135deg, #1E0A14 0%, #2A0E1A 50%, #1E0A14 100%)",
-        }}
+        className="absolute inset-0 gradient-section-bg"
       />
 
       {/* Decorative glows - static */}
@@ -30,7 +27,7 @@ export default function ContactHero() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-400 text-sm font-medium mb-6"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-600 dark:text-teal-400 text-sm font-medium mb-6"
           >
             <MessageCircle className="w-4 h-4" />
             <span>Get In Touch</span>
@@ -40,7 +37,7 @@ export default function ContactHero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-cream-200 mb-6"
+            className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-plum-900 dark:text-cream-200 mb-6"
           >
             Let&apos;s <span className="text-gradient-gold">Connect</span>
           </motion.h1>
@@ -49,7 +46,7 @@ export default function ContactHero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-lg md:text-xl text-cream-300 max-w-3xl mx-auto"
+            className="text-lg md:text-xl text-plum-600 dark:text-cream-300 max-w-3xl mx-auto"
           >
             Whether you want to partner with AnduBer Partners, collaborate with AnduBer Labs,
             or support The Gathering&mdash;we&apos;d love to hear from you.

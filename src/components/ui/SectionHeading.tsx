@@ -29,7 +29,7 @@ export default function SectionHeading({
         <span
           className={cn(
             "inline-block text-sm font-medium uppercase tracking-wider mb-3",
-            light ? "text-teal-400" : "text-teal-500"
+            light ? "text-teal-400" : "text-teal-600 dark:text-teal-500"
           )}
         >
           {subtitle}

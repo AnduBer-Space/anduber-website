@@ -19,7 +19,7 @@ export default function Card({
 }: CardProps) {
   const variants = {
     default: "bg-white dark:bg-plum-800",
-    dark: "bg-plum-800",
+    dark: "bg-cream-100 dark:bg-plum-800",
     glass: "bg-white/10 backdrop-blur-md border border-white/20",
   };
 
